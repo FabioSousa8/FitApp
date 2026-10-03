@@ -13,6 +13,7 @@ data/
   training-volume-landmarks.json   # Volume (séries/semana) por grupo muscular e nível: MV, MEV, MAV, MRV
   progression-rules.json           # Regras de progressão de carga, deload, platô e aderência
   supplementation-rules.json       # Classificação de suplementos (essencial/opcional/desnecessário) + filtro de segurança
+  activity-priority-rules.json     # Ranking de atividades físicas do cadastro → objetivo da musculação e teto de volume semanal
 test/
   test-personas.json               # 4 perfis de teste para validar a lógica do motor
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
@@ -28,4 +29,8 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor em validação — próximo passo é incorporar `sessionMinutes` (tempo disponível por treino) na alocação de volume, que hoje não limita quantas séries cabem numa sessão curta.
+Motor em validação. Pendências conhecidas (ver `docs/engine-flow.md`):
+
+- Incorporar `sessionMinutes` (tempo disponível por treino) na alocação de volume — hoje o motor decide o volume semanal total, mas não limita quantas séries cabem numa sessão curta.
+- Agendamento por dia da semana (evitar treino pesado de pernas no dia anterior a um jogo, por exemplo).
+- Banco de exercícios com seleção fina por atividade de suporte.

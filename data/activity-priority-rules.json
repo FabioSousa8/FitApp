@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "description": "Como o motor usa o ranking de atividades físicas do cadastro (musculação, cardio, esportes, etc., ordenadas por importância pelo próprio usuário, cada uma com frequência semanal) para decidir o objetivo e o volume-alvo da musculação dentro do orçamento semanal de recuperação da pessoa.",
+
+  "intakeSchema": {
+    "physicalActivities": [
+      {
+        "rank": "number (1 = mais importante). Definido pelo usuário arrastando a lista no cadastro.",
+        "name": "string, texto livre (ex: 'Musculação', 'Cardio', 'Vôlei', 'Jiu-jitsu', 'Corrida')",
+        "frequencyPerWeek": "number, 1-7. Quantos dias por semana a pessoa pratica essa atividade."
+      }
+    ]
+  },
+
+  "howItWorks": [
+    "1. O motor localiza a entrada com name == 'Musculação' (ou equivalente) na lista e lê seu rank.",
+    "2. Se rank == 1: musculação segue o objetivo normal (hipertrofia/força, conforme o que o usuário declarou), com progressão MEV → MAV de progression-rules.json sem restrição extra.",
+    "3. Se rank > 1: o objetivo da musculação muda para 'maintenance_support' (repRangesByGoal.maintenance_support e targetRIRByPhase.maintenance_support em progression-rules.json), e o teto de volume semanal é decidido por weeklyLoadBudget abaixo — não por capAt padrão.",
+    "4. Em qualquer caso, soma-se frequencyPerWeek de TODAS as atividades da lista (incluindo musculação) para achar totalWeeklyActivityDays, e esse total decide o quanto o motor pode empurrar o volume das atividades que não são rank 1."
+  ],
+
+  "weeklyLoadBudget": {
+    "totalWeeklyActivityDaysFormula": "soma de frequencyPerWeek de todas as entradas em physicalActivities",
+    "tiers": [
+      {
+        "maxTotalDays": 5,
+        "label": "carga semanal normal",
+        "volumeCapForNonRank1": "mav",
+        "note": "Folga de recuperação suficiente; mesmo não sendo rank 1, o volume ainda pode subir até o MAV se o usuário tolerar bem (ajustar via check-ins normalmente)."
+      },
+      {
+        "minTotalDays": 6,
+        "maxTotalDays": 7,
+        "label": "carga semanal alta",
+        "volumeCapForNonRank1": "mev",
+        "note": "Atividades que não são rank 1 ficam travadas no MEV — o suficiente para não regredir, sem competir pela recuperação da atividade prioritária."
+      },
+      {
+        "minTotalDays": 8,
+        "label": "carga semanal muito alta",
+        "volumeCapForNonRank1": "below_mev",
+        "volumeReductionPct": [10, 20],
+        "note": "Reduzir o volume da musculação abaixo do MEV quando ela não é rank 1. A prioridade é a recuperação da atividade rank 1; a musculação aqui serve só para não perder o que a pessoa já tem."
+      }
+    ]
+  },
+
+  "exerciseSelectionNote": "Quando a musculação é 'maintenance_support', preferir exercícios de menor custo de recuperação (menos trabalho excêntrico pesado, menos dor muscular tardia) — especialmente nos grupos musculares mais usados pela atividade rank 1. A seleção fina de exercício por atividade (ex: evitar posterior de coxa pesado perto de um jogo de futebol) depende do banco de exercícios, ainda não construído.",
+
+  "schedulingNote": "Idealmente o motor evita agendar sessões de musculação de alta intensidade no dia imediatamente anterior a uma sessão importante da atividade rank 1. Isso depende de calendário semanal (dia a dia), que ainda não é coletado no cadastro — fica como melhoria futura.",
+
+  "openQuestions": [
+    "A regra de corte de volume (tiers acima) é uma estimativa de bom senso, não uma referência científica fechada — ajustar com base em feedback real dos usuários nos check-ins.",
+    "Hoje assume-se que existe sempre uma entrada chamada 'Musculação' na lista. Se o usuário não incluir musculação na lista (ex: só cadastrou outras atividades), o motor precisa de uma regra de fallback — ainda não definida."
+  ]
+}

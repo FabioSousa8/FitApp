@@ -3,11 +3,13 @@
   "repRangesByGoal": {
     "strength": [4, 6],
     "hypertrophy": [8, 12],
-    "accessoryEndurance": [12, 20]
+    "accessoryEndurance": [12, 20],
+    "maintenance_support": [10, 15]
   },
   "targetRIRByPhase": {
     "accumulation": [1, 3],
-    "deload": [4, 5]
+    "deload": [4, 5],
+    "maintenance_support": [3, 5]
   },
   "loadProgressionRules": [
     {
@@ -34,7 +36,8 @@
     "mesocycleLengthWeeks": { "default": 5, "advanced": 6 },
     "weeklyVolumeStepSets": 1.5,
     "startAt": "mev",
-    "capAt": "mrv_ou_sinal_de_fadiga"
+    "capAt": "mrv_ou_sinal_de_fadiga",
+    "note": "Este teto padrão (progressão rumo ao MRV) vale apenas quando a musculação é a atividade rank 1 do usuário. Quando não é, activity-priority-rules.json sobrescreve capAt (trava no MEV ou abaixo)."
   },
   "deloadTriggers": [
     "duração do mesociclo atingida",
