@@ -62,7 +62,7 @@ console.log("=".repeat(70));
 personas.forEach((p) => {
   console.log(`\n--- Persona: ${p.id} ---`);
   console.log(`Nível: ${p.level} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Objetivo: ${p.goal}`);
-  if (p.limitations.length) console.log(`Limitações: ${p.limitations.join("; ")}`);
+  if (p.limitations.length) console.log(`Limitações: ${p.limitations.map((l) => `${l.description} [${l.tag}]`).join("; ")}`);
 
   const split = selectSplit(p.daysAvailable);
   console.log(`\nSplit escolhido: ${split.name}`);

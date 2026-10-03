@@ -1,0 +1,3291 @@
+{
+  "version": "1.0",
+  "description": "Banco de exercícios do motor: cada exercício é tipado por grupo muscular primário/secundário (chaves de training-volume-landmarks.json), papel (chaves de progression-rules.json/exerciseRoleProgramming), equipamento, tags de contraindicação (vocabulário fechado, ver exercise-selection-rules.json) e custo de recuperação (usado quando o objetivo é maintenance_support).",
+  "muscleGroups": [
+    "abs",
+    "backLats",
+    "backThickness",
+    "biceps",
+    "calves",
+    "chest",
+    "frontDelts",
+    "glutes",
+    "hamstrings",
+    "quads",
+    "rearDelts",
+    "sideDelts",
+    "triceps"
+  ],
+  "equipmentTypes": [
+    "barbell",
+    "dumbbell",
+    "machine",
+    "cable",
+    "smith",
+    "bodyweight"
+  ],
+  "contraindicationTagVocabulary": [
+    "knee_sensitive",
+    "lower_back_sensitive",
+    "shoulder_sensitive",
+    "wrist_sensitive",
+    "elbow_sensitive",
+    "neck_sensitive",
+    "hip_sensitive",
+    "ankle_sensitive"
+  ],
+  "exercises": [
+    {
+      "id": "chest_supino_reto_barra",
+      "name": "Supino reto (barra)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_supino_reto_halteres",
+      "name": "Supino reto (halteres)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_supino_reto_smith",
+      "name": "Supino reto (smith)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_supino_inclinado_barra",
+      "name": "Supino inclinado (barra)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "frontDelts",
+        "triceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_supino_inclinado_halteres",
+      "name": "Supino inclinado (halteres)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "frontDelts",
+        "triceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_supino_inclinado_maquina",
+      "name": "Supino inclinado (máquina)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "frontDelts",
+        "triceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "chest_supino_declinado_barra",
+      "name": "Supino declinado (barra)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "chest_supino_declinado_halteres",
+      "name": "Supino declinado (halteres)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "chest_supino_maquina_chest_press",
+      "name": "Supino máquina (chest press)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "chest_paralelas_dips_foco_peito",
+      "name": "Paralelas (dips, foco peito)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "chest_flexao_de_braco",
+      "name": "Flexão de braço",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_flexao_de_braco_pes_elevados",
+      "name": "Flexão de braço (pés elevados)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crucifixo_halteres",
+      "name": "Crucifixo (halteres)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crucifixo_cabo",
+      "name": "Crucifixo (cabo)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_voador___peck_deck",
+      "name": "Voador / peck deck",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crossover_cabo_alto_para_baixo",
+      "name": "Crossover (cabo, alto para baixo)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crossover_cabo_baixo_para_cima",
+      "name": "Crossover (cabo, baixo para cima)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crucifixo_inclinado_halteres",
+      "name": "Crucifixo inclinado (halteres)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_pullover_halter",
+      "name": "Pullover (halter)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "backLats"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_crucifixo_maquina_unilateral",
+      "name": "Crucifixo máquina unilateral",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backLats_puxada_alta_pegada_aberta",
+      "name": "Puxada alta (pegada aberta)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_puxada_alta_pegada_fechada_triangulo",
+      "name": "Puxada alta (pegada fechada/triângulo)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_puxada_alta_pegada_supinada",
+      "name": "Puxada alta (pegada supinada)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_puxada_alta_barra_h_pegada_neutra",
+      "name": "Puxada alta (barra H, pegada neutra)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_barra_fixa_pull_up",
+      "name": "Barra fixa (pull-up)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backLats_barra_fixa_assistida_maquina",
+      "name": "Barra fixa assistida (máquina)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_puxada_unilateral_cabo",
+      "name": "Puxada unilateral (cabo)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_pulldown_reto_corda_straight_arm",
+      "name": "Pulldown reto (corda, straight-arm)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backLats_pullover_no_cabo_polia_alta",
+      "name": "Pullover no cabo (polia alta)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backLats_levantamento_terra_barra",
+      "name": "Levantamento terra (barra)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "knee_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backLats_levantamento_terra_sumo_barra",
+      "name": "Levantamento terra sumô (barra)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "hip_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backLats_rack_pull_barra_do_joelho",
+      "name": "Rack pull (barra, do joelho)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "backThickness",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backLats_puxada_alta_articulada_iso_lateral",
+      "name": "Puxada alta articulada (iso-lateral)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_barra_fixa_supinada_chin_up",
+      "name": "Barra fixa supinada (chin-up)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backLats_puxada_alta_unilateral_maquina",
+      "name": "Puxada alta unilateral (máquina)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_curvada_barra",
+      "name": "Remada curvada (barra)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backThickness_remada_cavalinho_t_bar",
+      "name": "Remada cavalinho (T-bar)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "backThickness_remada_articulada_pegada_neutra_fechada_maquina",
+      "name": "Remada articulada (pegada neutra/fechada, máquina)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_baixa_cabo_triangulo",
+      "name": "Remada baixa (cabo, triângulo)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_baixa_cabo_pegada_aberta",
+      "name": "Remada baixa (cabo, pegada aberta)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps",
+        "rearDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_unilateral_halter_serrote",
+      "name": "Remada unilateral (halter, serrote)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_cavalo_chest_supported_maquina",
+      "name": "Remada cavalo (chest-supported, máquina)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_cavalo_halteres_apoiado_no_banco",
+      "name": "Remada cavalo (halteres, apoiado no banco)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_sentada_maquina_pegada_neutra",
+      "name": "Remada sentada (máquina, pegada neutra)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_alta_upright_row_barra",
+      "name": "Remada alta (upright row, barra)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "sideDelts"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backThickness_encolhimento_barra",
+      "name": "Encolhimento (barra)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "neck_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backThickness_encolhimento_halteres",
+      "name": "Encolhimento (halteres)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "neck_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backThickness_encolhimento_smith",
+      "name": "Encolhimento (smith)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "neck_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backThickness_remada_no_smith_pegada_pronada",
+      "name": "Remada no Smith (pegada pronada)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_unilateral_no_cabo_polia_baixa",
+      "name": "Remada unilateral no cabo (polia baixa)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_militar_barra",
+      "name": "Desenvolvimento militar (barra)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_militar_halteres",
+      "name": "Desenvolvimento militar (halteres)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_maquina_frontal",
+      "name": "Desenvolvimento máquina (frontal)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_arnold_halteres",
+      "name": "Desenvolvimento Arnold (halteres)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_no_smith",
+      "name": "Desenvolvimento no Smith",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_push_press_barra",
+      "name": "Push press (barra)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts",
+        "quads"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_halter",
+      "name": "Elevação frontal (halter)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_cabo",
+      "name": "Elevação frontal (cabo)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_barra",
+      "name": "Elevação frontal (barra)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_com_anilha",
+      "name": "Elevação frontal com anilha",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_alternada_halteres",
+      "name": "Elevação frontal alternada (halteres)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_sentado_halteres_banco_reto",
+      "name": "Desenvolvimento sentado (halteres, banco reto)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_cabo_unilateral",
+      "name": "Elevação frontal (cabo, unilateral)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_maquina_articulado",
+      "name": "Desenvolvimento máquina articulado",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_halteres",
+      "name": "Elevação lateral (halteres)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_cabo",
+      "name": "Elevação lateral (cabo)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_maquina",
+      "name": "Elevação lateral (máquina)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_cabo_unilateral",
+      "name": "Elevação lateral (cabo, unilateral)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_desenvolvimento_maquina_lateral_articulado",
+      "name": "Desenvolvimento máquina (lateral/articulado)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [
+        "triceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_na_polia_baixa_lean_away",
+      "name": "Elevação lateral na polia baixa (lean-away)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_remada_alta_upright_row_cabo",
+      "name": "Remada alta (upright row, cabo)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [
+        "backThickness",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_sentado_halteres",
+      "name": "Elevação lateral sentado (halteres)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_com_corda_cabo_duas_maos",
+      "name": "Elevação lateral com corda (cabo, duas mãos)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_maquina_peck_deck_invertido",
+      "name": "Elevação lateral (máquina, peck-deck invertido)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_parcial_halteres_topo_do_movimento",
+      "name": "Elevação lateral parcial (halteres, topo do movimento)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_deitado_de_lado_halter",
+      "name": "Elevação lateral deitado de lado (halter)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_no_banco_inclinado_halter",
+      "name": "Elevação lateral no banco inclinado (halter)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_maquina",
+      "name": "Crucifixo invertido (máquina)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_halteres_inclinado",
+      "name": "Crucifixo invertido (halteres, inclinado)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_face_pull_cabo",
+      "name": "Face pull (cabo)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [
+        "backThickness"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_cabo_cruzado",
+      "name": "Crucifixo invertido (cabo cruzado)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_remada_alta_pegada_ampla_rear_delt_row_maquina",
+      "name": "Remada alta pegada ampla (rear delt row, máquina)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "rearDelts_y_raise_halteres_banco_inclinado",
+      "name": "Y-raise (halteres, banco inclinado)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [
+        "sideDelts"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_no_banco_halteres_apoiado",
+      "name": "Crucifixo invertido no banco (halteres, apoiado)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_remada_alta_unilateral_cabo_foco_posterior",
+      "name": "Remada alta unilateral (cabo, foco posterior)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_cabo_baixo",
+      "name": "Crucifixo invertido (cabo baixo)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_passaro_peck_deck_invertido",
+      "name": "Pássaro (peck deck invertido)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_face_pull_unilateral_cabo",
+      "name": "Face pull unilateral (cabo)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [
+        "backThickness"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_em_pe_halteres",
+      "name": "Crucifixo invertido em pé (halteres)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_direta_barra_reta",
+      "name": "Rosca direta (barra reta)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_direta_barra_w",
+      "name": "Rosca direta (barra W)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_alternada_halteres",
+      "name": "Rosca alternada (halteres)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_martelo_halteres",
+      "name": "Rosca martelo (halteres)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_concentrada_halter",
+      "name": "Rosca concentrada (halter)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_scott_barra_w_banco_scott",
+      "name": "Rosca scott (barra W, banco scott)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_no_cabo_barra_reta",
+      "name": "Rosca no cabo (barra reta)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_no_cabo_corda",
+      "name": "Rosca no cabo (corda)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_21_barra",
+      "name": "Rosca 21 (barra)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "biceps_rosca_inversa_barra",
+      "name": "Rosca inversa (barra)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_no_banco_inclinado_halteres",
+      "name": "Rosca no banco inclinado (halteres)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_maquina",
+      "name": "Rosca máquina",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_spider_barra_w_banco_inclinado_apoiado",
+      "name": "Rosca spider (barra W, banco inclinado apoiado)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_unilateral_no_cabo",
+      "name": "Rosca unilateral no cabo",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_zottman_halteres",
+      "name": "Rosca Zottman (halteres)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_no_cabo_polia_baixa_pegada_supinada",
+      "name": "Rosca no cabo (polia baixa, pegada supinada)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_supino_fechado_barra_pegada_fechada",
+      "name": "Supino fechado (barra, pegada fechada)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest",
+        "frontDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "triceps_paralelas_foco_triceps_tronco_ereto",
+      "name": "Paralelas (foco tríceps, tronco ereto)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "triceps_triceps_testa_barra_w",
+      "name": "Tríceps testa (barra W)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_corda_cabo_pulley_alto",
+      "name": "Tríceps corda (cabo, pulley alto)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_frances_halter_unilateral",
+      "name": "Tríceps francês (halter, unilateral)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_pulley_barra_reta",
+      "name": "Tríceps pulley (barra reta)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_coice_halter_kickback",
+      "name": "Tríceps coice (halter, kickback)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_mergulho_no_banco_bench_dip",
+      "name": "Mergulho no banco (bench dip)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "triceps_triceps_maquina",
+      "name": "Tríceps máquina",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_supino_fechado_smith",
+      "name": "Supino fechado (smith)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "triceps_triceps_testa_halteres",
+      "name": "Tríceps testa (halteres)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_extensao_de_triceps_acima_da_cabeca_cabo",
+      "name": "Extensão de tríceps acima da cabeça (cabo)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_corda_unilateral_cabo",
+      "name": "Tríceps corda unilateral (cabo)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_jm_press_barra",
+      "name": "JM press (barra)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "triceps_triceps_barra_v_cabo",
+      "name": "Tríceps barra V (cabo)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_paralelas_no_graviton_assistida",
+      "name": "Paralelas no graviton (assistida)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_agachamento_livre_barra",
+      "name": "Agachamento livre (barra)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings",
+        "abs"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_agachamento_no_smith",
+      "name": "Agachamento no Smith",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_leg_press_45",
+      "name": "Leg press 45°",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_agachamento_frontal_barra",
+      "name": "Agachamento frontal (barra)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "abs"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "wrist_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_agachamento_bulgaro_halteres",
+      "name": "Agachamento búlgaro (halteres)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_afundo_halteres_caminhando_ou_parado",
+      "name": "Afundo (halteres, caminhando ou parado)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_hack_squat_maquina",
+      "name": "Hack squat (máquina)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "quads_cadeira_extensora",
+      "name": "Cadeira extensora",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "quads_agachamento_sumo_halteres",
+      "name": "Agachamento sumô (halteres)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "hip_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_passada_no_smith",
+      "name": "Passada no Smith",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_leg_press_horizontal",
+      "name": "Leg press horizontal",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_step_up_caixa_halteres",
+      "name": "Step-up (caixa, halteres)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_agachamento_goblet_halter",
+      "name": "Agachamento goblet (halter)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "abs"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_cadeira_extensora_unilateral",
+      "name": "Cadeira extensora unilateral",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "quads_agachamento_taca_kettlebell",
+      "name": "Agachamento taça (kettlebell)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "abs"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_leg_press_unilateral",
+      "name": "Leg press unilateral",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_mesa_flexora_deitado",
+      "name": "Mesa flexora (deitado)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_mesa_flexora_unilateral_sentado_deitado",
+      "name": "Mesa flexora unilateral (sentado/deitado)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_stiff_barra",
+      "name": "Stiff (barra)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "hamstrings_stiff_halteres",
+      "name": "Stiff (halteres)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "hamstrings_levantamento_terra_romeno_barra",
+      "name": "Levantamento terra romeno (barra)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "backThickness"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "hamstrings_cadeira_flexora_sentado",
+      "name": "Cadeira flexora sentado",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_flexora_em_pe_unilateral_cabo",
+      "name": "Flexora em pé unilateral (cabo)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_good_morning_barra",
+      "name": "Good morning (barra)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_elevacao_pelvica_com_flexao_glute_ham_raise_assistido",
+      "name": "Elevação pélvica com flexão (glute-ham raise assistido)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_stiff_no_smith",
+      "name": "Stiff no Smith",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "hamstrings_flexora_deitado_unilateral_cabo_no_tornozelo",
+      "name": "Flexora deitado unilateral (cabo no tornozelo)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_nordic_curl_assistido",
+      "name": "Nordic curl (assistido)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_stiff_unilateral_halter",
+      "name": "Stiff unilateral (halter)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_mesa_flexora_em_pe_maquina",
+      "name": "Mesa flexora em pé (máquina)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_elevacao_pelvica_barra_hip_thrust",
+      "name": "Elevação pélvica (barra, hip thrust)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "hamstrings"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "hip_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "glutes_elevacao_pelvica_maquina",
+      "name": "Elevação pélvica (máquina)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "hamstrings"
+      ],
+      "role": "primary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "high"
+    },
+    {
+      "id": "glutes_abducao_de_quadril_maquina",
+      "name": "Abdução de quadril (máquina)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_abducao_de_quadril_cabo_kickback",
+      "name": "Abdução de quadril (cabo, kickback)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_coice_no_cabo_glute_kickback",
+      "name": "Coice no cabo (glute kickback)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_passada_lateral_com_mini_band",
+      "name": "Passada lateral com mini band",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_elevacao_pelvica_unilateral_halter",
+      "name": "Elevação pélvica unilateral (halter)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "glutes_gluteo_no_cabo_quatro_apoios_polia_baixa",
+      "name": "Glúteo no cabo (quatro apoios, polia baixa)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_step_up_lateral_caixa",
+      "name": "Step-up lateral (caixa)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "quads"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive",
+        "hip_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "glutes_cadeira_abdutora_pegada_ampla_foco_gluteo_medio",
+      "name": "Cadeira abdutora (pegada ampla, foco glúteo médio)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_elevacao_pelvica_no_banco_dumbbell_thrust_apoio_nas_costas",
+      "name": "Elevação pélvica no banco (dumbbell thrust, apoio nas costas)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "glutes_agachamento_sumo_kettlebell",
+      "name": "Agachamento sumô (kettlebell)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "quads",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "calves_panturrilha_em_pe_maquina",
+      "name": "Panturrilha em pé (máquina)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_sentado_maquina",
+      "name": "Panturrilha sentado (máquina)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_no_leg_press",
+      "name": "Panturrilha no leg press",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_no_smith_em_pe",
+      "name": "Panturrilha no Smith (em pé)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_unilateral_halter_apoiado",
+      "name": "Panturrilha unilateral (halter, apoiado)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_no_hack_apoiado_na_plataforma",
+      "name": "Panturrilha no hack (apoiado na plataforma)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_em_pe_barra",
+      "name": "Panturrilha em pé (barra)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_no_step_peso_corporal",
+      "name": "Panturrilha no step (peso corporal)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_burrinho_maquina_tronco_inclinado",
+      "name": "Panturrilha burrinho (máquina, tronco inclinado)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_unilateral_no_step_halter",
+      "name": "Panturrilha unilateral no step (halter)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_prancha",
+      "name": "Prancha",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_abdominal_maquina_crunch_maquina",
+      "name": "Abdominal máquina (crunch máquina)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_elevacao_de_pernas_barra_fixa_hanging_leg_raise",
+      "name": "Elevação de pernas (barra fixa, hanging leg raise)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_pallof_press_cabo",
+      "name": "Pallof press (cabo)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_abdominal_infra_elevacao_de_joelhos_no_banco",
+      "name": "Abdominal infra (elevação de joelhos no banco)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_abdominal_supra_solo_crunch",
+      "name": "Abdominal supra (solo, crunch)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "neck_sensitive",
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_abdominal_no_cabo_crunch_na_polia_alta_ajoelhado",
+      "name": "Abdominal no cabo (crunch na polia alta, ajoelhado)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_prancha_lateral",
+      "name": "Prancha lateral",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_rotacao_de_tronco_no_cabo_woodchop",
+      "name": "Rotação de tronco no cabo (woodchop)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_roda_abdominal_ab_wheel",
+      "name": "Roda abdominal (ab wheel)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "abs_abdominal_remador_solo",
+      "name": "Abdominal remador (solo)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_elevacao_de_pernas_no_banco_romano_captains_chair",
+      "name": "Elevação de pernas no banco romano (captain's chair)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_supino_reto_pegada_fechada_halteres_foco_interno",
+      "name": "Supino reto pegada fechada (halteres, foco interno)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_flexao_de_braco_com_elevacao_de_pe_declinada",
+      "name": "Flexão de braço com elevação de pé (declinada)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "frontDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "wrist_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "backLats_remada_alta_na_polia_pegada_neutra_foco_lat",
+      "name": "Remada alta na polia (pegada neutra, foco lat)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "cable"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backThickness_remada_invertida_bodyweight_row_barra_guiada",
+      "name": "Remada invertida (bodyweight row, barra guiada)",
+      "primaryMuscleGroup": "backThickness",
+      "secondaryMuscleGroups": [
+        "backLats",
+        "biceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_desenvolvimento_com_kettlebell_unilateral",
+      "name": "Desenvolvimento com kettlebell (unilateral)",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [
+        "triceps",
+        "sideDelts"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "sideDelts_elevacao_lateral_com_halteres_leves_alta_repeticao_burnout",
+      "name": "Elevação lateral com halteres leves (alta repetição, burnout)",
+      "primaryMuscleGroup": "sideDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_crucifixo_invertido_unilateral_halter_apoiado_no_banco",
+      "name": "Crucifixo invertido unilateral (halter, apoiado no banco)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "biceps_rosca_no_cross_body_halter_martelo_cruzado",
+      "name": "Rosca no cross-body (halter, martelo cruzado)",
+      "primaryMuscleGroup": "biceps",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "triceps_triceps_no_banco_com_os_pes_apoiados_bench_dip_pernas_estendidas",
+      "name": "Tríceps no banco com os pés apoiados (bench dip, pernas estendidas)",
+      "primaryMuscleGroup": "triceps",
+      "secondaryMuscleGroups": [
+        "chest"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "elbow_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_agachamento_no_leg_press_pes_altos_foco_posterior_quad",
+      "name": "Agachamento no leg press (pés altos, foco posterior/quad)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "quads_avanco_estatico_halteres_apoio_no_banco",
+      "name": "Avanço estático (halteres, apoio no banco)",
+      "primaryMuscleGroup": "quads",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "hamstrings_elevacao_de_quadril_unilateral_no_solo_bodyweight_bridge",
+      "name": "Elevação de quadril unilateral no solo (bodyweight bridge)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_elevacao_pelvica_com_banda_elastica_ativacao",
+      "name": "Elevação pélvica com banda elástica (ativação)",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "glutes_agachamento_sumo_no_smith",
+      "name": "Agachamento sumô no Smith",
+      "primaryMuscleGroup": "glutes",
+      "secondaryMuscleGroups": [
+        "quads",
+        "hamstrings"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "hip_sensitive",
+        "knee_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "calves_panturrilha_unilateral_no_smith",
+      "name": "Panturrilha unilateral no Smith",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "calves_panturrilha_donkey_inclinado_foco_alongamento",
+      "name": "Panturrilha donkey (inclinado, foco alongamento)",
+      "primaryMuscleGroup": "calves",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "machine"
+      ],
+      "contraindicationTags": [
+        "ankle_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_abdominal_bicicleta_solo",
+      "name": "Abdominal bicicleta (solo)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "neck_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_elevacao_de_pernas_no_banco_deitado",
+      "name": "Elevação de pernas no banco (deitado)",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "abs_prancha_com_toque_no_ombro",
+      "name": "Prancha com toque no ombro",
+      "primaryMuscleGroup": "abs",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "bodyweight"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive",
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "chest_supino_inclinado_smith",
+      "name": "Supino inclinado (smith)",
+      "primaryMuscleGroup": "chest",
+      "secondaryMuscleGroups": [
+        "frontDelts",
+        "triceps"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "smith"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "backLats_remada_alta_unilateral_halter_serrote_em_pe",
+      "name": "Remada alta unilateral (halter, serrote em pé)",
+      "primaryMuscleGroup": "backLats",
+      "secondaryMuscleGroups": [
+        "biceps",
+        "backThickness"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    },
+    {
+      "id": "frontDelts_elevacao_frontal_com_barra_w",
+      "name": "Elevação frontal com barra W",
+      "primaryMuscleGroup": "frontDelts",
+      "secondaryMuscleGroups": [],
+      "role": "isolation_accessory",
+      "equipment": [
+        "barbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive",
+        "wrist_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "rearDelts_remada_alta_deitado_de_brucos_banco_inclinado_halteres",
+      "name": "Remada alta deitado de bruços (banco inclinado, halteres)",
+      "primaryMuscleGroup": "rearDelts",
+      "secondaryMuscleGroups": [
+        "backThickness"
+      ],
+      "role": "isolation_accessory",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "shoulder_sensitive"
+      ],
+      "recoveryCost": "low"
+    },
+    {
+      "id": "hamstrings_stiff_com_kettlebell_unilateral",
+      "name": "Stiff com kettlebell (unilateral)",
+      "primaryMuscleGroup": "hamstrings",
+      "secondaryMuscleGroups": [
+        "glutes"
+      ],
+      "role": "secondary_compound",
+      "equipment": [
+        "dumbbell"
+      ],
+      "contraindicationTags": [
+        "lower_back_sensitive"
+      ],
+      "recoveryCost": "medium"
+    }
+  ]
+}

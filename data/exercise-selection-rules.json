@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "description": "Como o motor escolhe exercícios de exercise-bank.json pra cada dia de treino, cruzando grupos-alvo do dia, papéis necessários (progression-rules.json/exerciseRoleProgramming), equipamento disponível e exclusões por limitação.",
+
+  "inputs": {
+    "targetMuscleGroupsForDay": "lista de grupos musculares do dia (vem da seleção de split, engine-flow.md passo 3)",
+    "availableEquipment": "lista de equipamento que o usuário tem acesso. Hoje não é coletado no cadastro — assume-se academia completa (todos os tipos de exercise-bank.json/equipmentTypes). Ver openQuestions.",
+    "limitationTags": "lista de tags do vocabulário fechado (exercise-bank.json/contraindicationTagVocabulary), substituindo texto livre — ver migração em test-personas.json",
+    "maintenanceSupportGroups": "grupos cujo objetivo é maintenance_support (activity-priority-rules.json) — preferem exercícios de recoveryCost baixo",
+    "maxSetsPerSession": "teto de séries do dia, de session-time-rules.json"
+  },
+
+  "selectionAlgorithm": [
+    "1. Para cada grupo muscular em targetMuscleGroupsForDay, filtrar exercise-bank.json: primaryMuscleGroup == grupo E nenhuma tag em contraindicationTags intersecta limitationTags E equipment intersecta availableEquipment.",
+    "2. Dentro do filtro, montar o mix de papéis do grupo: 1x primary_compound (se existir e sobrou do filtro; senão cai pra secondary_compound) + 1x secondary_compound + 1-2x isolation_accessory — usando as faixas de séries de exerciseRoleProgramming (progression-rules.json) por papel escolhido.",
+    "3. Se o grupo está em maintenanceSupportGroups, em caso de empate entre duas opções do mesmo papel, preferir a de menor recoveryCost (mesmo critério de exerciseSelectionNote em activity-priority-rules.json).",
+    "4. Somar as séries de todos os exercícios escolhidos no dia; se ultrapassar maxSetsPerSession, cortar primeiro os isolation_accessory extras antes de reduzir séries de compostos — mesma ordem de prioridade de sessionMinutesResolution em session-time-rules.json.",
+    "5. Ordenar os exercícios do dia alternando grupos antagonistas quando possível (empurrar/puxar, anterior/posterior) — é o pressuposto que sustenta o modelo de tempo por série de session-time-rules.json (o 'descanso' de um exercício vira a execução do outro).",
+    "6. Se um grupo fica sem NENHUM exercício depois do filtro de limitationTags + availableEquipment (ex: usuário sem acesso a máquina nenhuma e com múltiplas limitações), o motor sinaliza esse gap ao usuário em vez de pular o grupo silenciosamente."
+  ],
+
+  "substitutionNote": "Quando um exercício precisa ser trocado no meio do mesociclo (equipamento ocupado, dor pontual), buscar no banco outro exercício com mesmo primaryMuscleGroup e mesmo role — mantém a lógica de séries/reps de exerciseRoleProgramming sem precisar recalcular nada.",
+
+  "openQuestions": [
+    "availableEquipment ainda não é coletado no cadastro (assume-se tudo disponível). Precisa virar pergunta real no intake — mínimo viável: perguntar quais dos equipmentTypes de exercise-bank.json a academia do usuário tem.",
+    "O passo 2 (montar o mix de papéis) ainda não decide a fórmula exata de QUANTOS exercícios por grupo — isso depende do volume em séries alocado ao grupo (training-volume-landmarks.json) dividido pelo setsRange de cada papel. A fórmula explícita ainda não foi escrita — é o próximo passo pra isso virar código em vez de regra em texto.",
+    "O passo 5 (alternar antagonistas) é uma heurística de ordenação validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.",
+    "Nenhum destes arquivos (exercise-bank.json, exercise-selection-rules.json) está plugado em test/simulate-engine.js ainda — o simulador continua mostrando só os números semanais de referência, sem gerar a lista de exercícios do dia de fato."
+  ]
+}

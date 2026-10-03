@@ -17,7 +17,7 @@
       "daysAvailable": 3,
       "sessionMinutes": 50,
       "goal": "força + estética",
-      "limitations": ["dor lombar leve — evitar terra convencional pesado"]
+      "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}]
     },
     {
       "id": "avancado_pouco_tempo",
@@ -35,7 +35,7 @@
       "daysAvailable": 4,
       "sessionMinutes": 60,
       "goal": "emagrecimento + ganho de força",
-      "limitations": ["joelho sensível em agachamento profundo"]
+      "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}]
     }
   ]
 }

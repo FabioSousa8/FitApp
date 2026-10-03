@@ -15,8 +15,10 @@ data/
   supplementation-rules.json       # Classificação de suplementos (essencial/opcional/desnecessário) + filtro de segurança
   activity-priority-rules.json     # Ranking de atividades físicas do cadastro → objetivo da musculação e teto de volume semanal
   session-time-rules.json          # Tempo disponível por sessão → teto de séries por sessão (45min musculação / 30min cardio de referência)
+  exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
+  exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
 test/
-  test-personas.json               # 4 perfis de teste para validar a lógica do motor
+  test-personas.json               # 4 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
@@ -30,8 +32,8 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor em validação. Pendências conhecidas (ver `docs/engine-flow.md`):
+Motor em validação. Todas as regras abaixo existem como dados/regras, mas **nenhuma ainda está plugada em `simulate-engine.js`** — o simulador hoje só mostra os números semanais de referência (MEV/MAV/MRV). Ligar tudo isso é o próximo passo grande. Pendências conhecidas (ver `docs/engine-flow.md`):
 
-- A regra de `sessionMinutes` → teto de séries por sessão já existe (`session-time-rules.json`), mas ainda não está plugada em `simulate-engine.js` — o simulador hoje só mostra os números semanais de referência (MEV/MAV/MRV), sem distribuir por sessão nem aplicar o teto de tempo.
+- `sessionMinutes` → teto de séries por sessão (`session-time-rules.json`).
 - Agendamento por dia da semana (evitar treino pesado de pernas no dia anterior a um jogo, ou fatiar com precisão o tempo entre cardio e musculação no mesmo dia).
-- Banco de exercícios com seleção fina por atividade de suporte.
+- Banco de exercícios (`exercise-bank.json`, `exercise-selection-rules.json`): falta coletar equipamento disponível no cadastro, e a fórmula exata de quantos exercícios por grupo.
