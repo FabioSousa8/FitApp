@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "categories": {
+    "essential": [
+      { "name": "Creatina monohidratada", "rationale": "evidência robusta para performance e massa magra; segura para uso contínuo em adultos saudáveis" },
+      { "name": "Proteína suplementar (whey/vegetal)", "rationale": "só entra se a dieta não fechar a meta de proteína do dia; não substitui comida" },
+      { "name": "Vitamina D3", "rationale": "condicional a baixa exposição solar relatada; idealmente confirmar necessidade com exame antes", "conditional": true }
+    ],
+    "optional": [
+      { "name": "Cafeína / pré-treino", "rationale": "melhora desempenho agudo; efeito cai com tolerância" },
+      { "name": "Ômega-3", "rationale": "útil se baixo consumo de peixe; evidência moderada" },
+      { "name": "Multivitamínico", "rationale": "cobre lacunas pontuais; dispensável com dieta variada" },
+      { "name": "Beta-alanina", "rationale": "efeito modesto em séries de alta repetição" },
+      { "name": "Citrulina malato", "rationale": "efeito modesto em volume/congestão" }
+    ],
+    "unnecessary": [
+      { "name": "BCAA isolado", "rationale": "redundante se a proteína total do dia já é adequada" },
+      { "name": "Termogênicos / queimadores de gordura", "rationale": "evidência fraca; geralmente é só cafeína cara" },
+      { "name": "Chás/detox emagrecedores", "rationale": "sem base científica para composição corporal" }
+    ]
+  },
+  "blockedTerms": ["testosterona", "hormônio do crescimento", "GH", "SARM", "oxandrolona", "stanozolol", "trembolona", "anabolizante", "esteroide"],
+  "blockedResponseTemplate": "Isso está fora do que o app pode recomendar. Qualquer decisão sobre hormônios ou substâncias controladas precisa passar por um médico endocrinologista.",
+  "enforcement": "blockedTerms é checado por uma camada de validação ANTES de qualquer chamada ao LLM — não é instrução de prompt, é filtro de código. O modelo só pode escolher itens dentro de categories; nunca inventa um item novo."
+}

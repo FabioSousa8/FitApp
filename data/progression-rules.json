@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "repRangesByGoal": {
+    "strength": [4, 6],
+    "hypertrophy": [8, 12],
+    "accessoryEndurance": [12, 20]
+  },
+  "targetRIRByPhase": {
+    "accumulation": [1, 3],
+    "deload": [4, 5]
+  },
+  "loadProgressionRules": [
+    {
+      "id": "progress_load",
+      "condition": "todas as séries atingiram o topo da faixa de reps E RIR relatado >= RIR-alvo máximo",
+      "action": "aumentar carga",
+      "amount": { "upperBody": "2.5%-5%", "lowerBody": "5%-10%" },
+      "resetRepTarget": "base da faixa"
+    },
+    {
+      "id": "hold_load",
+      "condition": "reps dentro da faixa mas RIR relatado <= RIR-alvo mínimo (sentiu mais difícil que o esperado)",
+      "action": "manter carga",
+      "note": "continua perseguindo o topo da faixa de reps na próxima sessão"
+    },
+    {
+      "id": "reduce_load",
+      "condition": "não atingiu a base da faixa de reps na última série",
+      "action": "reduzir carga em 5%-10%",
+      "note": "alternativa: manter carga e repetir a sessão"
+    }
+  ],
+  "volumeProgression": {
+    "mesocycleLengthWeeks": { "default": 5, "advanced": 6 },
+    "weeklyVolumeStepSets": 1.5,
+    "startAt": "mev",
+    "capAt": "mrv_ou_sinal_de_fadiga"
+  },
+  "deloadTriggers": [
+    "duração do mesociclo atingida",
+    "2+ sessões seguidas com RIR alto relatado e carga sem progressão",
+    "auto-relato de fadiga alta no check-in"
+  ],
+  "deloadProtocol": {
+    "volumeReduction": "50%",
+    "intensityTargetRIR": [4, 5],
+    "durationWeeks": 1,
+    "nextMesocycleStart": "mev_ou_pouco_acima_se_houve_progresso"
+  },
+  "adherenceRule": {
+    "windowWeeks": 2,
+    "thresholdPct": 70,
+    "belowThresholdAction": "dispara check-in de causa (tempo, motivação, lesão) antes de progredir qualquer coisa"
+  },
+  "plateauRule": {
+    "sessionsWithoutLoadIncrease": 3,
+    "action": "sinaliza para troca de exercício ou revisão de técnica, não insiste linearmente"
+  }
+}

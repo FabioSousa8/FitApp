@@ -1,0 +1,41 @@
+{
+  "personas": [
+    {
+      "id": "avancado_sem_limitacao",
+      "level": "advanced",
+      "age": 36,
+      "daysAvailable": 5,
+      "sessionMinutes": 75,
+      "goal": "hipertrofia + recomposição",
+      "limitations": [],
+      "background": "8+ anos de treino, ex-atleta de basquete"
+    },
+    {
+      "id": "intermediario_dor_lombar",
+      "level": "intermediate",
+      "age": 29,
+      "daysAvailable": 3,
+      "sessionMinutes": 50,
+      "goal": "força + estética",
+      "limitations": ["dor lombar leve — evitar terra convencional pesado"]
+    },
+    {
+      "id": "avancado_pouco_tempo",
+      "level": "advanced",
+      "age": 33,
+      "daysAvailable": 3,
+      "sessionMinutes": 40,
+      "goal": "manutenção de massa em rotina corrida",
+      "limitations": []
+    },
+    {
+      "id": "intermediario_comeco_tardio",
+      "level": "intermediate",
+      "age": 42,
+      "daysAvailable": 4,
+      "sessionMinutes": 60,
+      "goal": "emagrecimento + ganho de força",
+      "limitations": ["joelho sensível em agachamento profundo"]
+    }
+  ]
+}

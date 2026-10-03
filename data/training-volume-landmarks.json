@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "unit": "direct_sets_per_week",
+  "description": "MV = volume mínimo pra manter. MEV = mínimo eficaz pra progredir. MAV = faixa ótima (sweet spot). MRV = máximo recuperável antes de estagnar/regredir. Valores padrão, revisar com profissional antes de produção.",
+  "levels": ["beginner", "intermediate", "advanced"],
+  "muscleGroups": {
+    "chest":        { "beginner": {"mv":3,"mev":6,"mav":[8,12],"mrv":16}, "intermediate": {"mv":4,"mev":8,"mav":[12,16],"mrv":20}, "advanced": {"mv":6,"mev":10,"mav":[14,20],"mrv":24} },
+    "backLats":     { "beginner": {"mv":4,"mev":8,"mav":[10,14],"mrv":18}, "intermediate": {"mv":6,"mev":10,"mav":[14,18],"mrv":22}, "advanced": {"mv":8,"mev":12,"mav":[16,22],"mrv":26} },
+    "backThickness":{ "beginner": {"mv":3,"mev":6,"mav":[8,12],"mrv":16}, "intermediate": {"mv":4,"mev":8,"mav":[12,16],"mrv":20}, "advanced": {"mv":6,"mev":10,"mav":[14,18],"mrv":22} },
+    "frontDelts":   { "beginner": {"mv":0,"mev":0,"mav":[2,4],"mrv":8},  "intermediate": {"mv":0,"mev":2,"mav":[4,6],"mrv":10},  "advanced": {"mv":0,"mev":4,"mav":[6,8],"mrv":12} },
+    "sideDelts":    { "beginner": {"mv":4,"mev":6,"mav":[8,12],"mrv":16}, "intermediate": {"mv":6,"mev":8,"mav":[14,18],"mrv":22}, "advanced": {"mv":8,"mev":10,"mav":[16,22],"mrv":26} },
+    "rearDelts":    { "beginner": {"mv":2,"mev":4,"mav":[6,10],"mrv":14}, "intermediate": {"mv":4,"mev":6,"mav":[10,14],"mrv":18}, "advanced": {"mv":6,"mev":8,"mav":[12,16],"mrv":20} },
+    "biceps":       { "beginner": {"mv":2,"mev":4,"mav":[6,10],"mrv":14}, "intermediate": {"mv":4,"mev":6,"mav":[10,14],"mrv":18}, "advanced": {"mv":6,"mev":8,"mav":[12,16],"mrv":22} },
+    "triceps":      { "beginner": {"mv":2,"mev":4,"mav":[6,10],"mrv":14}, "intermediate": {"mv":4,"mev":6,"mav":[10,14],"mrv":18}, "advanced": {"mv":6,"mev":8,"mav":[12,16],"mrv":20} },
+    "quads":        { "beginner": {"mv":3,"mev":6,"mav":[8,12],"mrv":16}, "intermediate": {"mv":4,"mev":8,"mav":[12,16],"mrv":20}, "advanced": {"mv":6,"mev":10,"mav":[14,18],"mrv":22} },
+    "hamstrings":   { "beginner": {"mv":2,"mev":4,"mav":[6,8],"mrv":12},  "intermediate": {"mv":3,"mev":6,"mav":[8,12],"mrv":16},  "advanced": {"mv":4,"mev":8,"mav":[10,14],"mrv":18} },
+    "glutes":       { "beginner": {"mv":0,"mev":2,"mav":[4,8],"mrv":12},  "intermediate": {"mv":0,"mev":4,"mav":[6,12],"mrv":16},  "advanced": {"mv":2,"mev":6,"mav":[8,14],"mrv":18} },
+    "calves":       { "beginner": {"mv":4,"mev":6,"mav":[8,12],"mrv":16}, "intermediate": {"mv":6,"mev":8,"mav":[12,16],"mrv":20}, "advanced": {"mv":8,"mev":10,"mav":[14,18],"mrv":22} },
+    "abs":          { "beginner": {"mv":0,"mev":4,"mav":[6,10],"mrv":14}, "intermediate": {"mv":0,"mev":6,"mav":[10,14],"mrv":18}, "advanced": {"mv":2,"mev":8,"mav":[12,16],"mrv":20} }
+  }
+}
