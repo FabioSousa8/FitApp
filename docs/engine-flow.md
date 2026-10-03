@@ -30,10 +30,13 @@
 
 Desde a versão atual, `test/simulate-engine.js` liga TODAS as regras acima — ranking de atividade, teto de tempo por sessão, banco de exercícios — e gera o protocolo semanal completo (dia por dia, exercício, séries, reps) pras 4 personas de teste, não só a tabela de referência de MEV/MAV/MRV.
 
+## Decisão de produto: sem agendamento por dia da semana
+
+O motor não atribui dia da semana aos treinos — gera sessões rotativas (Upper A, Upper B, Lower A, Lower B...) e o usuário encaixa cada uma na própria rotina, como numa ficha impressa normal. Não é uma pendência, é escopo definido (ver `schedulingNote` em `activity-priority-rules.json`). A única informação de cadastro que esse ponto ainda precisa é uma pergunta simples (sim/não: cardio e musculação caem no mesmo dia?) pra fatiar o tempo entre as duas quando acontece — isso NÃO exige calendário.
+
 ## Pendências conhecidas
 
-- **Equipamento disponível**: o campo existe (`availableEquipment` nas personas, usado no filtro), mas não existe pergunta real no cadastro ainda — é preciso desenhar essa tela.
+- **Equipamento disponível**: o campo existe (`availableEquipment` nas personas, usado no filtro), mas não existe pergunta real no cadastro ainda — fica pra quando desenharmos as telas.
 - **Fórmula de quantos exercícios por grupo**: ancorada em `currentRoutine` quando o usuário informa (ver `exerciseCountFormula` em `exercise-selection-rules.json`); sem isso, cai num cálculo frio (volume ÷ 3 séries/exercício) que é só uma estimativa de bom senso.
-- **Grupos pequenos ficam sistematicamente de fora em sessões muito curtas**: o corte por falta de tempo hoje sempre sacrifica os mesmos grupos (deltoide/bíceps/tríceps, que vêm depois na ordem do dia) em vez de rotacionar quem fica de fora entre os dias da semana — achado real na simulação, ainda não corrigido.
-- **Agendamento por dia da semana**: o motor ainda não sabe em que dias a pessoa faz cada atividade, só a frequência total — então não consegue evitar agendar musculação pesada de pernas no dia anterior a um jogo, nem fatiar o tempo entre cardio e musculação quando caem no mesmo dia com precisão (`schedulingNote` em `activity-priority-rules.json`, regra 5 de `session-time-rules.json`).
+- **Cobertura secundária só olha o dia, não a semana**: o corte por falta de tempo agora protege grupos sem estímulo secundário de nenhum composto *naquele dia* (ex: deltoide posterior) e sacrifica primeiro quem já é estimulado por outro exercício (ex: tríceps via supino, bíceps via puxada) — ver `selectionAlgorithm` passo 5 em `exercise-selection-rules.json`. Falta expandir isso pra olhar a semana inteira, não só o dia isolado.
 - **Ordenação por antagonistas** (empurrar/puxar) validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.

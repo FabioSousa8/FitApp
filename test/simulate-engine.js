@@ -195,15 +195,17 @@ function buildProtocol(persona) {
           sets,
           repsLabel: `${rlo}-${rhi}`,
           minutesPerSet: avgMinutesPerWorkingSet[ex.role === "isolation_accessory" ? "isolation" : "compound"],
+          secondaryMuscleGroups: ex.secondaryMuscleGroups || [],
         });
       });
     });
 
-    const priority = items.filter((i) => i.role !== "isolation_accessory").concat(items.filter((i) => i.role === "isolation_accessory"));
+    // Fase 1: compostos (primary/secondary_compound) entram primeiro, na ordem dos grupos do dia.
+    const compounds = items.filter((i) => i.role !== "isolation_accessory");
     let used = 0;
     const kept = [];
     let trimmedCount = 0;
-    priority.forEach((it) => {
+    compounds.forEach((it) => {
       const cost = it.sets * it.minutesPerSet;
       if (used + cost <= budgetMinutes) {
         kept.push(it);
@@ -212,6 +214,32 @@ function buildProtocol(persona) {
         trimmedCount++;
       }
     });
+
+    // Fase 2: isolamento entra ordenado por "quanto estímulo secundário o grupo já recebeu"
+    // dos compostos que sobreviveram — quem já é estimulado por outro exercício (ex: tríceps
+    // via supino) cede espaço primeiro pra quem não tem estímulo secundário de ninguém
+    // (ex: deltoide posterior, raramente secundário de um composto).
+    const secondaryCoverage = {};
+    kept.forEach((it) => {
+      it.secondaryMuscleGroups.forEach((g) => {
+        secondaryCoverage[g] = (secondaryCoverage[g] || 0) + 1;
+      });
+    });
+    const isolationItems = items
+      .filter((i) => i.role === "isolation_accessory")
+      .map((it, originalIndex) => ({ it, originalIndex, coverage: secondaryCoverage[it.group] || 0 }))
+      .sort((a, b) => a.coverage - b.coverage || a.originalIndex - b.originalIndex)
+      .map((x) => x.it);
+    isolationItems.forEach((it) => {
+      const cost = it.sets * it.minutesPerSet;
+      if (used + cost <= budgetMinutes) {
+        kept.push(it);
+        used += cost;
+      } else {
+        trimmedCount++;
+      }
+    });
+
     const order = {};
     groups.forEach((g, i) => (order[g] = i));
     kept.sort((a, b) => order[a.group] - order[b.group]);

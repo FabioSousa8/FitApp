@@ -32,9 +32,12 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios. Pendências conhecidas (ver `docs/engine-flow.md`):
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios. Ao cortar exercício por falta de tempo, o motor prioriza manter os grupos que não têm nenhum outro exercício estimulando eles secundariamente naquele dia (ex: deltoide posterior) e corta primeiro os que já são estimulados por outro composto (ex: tríceps via supino).
 
-- Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem).
+Decisão de produto: o motor não atribui dia da semana aos treinos — gera sessões rotativas (Upper A/B, Lower A/B...) que o usuário encaixa na própria rotina, não um calendário fixo.
+
+Pendências conhecidas (ver `docs/engine-flow.md`):
+
+- Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem) — fica pra quando desenharmos as telas.
 - Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
-- Grupos pequenos (deltoide, bíceps, tríceps) ficam sistematicamente de fora em sessões muito curtas — falta rotacionar o corte entre os dias.
-- Agendamento por dia da semana (evitar treino pesado de pernas no dia anterior a um jogo, ou fatiar com precisão o tempo entre cardio e musculação no mesmo dia).
+- A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.

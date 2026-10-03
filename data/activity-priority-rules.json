@@ -23,7 +23,7 @@
     "totalWeeklyActivityDaysFormula": "soma de frequencyPerWeek de todas as entradas em physicalActivities — ATENÇÃO: isso superestima quando atividades acontecem no mesmo dia calendário (ver knownFlaw abaixo). Até existir agendamento por dia da semana, tratar o resultado como teto conservador, não como contagem exata de dias distintos.",
     "knownFlaw": {
       "problem": "Somar frequencyPerWeek sem saber que dias se sobrepõem superestima a carga. Caso real: musculação 6x/semana + cardio (quase sempre no mesmo dia da musculação) + basquete 3x/semana somaria ~14 'dias', o que cairia no tier 'carga semanal muito alta' (reduzir abaixo do MEV) — mas essa pessoa claramente não precisa de volume reduzido (é um treino de hipertrofia robusto, 23 séries/sessão). O problema é que musculação+cardio no mesmo dia não deveriam somar como 2 dias de carga distintos.",
-      "stopgapMitigation": "Até existir agendamento por dia da semana: perguntar diretamente no cadastro se as atividades de rank mais alto acontecem nos mesmos dias (sim/não), e se sim, contar esses dias uma vez só (pelo maior frequencyPerWeek entre elas, não a soma) antes de aplicar os tiers."
+      "mitigation": "O motor não vai ter agendamento por dia da semana (decisão de produto — ver schedulingNote). A correção é perguntar direto no cadastro se as atividades de rank mais alto costumam cair nos mesmos dias (sim/não) — não precisa de calendário, só dessa resposta — e se sim, contar esses dias uma vez só (pelo maior frequencyPerWeek entre elas, não a soma) antes de aplicar os tiers."
     },
     "tiers": [
       {
@@ -51,7 +51,7 @@
 
   "exerciseSelectionNote": "Quando a musculação é 'maintenance_support', preferir exercícios de menor custo de recuperação (menos trabalho excêntrico pesado, menos dor muscular tardia) — especialmente nos grupos musculares mais usados pela atividade rank 1. A seleção fina de exercício por atividade (ex: evitar posterior de coxa pesado perto de um jogo de futebol) depende do banco de exercícios, ainda não construído.",
 
-  "schedulingNote": "Idealmente o motor evita agendar sessões de musculação de alta intensidade no dia imediatamente anterior a uma sessão importante da atividade rank 1. Isso depende de calendário semanal (dia a dia), que ainda não é coletado no cadastro — fica como melhoria futura.",
+  "schedulingNote": "Decisão de produto: o motor NÃO atribui dia da semana aos treinos (não existe 'segunda = Upper A'). Ele gera sessões rotativas (Upper A, Upper B, Lower A, Lower B...) e o usuário encaixa cada uma na semana dele do jeito que fizer sentido pra rotina dele — igual uma ficha de treino impressa normal. Evitar agendar musculação pesada de perna no dia anterior a um jogo é responsabilidade do usuário ao encaixar as sessões, não algo que o motor resolve de forma automática.",
 
   "openQuestions": [
     "A regra de corte de volume (tiers acima) é uma estimativa de bom senso, não uma referência científica fechada — ajustar com base em feedback real dos usuários nos check-ins.",
