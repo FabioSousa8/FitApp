@@ -4,27 +4,37 @@
 
   "inputs": {
     "targetMuscleGroupsForDay": "lista de grupos musculares do dia (vem da seleção de split, engine-flow.md passo 3)",
-    "availableEquipment": "lista de equipamento que o usuário tem acesso. Hoje não é coletado no cadastro — assume-se academia completa (todos os tipos de exercise-bank.json/equipmentTypes). Ver openQuestions.",
+    "availableEquipment": "lista de equipamento que o usuário tem acesso, coletada no cadastro (pergunta direta: quais destes sua academia/casa tem? — opções de exercise-bank.json/equipmentTypes). Sem resposta, o motor NÃO deve assumir academia completa — assume o mínimo (bodyweight) e sinaliza que precisa dessa resposta.",
     "limitationTags": "lista de tags do vocabulário fechado (exercise-bank.json/contraindicationTagVocabulary), substituindo texto livre — ver migração em test-personas.json",
     "maintenanceSupportGroups": "grupos cujo objetivo é maintenance_support (activity-priority-rules.json) — preferem exercícios de recoveryCost baixo",
-    "maxSetsPerSession": "teto de séries do dia, de session-time-rules.json"
+    "maxSetsPerSession": "teto de séries do dia, de session-time-rules.json",
+    "currentRoutine": "rotina atual que o usuário reporta no cadastro (exerciseCountByGroup: quantos exercícios por grupo ele já faz hoje). Opcional — null quando o usuário não informa."
+  },
+
+  "exerciseCountFormula": {
+    "description": "Quantos exercícios o motor escolhe por grupo no dia. Não é um cálculo frio (volume ÷ número fixo) — ancora no que o usuário já faz hoje, do mesmo jeito que o fundador alimentou a própria IA com a série que já seguia na Smart Fit antes de pedir um protocolo novo. O cálculo frio só entra quando não há rotina atual pra ancorar.",
+    "withCurrentRoutine": "exerciseCount = currentRoutine.exerciseCountByGroup[grupo]. O motor NÃO recalcula esse número do zero — ele decide os PAPÉIS (quais desses exercícios são composto principal/secundário/isolamento) e as séries/reps de cada um via exerciseRoleProgramming, a partir da meta (goal) e do nível. Se o número atual for claramente insuficiente pro MEV do nível (ex: 1 exercício só pra um grupo que precisa de 8+ séries/semana), o motor aumenta série por exercício antes de aumentar número de exercícios — muda intensidade antes de mudar a estrutura que a pessoa já está acostumada.",
+    "withoutCurrentRoutine": "coldStartCount = max(1, round(perDayTargetSets / 3)), onde perDayTargetSets = volume semanal do grupo (MEV, training-volume-landmarks.json, com teto de activity-priority-rules.json quando aplicável) dividido pelos dias da semana que o split treina aquele grupo. 3 é uma média grosseira de séries por exercício — mesma lógica de bom senso usada nos outros arquivos, a calibrar.",
+    "note": "currentRoutine também é sinal pra nível de experiência (engine-flow.md passo 1) — alguém que já faz 4 exercícios de peito com carga provavelmente não é iniciante, independente do que ele mesmo classificaria. Ainda não formalizado como regra — ver openQuestions."
   },
 
   "selectionAlgorithm": [
     "1. Para cada grupo muscular em targetMuscleGroupsForDay, filtrar exercise-bank.json: primaryMuscleGroup == grupo E nenhuma tag em contraindicationTags intersecta limitationTags E equipment intersecta availableEquipment.",
-    "2. Dentro do filtro, montar o mix de papéis do grupo: 1x primary_compound (se existir e sobrou do filtro; senão cai pra secondary_compound) + 1x secondary_compound + 1-2x isolation_accessory — usando as faixas de séries de exerciseRoleProgramming (progression-rules.json) por papel escolhido.",
-    "3. Se o grupo está em maintenanceSupportGroups, em caso de empate entre duas opções do mesmo papel, preferir a de menor recoveryCost (mesmo critério de exerciseSelectionNote em activity-priority-rules.json).",
-    "4. Somar as séries de todos os exercícios escolhidos no dia; se ultrapassar maxSetsPerSession, cortar primeiro os isolation_accessory extras antes de reduzir séries de compostos — mesma ordem de prioridade de sessionMinutesResolution em session-time-rules.json.",
-    "5. Ordenar os exercícios do dia alternando grupos antagonistas quando possível (empurrar/puxar, anterior/posterior) — é o pressuposto que sustenta o modelo de tempo por série de session-time-rules.json (o 'descanso' de um exercício vira a execução do outro).",
-    "6. Se um grupo fica sem NENHUM exercício depois do filtro de limitationTags + availableEquipment (ex: usuário sem acesso a máquina nenhuma e com múltiplas limitações), o motor sinaliza esse gap ao usuário em vez de pular o grupo silenciosamente."
+    "2. Determinar exerciseCount do grupo via exerciseCountFormula (ancorado em currentRoutine quando existir).",
+    "3. Montar o mix de papéis pra preencher exerciseCount: 1x primary_compound (se existir e sobrou do filtro; senão cai pra secondary_compound) + 1x secondary_compound + o restante em isolation_accessory — usando as faixas de séries de exerciseRoleProgramming (progression-rules.json) por papel escolhido.",
+    "4. Se o grupo está em maintenanceSupportGroups, em caso de empate entre duas opções do mesmo papel, preferir a de menor recoveryCost (mesmo critério de exerciseSelectionNote em activity-priority-rules.json).",
+    "5. Somar as séries de todos os exercícios escolhidos no dia; se ultrapassar maxSetsPerSession, cortar primeiro os isolation_accessory extras antes de reduzir séries de compostos — mesma ordem de prioridade de sessionMinutesResolution em session-time-rules.json.",
+    "6. Ordenar os exercícios do dia alternando grupos antagonistas quando possível (empurrar/puxar, anterior/posterior) — é o pressuposto que sustenta o modelo de tempo por série de session-time-rules.json (o 'descanso' de um exercício vira a execução do outro).",
+    "7. Se um grupo fica sem NENHUM exercício depois do filtro de limitationTags + availableEquipment (ex: usuário sem acesso a máquina nenhuma e com múltiplas limitações), o motor sinaliza esse gap ao usuário em vez de pular o grupo silenciosamente."
   ],
 
   "substitutionNote": "Quando um exercício precisa ser trocado no meio do mesociclo (equipamento ocupado, dor pontual), buscar no banco outro exercício com mesmo primaryMuscleGroup e mesmo role — mantém a lógica de séries/reps de exerciseRoleProgramming sem precisar recalcular nada.",
 
   "openQuestions": [
-    "availableEquipment ainda não é coletado no cadastro (assume-se tudo disponível). Precisa virar pergunta real no intake — mínimo viável: perguntar quais dos equipmentTypes de exercise-bank.json a academia do usuário tem.",
-    "O passo 2 (montar o mix de papéis) ainda não decide a fórmula exata de QUANTOS exercícios por grupo — isso depende do volume em séries alocado ao grupo (training-volume-landmarks.json) dividido pelo setsRange de cada papel. A fórmula explícita ainda não foi escrita — é o próximo passo pra isso virar código em vez de regra em texto.",
-    "O passo 5 (alternar antagonistas) é uma heurística de ordenação validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.",
-    "Nenhum destes arquivos (exercise-bank.json, exercise-selection-rules.json) está plugado em test/simulate-engine.js ainda — o simulador continua mostrando só os números semanais de referência, sem gerar a lista de exercícios do dia de fato."
+    "A pergunta de availableEquipment ainda não tem uma tela/copy definida no cadastro — só o campo e a regra de uso existem.",
+    "exerciseCountFormula.note: usar currentRoutine como sinal de nível de experiência ainda não é uma regra formal, só uma observação — falta decidir como isso se combina com anos de treino + consistência (engine-flow.md passo 1) sem virar auto-relato puro de novo.",
+    "O passo 6 (alternar antagonistas) é uma heurística de ordenação validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.",
+    "withoutCurrentRoutine usa 3 séries/exercício como média — mesma natureza de estimativa de bom senso que avgMinutesPerWorkingSet tinha antes de ser calibrado; vale revisar com dados reais.",
+    "Limitação real encontrada na simulação: quando o tempo de sessão é muito curto (ex: full body em 35-40min), o corte por falta de tempo (passo 5) sempre sacrifica os MESMOS grupos — os que aparecem depois na ordem de dayMuscleMap (hoje: deltoide/bíceps/tríceps ficam de fora todo dia, nunca é a vez deles). O jeito certo seria rotacionar qual grupo fica de fora entre os dias da semana, não sempre o mesmo. Ainda não implementado."
   ]
 }

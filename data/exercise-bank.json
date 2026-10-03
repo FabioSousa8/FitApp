@@ -1,6 +1,7 @@
 {
   "version": "1.0",
   "description": "Banco de exercícios do motor: cada exercício é tipado por grupo muscular primário/secundário (chaves de training-volume-landmarks.json), papel (chaves de progression-rules.json/exerciseRoleProgramming), equipamento, tags de contraindicação (vocabulário fechado, ver exercise-selection-rules.json) e custo de recuperação (usado quando o objetivo é maintenance_support).",
+  "taggingGuidance": "contraindicationTags é pra marcar a variação de MAIOR risco pra aquela articulação, não todo exercício que a envolve — marcar tudo quebra o grupo inteiro pro usuário com aquela limitação (bug real encontrado e corrigido: todo exercício de quadríceps estava marcado com knee_sensitive, incluindo leg press e cadeira extensora, que na prática são as opções mais indicadas justamente pra joelho sensível). Regra prática: squat livre profundo/afundo/step-up = marca; leg press/cadeira extensora/goblet squat = não marca, a não ser que o exercício específico seja reconhecidamente agressivo pra aquela articulação.",
   "muscleGroups": [
     "abs",
     "backLats",
@@ -1954,7 +1955,6 @@
         "smith"
       ],
       "contraindicationTags": [
-        "knee_sensitive",
         "lower_back_sensitive"
       ],
       "recoveryCost": "high"
@@ -1972,7 +1972,6 @@
         "machine"
       ],
       "contraindicationTags": [
-        "knee_sensitive",
         "lower_back_sensitive"
       ],
       "recoveryCost": "high"
@@ -2057,9 +2056,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2109,9 +2106,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "medium"
     },
     {
@@ -2142,9 +2137,7 @@
       "equipment": [
         "dumbbell"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "medium"
     },
     {
@@ -2156,9 +2149,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2173,9 +2164,7 @@
       "equipment": [
         "dumbbell"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "medium"
     },
     {
@@ -2189,9 +2178,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "medium"
     },
     {
@@ -2203,9 +2190,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2217,9 +2202,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2281,9 +2264,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2402,9 +2383,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -3065,9 +3044,7 @@
       "equipment": [
         "machine"
       ],
-      "contraindicationTags": [
-        "knee_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "medium"
     },
     {

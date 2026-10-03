@@ -8,7 +8,20 @@
       "sessionMinutes": 75,
       "goal": "hipertrofia + recomposição",
       "limitations": [],
-      "background": "8+ anos de treino, ex-atleta de basquete"
+      "background": "8+ anos de treino, ex-atleta de basquete",
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 5 },
+        { "rank": 2, "name": "Cardio", "frequencyPerWeek": 3 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": {
+        "note": "O que o usuário reportou já fazer hoje na academia (coletado no cadastro) — ancora quantos exercícios por grupo o motor sugere, em vez de calcular do zero.",
+        "exerciseCountByGroup": {
+          "chest": 3, "backLats": 3, "backThickness": 2, "frontDelts": 1, "sideDelts": 2,
+          "rearDelts": 1, "biceps": 2, "triceps": 2, "quads": 3, "hamstrings": 2,
+          "glutes": 1, "calves": 1, "abs": 1
+        }
+      }
     },
     {
       "id": "intermediario_dor_lombar",
@@ -17,7 +30,13 @@
       "daysAvailable": 3,
       "sessionMinutes": 50,
       "goal": "força + estética",
-      "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}]
+      "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}],
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 3 },
+        { "rank": 2, "name": "Caminhada", "frequencyPerWeek": 2 }
+      ],
+      "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
+      "currentRoutine": null
     },
     {
       "id": "avancado_pouco_tempo",
@@ -26,7 +45,13 @@
       "daysAvailable": 3,
       "sessionMinutes": 40,
       "goal": "manutenção de massa em rotina corrida",
-      "limitations": []
+      "limitations": [],
+      "physicalActivities": [
+        { "rank": 1, "name": "Corrida", "frequencyPerWeek": 4 },
+        { "rank": 2, "name": "Musculação", "frequencyPerWeek": 3 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": null
     },
     {
       "id": "intermediario_comeco_tardio",
@@ -35,7 +60,17 @@
       "daysAvailable": 4,
       "sessionMinutes": 60,
       "goal": "emagrecimento + ganho de força",
-      "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}]
+      "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}],
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "bodyweight"],
+      "currentRoutine": {
+        "note": "Começo tardio — rotina atual ainda enxuta, serve como piso, não como teto.",
+        "exerciseCountByGroup": {
+          "chest": 2, "quads": 2, "backThickness": 2, "abs": 1
+        }
+      }
     }
   ]
 }

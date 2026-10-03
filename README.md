@@ -32,8 +32,9 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor em validação. Todas as regras abaixo existem como dados/regras, mas **nenhuma ainda está plugada em `simulate-engine.js`** — o simulador hoje só mostra os números semanais de referência (MEV/MAV/MRV). Ligar tudo isso é o próximo passo grande. Pendências conhecidas (ver `docs/engine-flow.md`):
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios. Pendências conhecidas (ver `docs/engine-flow.md`):
 
-- `sessionMinutes` → teto de séries por sessão (`session-time-rules.json`).
+- Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem).
+- Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
+- Grupos pequenos (deltoide, bíceps, tríceps) ficam sistematicamente de fora em sessões muito curtas — falta rotacionar o corte entre os dias.
 - Agendamento por dia da semana (evitar treino pesado de pernas no dia anterior a um jogo, ou fatiar com precisão o tempo entre cardio e musculação no mesmo dia).
-- Banco de exercícios (`exercise-bank.json`, `exercise-selection-rules.json`): falta coletar equipamento disponível no cadastro, e a fórmula exata de quantos exercícios por grupo.

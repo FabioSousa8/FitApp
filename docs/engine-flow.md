@@ -26,9 +26,14 @@
 
 8. **Reavaliação de mesociclo** → ao fim do ciclo (ou por trigger de deload), sobe o volume-alvo em direção ao teto definido no passo 2 (MAV normal, ou o limite reduzido de quem não tem a musculação como rank 1).
 
+## Status: motor rodando de ponta a ponta
+
+Desde a versão atual, `test/simulate-engine.js` liga TODAS as regras acima — ranking de atividade, teto de tempo por sessão, banco de exercícios — e gera o protocolo semanal completo (dia por dia, exercício, séries, reps) pras 4 personas de teste, não só a tabela de referência de MEV/MAV/MRV.
+
 ## Pendências conhecidas
 
-- **Nada das regras abaixo está plugado em `simulate-engine.js` ainda.** O simulador continua mostrando só os números semanais de MEV/MAV/MRV por grupo (referência) — não gera a lista de exercícios do dia, não aplica o teto de tempo, não aplica o ranking de atividades. Isso é o próximo passo pra sair de "regras documentadas" pra "motor rodando de ponta a ponta".
-- **Tempo por sessão (`sessionMinutes`)**: regra existe em `session-time-rules.json`, não aplicada na simulação.
+- **Equipamento disponível**: o campo existe (`availableEquipment` nas personas, usado no filtro), mas não existe pergunta real no cadastro ainda — é preciso desenhar essa tela.
+- **Fórmula de quantos exercícios por grupo**: ancorada em `currentRoutine` quando o usuário informa (ver `exerciseCountFormula` em `exercise-selection-rules.json`); sem isso, cai num cálculo frio (volume ÷ 3 séries/exercício) que é só uma estimativa de bom senso.
+- **Grupos pequenos ficam sistematicamente de fora em sessões muito curtas**: o corte por falta de tempo hoje sempre sacrifica os mesmos grupos (deltoide/bíceps/tríceps, que vêm depois na ordem do dia) em vez de rotacionar quem fica de fora entre os dias da semana — achado real na simulação, ainda não corrigido.
 - **Agendamento por dia da semana**: o motor ainda não sabe em que dias a pessoa faz cada atividade, só a frequência total — então não consegue evitar agendar musculação pesada de pernas no dia anterior a um jogo, nem fatiar o tempo entre cardio e musculação quando caem no mesmo dia com precisão (`schedulingNote` em `activity-priority-rules.json`, regra 5 de `session-time-rules.json`).
-- **Banco de exercícios**: catálogo e regra de seleção existem (`exercise-bank.json`, `exercise-selection-rules.json`), mas faltam: (a) coletar equipamento disponível no cadastro (hoje assume-se academia completa), (b) a fórmula exata de quantos exercícios por grupo (depende do volume alocado ÷ setsRange do papel), (c) validar a heurística de ordenação por antagonistas contra outros perfis além do do fundador.
+- **Ordenação por antagonistas** (empurrar/puxar) validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.
