@@ -20,7 +20,11 @@
   ],
 
   "weeklyLoadBudget": {
-    "totalWeeklyActivityDaysFormula": "soma de frequencyPerWeek de todas as entradas em physicalActivities",
+    "totalWeeklyActivityDaysFormula": "soma de frequencyPerWeek de todas as entradas em physicalActivities — ATENÇÃO: isso superestima quando atividades acontecem no mesmo dia calendário (ver knownFlaw abaixo). Até existir agendamento por dia da semana, tratar o resultado como teto conservador, não como contagem exata de dias distintos.",
+    "knownFlaw": {
+      "problem": "Somar frequencyPerWeek sem saber que dias se sobrepõem superestima a carga. Caso real: musculação 6x/semana + cardio (quase sempre no mesmo dia da musculação) + basquete 3x/semana somaria ~14 'dias', o que cairia no tier 'carga semanal muito alta' (reduzir abaixo do MEV) — mas essa pessoa claramente não precisa de volume reduzido (é um treino de hipertrofia robusto, 23 séries/sessão). O problema é que musculação+cardio no mesmo dia não deveriam somar como 2 dias de carga distintos.",
+      "stopgapMitigation": "Até existir agendamento por dia da semana: perguntar diretamente no cadastro se as atividades de rank mais alto acontecem nos mesmos dias (sim/não), e se sim, contar esses dias uma vez só (pelo maior frequencyPerWeek entre elas, não a soma) antes de aplicar os tiers."
+    },
     "tiers": [
       {
         "maxTotalDays": 5,
@@ -51,6 +55,9 @@
 
   "openQuestions": [
     "A regra de corte de volume (tiers acima) é uma estimativa de bom senso, não uma referência científica fechada — ajustar com base em feedback real dos usuários nos check-ins.",
-    "Hoje assume-se que existe sempre uma entrada chamada 'Musculação' na lista. Se o usuário não incluir musculação na lista (ex: só cadastrou outras atividades), o motor precisa de uma regra de fallback — ainda não definida."
-  ]
+    "Hoje assume-se que existe sempre uma entrada chamada 'Musculação' na lista. Se o usuário não incluir musculação na lista (ex: só cadastrou outras atividades), o motor precisa de uma regra de fallback — ainda não definida.",
+    "O problema de dias sobrepostos descrito em weeklyLoadBudget.knownFlaw ainda não tem solução definitiva, só o stopgapMitigation."
+  ],
+
+  "rankClarification": "Rank é a prioridade DECLARADA pelo usuário pro que ele quer que o motor otimize — não é frequência semanal nem quão 'sério'/competitivo é o envolvimento com a atividade. Caso real: pessoa joga basquete 3x/semana (às vezes recreativo, às vezes competitivo por time amador) mas seu objetivo é saúde/estética, então musculação continua rank 1 mesmo o basquete sendo praticado com seriedade. O cadastro (UI de ranking) precisa deixar claro que é 'o que você quer que a gente priorize', não 'o que você leva mais a sério' — senão o usuário pode ranquear errado."
 }

@@ -5,7 +5,8 @@
 2. **Classificação do objetivo via ranking de atividades** (`activity-priority-rules.json`) → o usuário ordena suas atividades físicas por importância (ex: Musculação, Cardio, Vôlei) e informa a frequência semanal de cada uma.
    - Se "Musculação" é rank 1 → objetivo segue normal (hipertrofia/força), progressão MEV → MAV sem restrição extra.
    - Se "Musculação" não é rank 1 → objetivo vira `maintenance_support` (repRangesByGoal e targetRIRByPhase próprios em `progression-rules.json`), e o teto de volume semanal passa a ser decidido pelo orçamento de carga semanal (`weeklyLoadBudget`), não pelo MRV padrão.
-   - A soma da frequência de todas as atividades (`totalWeeklyActivityDays`) decide o quanto o motor pode empurrar o volume das atividades que não são rank 1 (normal / travado no MEV / abaixo do MEV).
+   - A soma da frequência de todas as atividades (`totalWeeklyActivityDays`) decide o quanto o motor pode empurrar o volume das atividades que não são rank 1 (normal / travado no MEV / abaixo do MEV). **Cuidado**: essa soma superestima quando atividades caem no mesmo dia (ex: musculação + cardio no mesmo dia) — ver `weeklyLoadBudget.knownFlaw` em `activity-priority-rules.json`.
+   - Rank reflete prioridade declarada, não frequência nem nível de competitividade — uma atividade praticada de forma séria/competitiva (ex: time amador) não é automaticamente rank 1 (ver `rankClarification` em `activity-priority-rules.json`).
 
 3. **Seleção de split** (baseado em daysAvailable):
    - 2-3 dias → Full body ou Upper/Lower alternado
@@ -17,7 +18,7 @@
    - Depois de alocado, o total de séries de cada dia passa pelo teto de tempo (`session-time-rules.json`): `sessionMinutes` (45 min de musculação como referência, se o usuário não informar outro valor) converte em `maxSetsPerSession` via `avgMinutesPerWorkingSet`. Se o volume do dia ultrapassar esse teto, corta-se primeiro o excesso acima do MEV antes de cortar abaixo dele — e se nem no MEV couber, o motor sinaliza que o tempo disponível é insuficiente pro split/dias escolhidos.
    - Quando cardio e musculação acontecem no mesmo dia, o orçamento de referência é 45 min musculação + 30 min cardio (até ~1h30 no total com aquecimento/transição); a atividade rank 1 recebe sua fatia integral primeiro.
 
-5. **Seleção de exercícios** → banco curado (fora do escopo destes arquivos, ainda não construído) filtrado por equipamento disponível e limitações reportadas (ex: joelho sensível remove agachamento livre pesado da lista). Quando o objetivo é `maintenance_support`, prefere exercícios de menor custo de recuperação (ver `exerciseSelectionNote` em `activity-priority-rules.json`).
+5. **Seleção de exercícios** → banco curado (fora do escopo destes arquivos, ainda não construído) filtrado por equipamento disponível e limitações reportadas (ex: joelho sensível remove agachamento livre pesado da lista). Quando o objetivo é `maintenance_support`, prefere exercícios de menor custo de recuperação (ver `exerciseSelectionNote` em `activity-priority-rules.json`). Dentro da sessão, série/reps variam pelo papel do exercício (composto principal vs. secundário vs. isolamento/acessório), não é um número fixo igual pra tudo — ver `exerciseRoleProgramming` em `progression-rules.json`. A ordem também importa: alternar grupos antagonistas (empurrar/puxar) é o que permite caber mais séries no tempo disponível (ver `session-time-rules.json`).
 
 6. **Geração do protocolo inicial** → treino + cardio + dieta (macro a parte) + suplementação, essa última só usando `supplementation-rules.json`.
 
