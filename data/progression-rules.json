@@ -37,7 +37,7 @@
     "weeklyVolumeStepSets": 1.5,
     "startAt": "mev",
     "capAt": "mrv_ou_sinal_de_fadiga",
-    "note": "Este teto padrão (progressão rumo ao MRV) vale apenas quando a musculação é a atividade rank 1 do usuário. Quando não é, activity-priority-rules.json sobrescreve capAt (trava no MEV ou abaixo)."
+    "note": "Este teto padrão (progressão rumo ao MRV) vale apenas quando a musculação é a atividade rank 1 do usuário. Quando não é, activity-priority-rules.json sobrescreve capAt (trava no MEV ou abaixo). Em ambos os casos, o volume do dia também não pode ultrapassar maxSetsPerSession de session-time-rules.json — esse teto de tempo é verificado depois do teto de prioridade de atividade."
   },
   "deloadTriggers": [
     "duração do mesociclo atingida",

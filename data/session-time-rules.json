@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "description": "Como o tempo disponível por sessão (sessionMinutes) limita quantas séries cabem numa sessão de musculação, e como a sessão se divide entre cardio e musculação quando as duas acontecem no mesmo dia.",
+
+  "referenceSessionBudget": {
+    "musculacao_minutes": 45,
+    "cardio_minutes": 30,
+    "totalComfortable_minutes": 90,
+    "note": "Referência de bom senso definida pelo fundador: 45 min de musculação + 30 min de cardio = 75 min de trabalho efetivo. Os ~15 min restantes até 90 min cobrem aquecimento geral, transição entre atividades e deslocamento dentro da academia. Isso é o alvo 'ideal' quando cardio e musculação acontecem no mesmo dia — não um mínimo nem um máximo rígido, e sim o que o motor assume quando o usuário não informa um valor próprio."
+  },
+
+  "setsPerMinuteModel": {
+    "avgMinutesPerWorkingSet": 3,
+    "warmupOverheadMinutesPerSession": 10,
+    "formula": "maxSetsPerSession = floor((sessionMinutesForMusculacao - warmupOverheadMinutesPerSession) / avgMinutesPerWorkingSet)",
+    "example": "Com sessionMinutesForMusculacao = 45 (a referência padrão): maxSetsPerSession = floor((45-10)/3) = 11 séries.",
+    "note": "3 min/série (execução + descanso) é uma média grosseira entre exercícios compostos (mais descanso, 2-3min) e isoladores (menos descanso, 60-90s). O overhead de aquecimento é fixo por sessão, não por série. Ajustar com dados reais de duração de sessão reportada nos check-ins — ver openQuestions."
+  },
+
+  "sessionMinutesResolution": [
+    "1. Se o usuário não informar sessionMinutes, assume-se o referenceSessionBudget (45 min musculação, +30 min se houver cardio no mesmo dia).",
+    "2. maxSetsPerSession (setsPerMinuteModel) é o teto de séries somando TODOS os grupos musculares trabalhados naquela sessão — não por grupo.",
+    "3. Se o volume alocado pro dia (via training-volume-landmarks.json / activity-priority-rules.json) ultrapassar maxSetsPerSession, e musculação for rank 1: corta-se primeiro o excesso acima do MEV (a parte 'MEV → MAV' é a que sacrifica primeiro) antes de cortar abaixo do MEV.",
+    "4. Se mesmo cortando até o MEV o volume do dia não cabe em maxSetsPerSession: o motor sinaliza ao usuário que o tempo disponível é insuficiente pro número de dias/grupos escolhidos, e sugere aumentar sessionMinutes, trocar pra um split que distribua os grupos em mais dias, ou aumentar daysAvailable.",
+    "5. Quando cardio e musculação acontecem no mesmo dia e o tempo total informado for menor que a soma das duas referências (75min), a atividade rank 1 (ver activity-priority-rules.json) recebe sua fatia de tempo integral primeiro; a atividade de rank inferior fica com o que restar."
+  ],
+
+  "openQuestions": [
+    "avgMinutesPerWorkingSet=3 e warmupOverheadMinutesPerSession=10 são estimativas de bom senso, não validadas — calibrar com dados reais reportados nos check-ins (ex: usuário reporta que a sessão real durou X min pra Y séries).",
+    "O modelo trata 'série' como unidade de tempo uniforme, mas uma série de 20 reps de isolador não custa o mesmo tempo que uma série pesada de composto — refinamento futuro seria ter avgMinutesPerWorkingSet por tipo de exercício, o que depende do banco de exercícios (ainda não construído).",
+    "A regra 5 (fatiar o tempo entre cardio e musculação no mesmo dia) assume que o motor sabe que as duas acontecem no mesmo dia — isso depende de agendamento por dia da semana, que ainda não é coletado no cadastro (mesmo gap já listado em activity-priority-rules.json / schedulingNote)."
+  ]
+}

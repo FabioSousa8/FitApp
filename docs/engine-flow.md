@@ -14,6 +14,8 @@
    - 6 dias → PPL 2x
 
 4. **Alocação de volume** → para cada grupo muscular, pega o MEV do nível (`training-volume-landmarks.json`) como ponto de partida do mesociclo, distribui entre os dias do split escolhido. O teto (MAV normal, ou o limite de `activity-priority-rules.json` quando aplicável) depende do passo 2.
+   - Depois de alocado, o total de séries de cada dia passa pelo teto de tempo (`session-time-rules.json`): `sessionMinutes` (45 min de musculação como referência, se o usuário não informar outro valor) converte em `maxSetsPerSession` via `avgMinutesPerWorkingSet`. Se o volume do dia ultrapassar esse teto, corta-se primeiro o excesso acima do MEV antes de cortar abaixo dele — e se nem no MEV couber, o motor sinaliza que o tempo disponível é insuficiente pro split/dias escolhidos.
+   - Quando cardio e musculação acontecem no mesmo dia, o orçamento de referência é 45 min musculação + 30 min cardio (até ~1h30 no total com aquecimento/transição); a atividade rank 1 recebe sua fatia integral primeiro.
 
 5. **Seleção de exercícios** → banco curado (fora do escopo destes arquivos, ainda não construído) filtrado por equipamento disponível e limitações reportadas (ex: joelho sensível remove agachamento livre pesado da lista). Quando o objetivo é `maintenance_support`, prefere exercícios de menor custo de recuperação (ver `exerciseSelectionNote` em `activity-priority-rules.json`).
 
@@ -25,6 +27,6 @@
 
 ## Pendências conhecidas
 
-- **Tempo por sessão (`sessionMinutes`)** ainda não limita quantas séries/exercícios cabem numa sessão curta — só o volume semanal total é decidido, não a distribuição por sessão. Ver discussão em aberto.
-- **Agendamento por dia da semana**: o motor ainda não sabe em que dias a pessoa faz cada atividade, só a frequência total — então não consegue evitar agendar musculação pesada de pernas no dia anterior a um jogo, por exemplo (`schedulingNote` em `activity-priority-rules.json`).
-- **Banco de exercícios** com seleção fina por atividade de suporte (ex: exercícios de prevenção de lesão específicos por esporte) ainda não existe.
+- **Tempo por sessão (`sessionMinutes`)**: a regra de conversão tempo → teto de séries já existe (`session-time-rules.json`), mas `simulate-engine.js` ainda não a aplica — hoje o simulador só mostra os números semanais de MEV/MAV/MRV por grupo (referência), sem distribuir isso em séries por dia nem checar o teto de tempo. Falta ligar essa regra na simulação (e depois num motor de verdade).
+- **Agendamento por dia da semana**: o motor ainda não sabe em que dias a pessoa faz cada atividade, só a frequência total — então não consegue evitar agendar musculação pesada de pernas no dia anterior a um jogo, nem fatiar o tempo entre cardio e musculação quando caem no mesmo dia com precisão (`schedulingNote` em `activity-priority-rules.json`, regra 5 de `session-time-rules.json`).
+- **Banco de exercícios** com seleção fina por atividade de suporte (ex: exercícios de prevenção de lesão específicos por esporte) ainda não existe. Também é o que permitiria ter `avgMinutesPerWorkingSet` por tipo de exercício em vez de uma média única.
