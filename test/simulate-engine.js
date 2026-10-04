@@ -17,33 +17,71 @@ const progression = loadData("progression-rules.json");
 const activityPriority = loadData("activity-priority-rules.json");
 const sessionTimeRules = loadData("session-time-rules.json");
 const exerciseBank = loadData("exercise-bank.json");
+const splitStyleRules = loadData("split-style-rules.json");
 const personas = JSON.parse(fs.readFileSync(path.join(__dirname, "test-personas.json"), "utf8")).personas;
 
-// --- 1. Seleção de split baseada em dias disponíveis ---
-function selectSplit(daysAvailable) {
-  if (daysAvailable <= 3) return { name: "Full Body / Upper-Lower alternado", days: buildDays(daysAvailable, ["fullbody"]) };
-  if (daysAvailable === 4) return { name: "Upper/Lower 2x", days: ["upper", "lower", "upper", "lower"] };
-  if (daysAvailable === 5) return { name: "Upper/Lower + PPL híbrido", days: ["upper", "lower", "push", "pull", "legs"] };
-  return { name: "PPL 2x", days: ["push", "pull", "legs", "push", "pull", "legs"] };
-}
-function buildDays(n, base) {
-  const days = [];
-  for (let i = 0; i < n; i++) days.push(base[0] + "_" + (i + 1));
-  return days;
+// --- 1. Seleção de split (split-style-rules.json) ---
+// Não existe UM estilo certo por quantidade de dias: cada estilo (FB, FBEOD, U/L,
+// PPL/ABC, ABCD, ABCDE/Bro Split, híbrido) define um ciclo de tipos de dia, e o
+// motor filtra os que cabem em daysAvailable, sugere um default pela combinação
+// nível + (musculação é rank 1?), e sempre expõe as outras opções viáveis junto —
+// nunca fecha numa resposta só (ver selectionGuidance em split-style-rules.json).
+const dayMuscleMap = splitStyleRules.dayMuscleMap;
+
+function profileKey(isRank1, level) {
+  return isRank1 ? `rank1_${level}` : "nonRank1_qualquerNivel";
 }
 
-// Quais grupos cada tipo de dia trabalha (simplificado p/ simulação).
-// A ordem dentro de cada lista já aproxima a alternância empurra/puxa.
-const dayMuscleMap = {
-  fullbody: ["chest", "backLats", "quads", "hamstrings", "sideDelts", "biceps", "triceps"],
-  upper: ["chest", "backLats", "backThickness", "sideDelts", "rearDelts", "biceps", "triceps"],
-  lower: ["quads", "hamstrings", "glutes", "calves", "abs"],
-  push: ["chest", "frontDelts", "sideDelts", "triceps"],
-  pull: ["backLats", "backThickness", "rearDelts", "biceps"],
-  legs: ["quads", "hamstrings", "glutes", "calves"],
-};
+function viableStyleEntries(daysAvailable) {
+  return Object.entries(splitStyleRules.styles).filter(([, s]) => s.cycle.length <= daysAvailable);
+}
+
+function isIdealFit(style, daysAvailable) {
+  const [lo, hi] = style.idealDaysRange;
+  return daysAvailable >= lo && daysAvailable <= hi;
+}
+
+function pickSplitStyle(daysAvailable, level, isRank1) {
+  const guidance = splitStyleRules.selectionGuidance;
+  const order = guidance.preferredOrderByProfile[profileKey(isRank1, level)] || guidance.preferredOrderByProfile.nonRank1_qualquerNivel;
+  const viable = new Map(viableStyleEntries(daysAvailable));
+
+  const idealMatches = order.filter((key) => viable.has(key) && isIdealFit(viable.get(key), daysAvailable));
+  const rest = order.filter((key) => viable.has(key) && !idealMatches.includes(key));
+  let orderedViable = idealMatches.length > 0 ? idealMatches.concat(rest) : order.filter((key) => viable.has(key));
+  if (orderedViable.length === 0) orderedViable = ["full_body"]; // fallback absoluto, cycle.length 1 sempre cabe
+
+  const chosenKey = orderedViable[0];
+  const chosenStyle = viable.get(chosenKey) || splitStyleRules.styles[chosenKey];
+  const alternativeKeys = orderedViable.slice(1, 3);
+  return {
+    key: chosenKey,
+    style: chosenStyle,
+    days: buildWeekDays(chosenStyle.cycle, daysAvailable),
+    alternatives: alternativeKeys.map((k) => splitStyleRules.styles[k].label),
+  };
+}
+
+// Repete o ciclo de tipos de dia do estilo até preencher daysAvailable; numera
+// (#1, #2...) só o tipo de dia que de fato se repete na semana, pra não poluir
+// o label quando o ciclo cabe exatamente (ex: ABCD em 4 dias).
+function buildWeekDays(cycle, daysAvailable) {
+  const totalOccurrence = {};
+  for (let i = 0; i < daysAvailable; i++) {
+    const t = cycle[i % cycle.length];
+    totalOccurrence[t] = (totalOccurrence[t] || 0) + 1;
+  }
+  const occurrence = {};
+  const days = [];
+  for (let i = 0; i < daysAvailable; i++) {
+    const t = cycle[i % cycle.length];
+    occurrence[t] = (occurrence[t] || 0) + 1;
+    days.push(totalOccurrence[t] > 1 ? `${t}#${occurrence[t]}` : t);
+  }
+  return days;
+}
 function dayType(dayLabel) {
-  return dayLabel.split("_")[0];
+  return dayLabel.split("#")[0];
 }
 
 // --- 2. Objetivo via ranking de atividades (activity-priority-rules.json) ---
@@ -147,7 +185,9 @@ function pickForGroup(group, exerciseCount, availableEquipment, limitationTags, 
 // --- 6. Monta o protocolo completo de uma persona ---
 function buildProtocol(persona) {
   const objective = resolveActivityObjective(persona);
-  const split = selectSplit(persona.daysAvailable);
+  const isRank1ForSplit = objective.isRank1 || !objective.musc;
+  const splitPick = pickSplitStyle(persona.daysAvailable, persona.level, isRank1ForSplit);
+  const split = { name: splitPick.style.label, days: splitPick.days, alternatives: splitPick.alternatives };
   const groupsHit = new Set();
   split.days.forEach((d) => dayMuscleMap[dayType(d)].forEach((g) => groupsHit.add(g)));
 
@@ -176,9 +216,27 @@ function buildProtocol(persona) {
   const { avgMinutesPerWorkingSet, generalWarmupMinutesPerSession } = sessionTimeRules.setsPerMinuteModel;
   const budgetMinutes = Math.max(0, persona.sessionMinutes - generalWarmupMinutesPerSession);
 
+  // Quando um tipo de dia se repete na semana (ex: fullbody#1/#2/#3, ou upper#1/#2),
+  // dayMuscleMap lista os grupos sempre na mesma ordem — sem rotação, o corte por
+  // tempo (fase 1 abaixo) sempre sacrificaria os MESMOS grupos no fim da lista em
+  // TODAS as repetições (ex: full body com pouco tempo nunca treinaria perna/abdômen
+  // a semana inteira). Rotacionar o ponto de partida a cada ocorrência garante que,
+  // ao longo da semana, a prioridade passe por mais grupos possíveis antes de repetir.
+  const dayTypeOccurrences = {};
+  split.days.forEach((d) => {
+    const t = dayType(d);
+    dayTypeOccurrences[t] = (dayTypeOccurrences[t] || 0) + 1;
+  });
+
   const usedIds = new Set();
   const dayPlans = split.days.map((dayLabel) => {
-    const groups = dayMuscleMap[dayType(dayLabel)].filter((g) => groupsHit.has(g));
+    const t = dayType(dayLabel);
+    const baseGroups = dayMuscleMap[t].filter((g) => groupsHit.has(g));
+    const totalOccurrences = dayTypeOccurrences[t];
+    const occMatch = dayLabel.match(/#(\d+)$/);
+    const occurrence = occMatch ? parseInt(occMatch[1], 10) : 1;
+    const rotateBy = totalOccurrences > 1 ? Math.floor(((occurrence - 1) * baseGroups.length) / totalOccurrences) : 0;
+    const groups = baseGroups.slice(rotateBy).concat(baseGroups.slice(0, rotateBy));
     let items = [];
     groups.forEach((g) => {
       const info = groupInfo[g];
@@ -276,6 +334,9 @@ personas.forEach((p) => {
   }
 
   console.log(`Split escolhido: ${protocol.split.name} (${protocol.split.days.join(" | ")})`);
+  if (protocol.split.alternatives && protocol.split.alternatives.length) {
+    console.log(`  (também viável pro perfil: ${protocol.split.alternatives.join(", ")} — não é resposta fechada, só o default sugerido)`);
+  }
   console.log(`Teto de tempo: ${p.sessionMinutes}min → orçamento de trabalho ${protocol.budgetMinutes}min após aquecimento`);
 
   protocol.dayPlans.forEach((day) => {

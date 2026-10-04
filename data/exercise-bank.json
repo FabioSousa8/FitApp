@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "description": "Banco de exercícios do motor: cada exercício é tipado por grupo muscular primário/secundário (chaves de training-volume-landmarks.json), papel (chaves de progression-rules.json/exerciseRoleProgramming), equipamento, tags de contraindicação (vocabulário fechado, ver exercise-selection-rules.json) e custo de recuperação (usado quando o objetivo é maintenance_support).",
-  "taggingGuidance": "contraindicationTags é pra marcar a variação de MAIOR risco pra aquela articulação, não todo exercício que a envolve — marcar tudo quebra o grupo inteiro pro usuário com aquela limitação (bug real encontrado e corrigido: todo exercício de quadríceps estava marcado com knee_sensitive, incluindo leg press e cadeira extensora, que na prática são as opções mais indicadas justamente pra joelho sensível). Regra prática: squat livre profundo/afundo/step-up = marca; leg press/cadeira extensora/goblet squat = não marca, a não ser que o exercício específico seja reconhecidamente agressivo pra aquela articulação.",
+  "taggingGuidance": "contraindicationTags é pra marcar a variação de MAIOR risco pra aquela articulação, não todo exercício que a envolve — marcar tudo quebra o grupo inteiro pro usuário com aquela limitação (bug real encontrado e corrigido: todo exercício de quadríceps estava marcado com knee_sensitive, incluindo leg press e cadeira extensora, que na prática são as opções mais indicadas justamente pra joelho sensível). Regra prática: squat livre profundo/afundo/step-up = marca; leg press/cadeira extensora/goblet squat = não marca, a não ser que o exercício específico seja reconhecidamente agressivo pra aquela articulação. Mesmo princípio aplicado aos exercícios de abdômen: prancha, prancha lateral, prancha com toque no ombro e pallof press são isométricos/anti-rotação (sem flexão de coluna sob carga) e não deveriam carregar lower_back_sensitive — são, na prática, exercícios comumente usados em reabilitação de lombar, não contraindicados para ela. O tag ficou só nos exercícios que de fato envolvem flexão de coluna sob carga ou padrão de leg raise com puxada lombar (crunch, elevação de pernas, abdominal infra/supra, woodchop, ab wheel).",
   "muscleGroups": [
     "abs",
     "backLats",
@@ -2724,9 +2724,7 @@
       "equipment": [
         "bodyweight"
       ],
-      "contraindicationTags": [
-        "lower_back_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2767,9 +2765,7 @@
       "equipment": [
         "cable"
       ],
-      "contraindicationTags": [
-        "lower_back_sensitive"
-      ],
+      "contraindicationTags": [],
       "recoveryCost": "low"
     },
     {
@@ -2825,7 +2821,6 @@
         "bodyweight"
       ],
       "contraindicationTags": [
-        "lower_back_sensitive",
         "shoulder_sensitive"
       ],
       "recoveryCost": "low"
@@ -3178,7 +3173,6 @@
         "bodyweight"
       ],
       "contraindicationTags": [
-        "lower_back_sensitive",
         "shoulder_sensitive"
       ],
       "recoveryCost": "low"

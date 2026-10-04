@@ -15,6 +15,7 @@ data/
   supplementation-rules.json       # Classificação de suplementos (essencial/opcional/desnecessário) + filtro de segurança
   activity-priority-rules.json     # Ranking de atividades físicas do cadastro → objetivo da musculação e teto de volume semanal
   session-time-rules.json          # Tempo disponível por sessão → teto de séries por sessão (45min musculação / 30min cardio de referência)
+  split-style-rules.json           # Biblioteca de estilos de divisão (FB, FBEOD, U/L, PPL/ABC, ABCD, ABCDE/Bro Split, híbrido) e como escolher um default por dias/nível/objetivo sem fechar nas outras opções
   exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
   exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
 test/
@@ -32,7 +33,11 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios. Ao cortar exercício por falta de tempo, o motor prioriza manter os grupos que não têm nenhum outro exercício estimulando eles secundariamente naquele dia (ex: deltoide posterior) e corta primeiro os que já são estimulados por outro composto (ex: tríceps via supino).
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
+
+O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL/ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única.
+
+Ao cortar exercício por falta de tempo, o motor prioriza manter os grupos que não têm nenhum outro exercício estimulando eles secundariamente naquele dia (ex: deltoide posterior) e corta primeiro os que já são estimulados por outro composto (ex: tríceps via supino). Quando o mesmo tipo de dia se repete na semana (ex: Full Body 3x), a prioridade de grupo roda a cada repetição, pra não sacrificar sempre os mesmos grupos nos dias com pouco tempo.
 
 Decisão de produto: o motor não atribui dia da semana aos treinos — gera sessões rotativas (Upper A/B, Lower A/B...) que o usuário encaixa na própria rotina, não um calendário fixo.
 
@@ -41,3 +46,4 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem) — fica pra quando desenharmos as telas.
 - Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
+- Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.

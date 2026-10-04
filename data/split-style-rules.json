@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "description": "Biblioteca de estilos de divisão de treino (splits). Cada estilo define um ciclo de tipos de dia que se repete até preencher os dias disponíveis na semana — não existe UM estilo certo por quantidade de dias, existem estilos viáveis, e o motor sugere um default sem fechar as outras opções.",
+
+  "muscleGroupCoverage": "Todos os estilos abaixo cobrem os 13 grupos de training-volume-landmarks.json pelo menos 1x por ciclo completo (um ciclo = passar por todos os tipos de dia do estilo uma vez).",
+
+  "dayMuscleMap": {
+    "fullbody": ["chest", "backLats", "backThickness", "frontDelts", "sideDelts", "rearDelts", "biceps", "triceps", "quads", "hamstrings", "glutes", "calves", "abs"],
+    "upper": ["chest", "backLats", "backThickness", "frontDelts", "sideDelts", "rearDelts", "biceps", "triceps"],
+    "lower": ["quads", "hamstrings", "glutes", "calves", "abs"],
+    "push": ["chest", "frontDelts", "sideDelts", "triceps"],
+    "pull": ["backLats", "backThickness", "rearDelts", "biceps"],
+    "legs": ["quads", "hamstrings", "glutes", "calves", "abs"],
+    "a_peito_triceps": ["chest", "triceps"],
+    "b_costas_biceps": ["backLats", "backThickness", "biceps"],
+    "c_pernas": ["quads", "hamstrings", "glutes", "calves"],
+    "d_ombro_abdomen": ["frontDelts", "sideDelts", "rearDelts", "abs"],
+    "a_peito": ["chest"],
+    "b_costas": ["backLats", "backThickness"],
+    "d_ombro": ["frontDelts", "sideDelts", "rearDelts"],
+    "e_braco_abdomen": ["biceps", "triceps", "abs"]
+  },
+
+  "styles": {
+    "full_body": {
+      "label": "Full Body (FB)",
+      "cycle": ["fullbody"],
+      "idealDaysRange": [1, 3],
+      "suitsLevel": ["beginner", "intermediate", "advanced"],
+      "notes": "Maior frequência por grupo (todo dia de treino passa por tudo), volume menor por sessão. Bom pra iniciante (mais repetição = aprendizado motor mais rápido), pra quem tem poucos dias, ou quando musculação não é a atividade rank 1 (ver activity-priority-rules.json) — frequência ajuda mais a manter do que volume concentrado."
+    },
+    "full_body_eod": {
+      "label": "Full Body Every Other Day (FBEOD)",
+      "cycle": ["fullbody"],
+      "idealDaysRange": [3, 4],
+      "suitsLevel": ["beginner", "intermediate"],
+      "notes": "Mesmo conteúdo do Full Body — a diferença é só espaçar as sessões com pelo menos 1 dia de descanso entre elas, em vez de treinar em dias seguidos.",
+      "schedulingGuidance": "Como o motor não atribui dia da semana (ver schedulingNote em activity-priority-rules.json), o espaçamento 'a cada dois dias' é orientação pro usuário encaixar na própria rotina, não uma regra que o motor aplica sozinho."
+    },
+    "upper_lower": {
+      "label": "Upper / Lower (U/L)",
+      "cycle": ["upper", "lower"],
+      "idealDaysRange": [4, 5],
+      "suitsLevel": ["beginner", "intermediate", "advanced"],
+      "notes": "Divisão em 2 — membros superiores de um lado, inferiores do outro. Cada grupo é treinado ~2x/semana num ciclo de 4 dias. Default sólido pra praticamente qualquer perfil."
+    },
+    "ppl": {
+      "label": "Push / Pull / Legs (PPL)",
+      "aliasOf": null,
+      "cycle": ["push", "pull", "legs"],
+      "idealDaysRange": [3, 6],
+      "suitsLevel": ["intermediate", "advanced"],
+      "notes": "Agrupa por função do movimento (empurrar / puxar / pernas) em vez de região do corpo. Em 3 dias dá 1x/semana por grupo; em 6 dias (PPL 2x) dá 2x/semana com mais volume concentrado por sessão."
+    },
+    "abc": {
+      "label": "ABC",
+      "aliasOf": "ppl",
+      "cycle": ["push", "pull", "legs"],
+      "idealDaysRange": [3, 6],
+      "suitsLevel": ["intermediate", "advanced"],
+      "notes": "Nome mais comum no Brasil pro mesmo agrupamento do PPL (A=empurrar, B=puxar, C=pernas) na divisão balanceada mais usada. Ver openQuestions sobre a variação Peito+Tríceps / Costas+Bíceps / Pernas+Ombro, que também é chamada de ABC em algumas academias."
+    },
+    "abcd": {
+      "label": "ABCD",
+      "cycle": ["a_peito_triceps", "b_costas_biceps", "c_pernas", "d_ombro_abdomen"],
+      "idealDaysRange": [4, 4],
+      "suitsLevel": ["intermediate", "advanced"],
+      "notes": "4 dias, mais granular que Upper/Lower: peito+tríceps, costas+bíceps, pernas, ombro+abdômen — cada grupo principal já começa a ganhar um dia mais dedicado sem ir direto pro bro split."
+    },
+    "abcde_bro_split": {
+      "label": "ABCDE / Bro Split",
+      "cycle": ["a_peito", "b_costas", "c_pernas", "d_ombro", "e_braco_abdomen"],
+      "idealDaysRange": [5, 6],
+      "suitsLevel": ["advanced"],
+      "notes": "Um grupo muscular (ou cluster pequeno) por dia, frequência de 1x/semana por grupo mas o maior volume/variedade de exercício concentrado nesse dia. Frequência 1x/semana está fora do que a maioria dos estudos atuais considera ótimo pra hipertrofia (2x/semana costuma produzir mais) — mas é um estilo tradicional, muita gente treina assim por preferência/hábito/identificação, e continua sendo uma opção válida, não descartada por 'não ser o ideal científico'."
+    },
+    "ul_ppl_hybrid": {
+      "label": "Upper/Lower + PPL híbrido",
+      "cycle": ["upper", "lower", "push", "pull", "legs"],
+      "idealDaysRange": [5, 5],
+      "suitsLevel": ["intermediate", "advanced"],
+      "notes": "5 dias misturando as duas lógicas — meio-termo entre a frequência do Upper/Lower e a especialização do PPL. Alguns grupos acabam com frequência maior que outros dentro do mesmo ciclo (ex: peito aparece no Upper E no Push)."
+    }
+  },
+
+  "selectionGuidance": {
+    "approach": "O motor não decide UM estilo fechado — calcula quais estilos são viáveis pros dias disponíveis do usuário (cycle.length <= daysAvailable) e sugere um default dentro dos viáveis, com base em nível e se musculação é a atividade rank 1 (ver activity-priority-rules.json). As outras opções viáveis continuam sendo mostradas, nunca escondidas — o usuário pode preferir qualquer uma.",
+    "idealFitFirst": "Prioriza estilos cujo idealDaysRange cobre daysAvailable; só cai pra 'qualquer estilo mecanicamente viável' se nenhum dos ideais encaixar (ex: 2 dias disponíveis com um perfil que preferia ABCD).",
+    "preferredOrderByProfile": {
+      "nonRank1_qualquerNivel": ["full_body", "full_body_eod", "upper_lower", "abc", "ul_ppl_hybrid", "abcd", "abcde_bro_split"],
+      "rank1_beginner": ["full_body_eod", "full_body", "upper_lower", "abc", "abcd", "ul_ppl_hybrid", "abcde_bro_split"],
+      "rank1_intermediate": ["upper_lower", "abcd", "abc", "ul_ppl_hybrid", "full_body_eod", "full_body", "abcde_bro_split"],
+      "rank1_advanced": ["abcde_bro_split", "abcd", "ul_ppl_hybrid", "abc", "upper_lower", "full_body_eod", "full_body"]
+    },
+    "reasoning": "Quando musculação não é rank 1, frequência pesa mais que especialização (suporte se beneficia de manutenção regular, não de volume concentrado). Iniciante também pesa pra frequência (aprendizado motor). Avançado com musculação rank 1 pesa pra especialização (mais capacidade de recuperação, já sabe executar os exercícios, se beneficia de mais volume/variedade por grupo)."
+  },
+
+  "openQuestions": [
+    "ABC tem pelo menos duas convenções reais diferentes nas academias brasileiras: (a) igual ao PPL balanceado (usado aqui como default) e (b) Peito+Tríceps / Costas+Bíceps / Pernas+Ombro+Abdômen. Modelei pela (a) por ser mais balanceada, mas isso é uma escolha, não uma verdade única — se o usuário já treina na convenção (b), o motor devia reconhecer isso em vez de forçar a (a).",
+    "Não existe ainda um campo no cadastro perguntando qual estilo a pessoa já treina/prefere hoje. Isso deveria pesar tanto ou mais que a regra de nível/objetivo — é o mesmo princípio de ancorar em currentRoutine já usado em exercise-selection-rules.json.",
+    "abcde_bro_split sempre agrupa pernas inteira num dia só (quads+hamstrings+glutes+calves) — existe uma variação mais extrema (ex: dia de quadríceps separado de dia de posterior) que não foi modelada.",
+    "idealDaysRange de cada estilo é uma estimativa própria de bom senso, não uma convenção fechada da literatura — calibrar com o que os usuários reais escolhem/preferem."
+  ]
+}
