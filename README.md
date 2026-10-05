@@ -15,7 +15,7 @@ data/
   supplementation-rules.json       # Classificação de suplementos (essencial/opcional/desnecessário) + filtro de segurança
   activity-priority-rules.json     # Ranking de atividades físicas do cadastro → objetivo da musculação e teto de volume semanal
   session-time-rules.json          # Tempo disponível por sessão → teto de séries por sessão (45min musculação / 30min cardio de referência)
-  split-style-rules.json           # Biblioteca de estilos de divisão (FB, FBEOD, U/L, PPL/ABC, ABCD, ABCDE/Bro Split, híbrido) e como escolher um default por dias/nível/objetivo sem fechar nas outras opções
+  split-style-rules.json           # Biblioteca de estilos de divisão (FB, FBEOD, U/L, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido) e como escolher um default por dias/nível/objetivo sem fechar nas outras opções
   exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
   exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
 test/
@@ -35,7 +35,7 @@ node test/simulate-engine.js
 
 Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
 
-O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL/ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única.
+O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única. PPL e ABC são dois estilos de 3 dias DIFERENTES, não o mesmo nome em dois idiomas: PPL agrupa por função do movimento (empurrar/puxar/pernas), ABC agrupa por músculo principal + sinergista (peito+tríceps / costas+bíceps / pernas+ombro+abdômen).
 
 Ao cortar exercício por falta de tempo, o motor prioriza manter os grupos que não têm nenhum outro exercício estimulando eles secundariamente naquele dia (ex: deltoide posterior) e corta primeiro os que já são estimulados por outro composto (ex: tríceps via supino). Quando o mesmo tipo de dia se repete na semana (ex: Full Body 3x), a prioridade de grupo roda a cada repetição, pra não sacrificar sempre os mesmos grupos nos dias com pouco tempo.
 

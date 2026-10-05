@@ -14,6 +14,7 @@
     "a_peito_triceps": ["chest", "triceps"],
     "b_costas_biceps": ["backLats", "backThickness", "biceps"],
     "c_pernas": ["quads", "hamstrings", "glutes", "calves"],
+    "c_pernas_ombro_abdomen": ["quads", "hamstrings", "glutes", "calves", "frontDelts", "sideDelts", "rearDelts", "abs"],
     "d_ombro_abdomen": ["frontDelts", "sideDelts", "rearDelts", "abs"],
     "a_peito": ["chest"],
     "b_costas": ["backLats", "backThickness"],
@@ -46,19 +47,17 @@
     },
     "ppl": {
       "label": "Push / Pull / Legs (PPL)",
-      "aliasOf": null,
       "cycle": ["push", "pull", "legs"],
       "idealDaysRange": [3, 6],
       "suitsLevel": ["intermediate", "advanced"],
-      "notes": "Agrupa por função do movimento (empurrar / puxar / pernas) em vez de região do corpo. Em 3 dias dá 1x/semana por grupo; em 6 dias (PPL 2x) dá 2x/semana com mais volume concentrado por sessão."
+      "notes": "Agrupa por FUNÇÃO DO MOVIMENTO, não por músculo principal: dia de empurrar leva peito+ombro+tríceps juntos (todo mundo que empurra), dia de puxar leva costas+bíceps, pernas fica sozinho. Em 3 dias dá 1x/semana por grupo; em 6 dias (PPL 2x) dá 2x/semana."
     },
     "abc": {
       "label": "ABC",
-      "aliasOf": "ppl",
-      "cycle": ["push", "pull", "legs"],
+      "cycle": ["a_peito_triceps", "b_costas_biceps", "c_pernas_ombro_abdomen"],
       "idealDaysRange": [3, 6],
-      "suitsLevel": ["intermediate", "advanced"],
-      "notes": "Nome mais comum no Brasil pro mesmo agrupamento do PPL (A=empurrar, B=puxar, C=pernas) na divisão balanceada mais usada. Ver openQuestions sobre a variação Peito+Tríceps / Costas+Bíceps / Pernas+Ombro, que também é chamada de ABC em algumas academias."
+      "suitsLevel": ["beginner", "intermediate", "advanced"],
+      "notes": "Divisão diferente do PPL, mesmo sendo 3 dias também: agrupa por MÚSCULO PRINCIPAL + sinergista direto, não por função do movimento. A = peito+tríceps, B = costas+bíceps, C = pernas+ombro+abdômen (ombro entra com pernas, não com peito). Convenção mais comum nas academias brasileiras — duas misturas de treino superior e uma de inferior, não 'empurrar/puxar/pernas'."
     },
     "abcd": {
       "label": "ABCD",
@@ -87,16 +86,16 @@
     "approach": "O motor não decide UM estilo fechado — calcula quais estilos são viáveis pros dias disponíveis do usuário (cycle.length <= daysAvailable) e sugere um default dentro dos viáveis, com base em nível e se musculação é a atividade rank 1 (ver activity-priority-rules.json). As outras opções viáveis continuam sendo mostradas, nunca escondidas — o usuário pode preferir qualquer uma.",
     "idealFitFirst": "Prioriza estilos cujo idealDaysRange cobre daysAvailable; só cai pra 'qualquer estilo mecanicamente viável' se nenhum dos ideais encaixar (ex: 2 dias disponíveis com um perfil que preferia ABCD).",
     "preferredOrderByProfile": {
-      "nonRank1_qualquerNivel": ["full_body", "full_body_eod", "upper_lower", "abc", "ul_ppl_hybrid", "abcd", "abcde_bro_split"],
-      "rank1_beginner": ["full_body_eod", "full_body", "upper_lower", "abc", "abcd", "ul_ppl_hybrid", "abcde_bro_split"],
-      "rank1_intermediate": ["upper_lower", "abcd", "abc", "ul_ppl_hybrid", "full_body_eod", "full_body", "abcde_bro_split"],
-      "rank1_advanced": ["abcde_bro_split", "abcd", "ul_ppl_hybrid", "abc", "upper_lower", "full_body_eod", "full_body"]
+      "nonRank1_qualquerNivel": ["full_body", "full_body_eod", "upper_lower", "abc", "ppl", "ul_ppl_hybrid", "abcd", "abcde_bro_split"],
+      "rank1_beginner": ["full_body_eod", "full_body", "upper_lower", "abc", "ppl", "abcd", "ul_ppl_hybrid", "abcde_bro_split"],
+      "rank1_intermediate": ["upper_lower", "abcd", "abc", "ppl", "ul_ppl_hybrid", "full_body_eod", "full_body", "abcde_bro_split"],
+      "rank1_advanced": ["abcde_bro_split", "abcd", "ul_ppl_hybrid", "abc", "ppl", "upper_lower", "full_body_eod", "full_body"]
     },
     "reasoning": "Quando musculação não é rank 1, frequência pesa mais que especialização (suporte se beneficia de manutenção regular, não de volume concentrado). Iniciante também pesa pra frequência (aprendizado motor). Avançado com musculação rank 1 pesa pra especialização (mais capacidade de recuperação, já sabe executar os exercícios, se beneficia de mais volume/variedade por grupo)."
   },
 
   "openQuestions": [
-    "ABC tem pelo menos duas convenções reais diferentes nas academias brasileiras: (a) igual ao PPL balanceado (usado aqui como default) e (b) Peito+Tríceps / Costas+Bíceps / Pernas+Ombro+Abdômen. Modelei pela (a) por ser mais balanceada, mas isso é uma escolha, não uma verdade única — se o usuário já treina na convenção (b), o motor devia reconhecer isso em vez de forçar a (a).",
+    "ABC pode variar um pouco de academia pra academia em qual grupo exatamente entra em cada dia (ex: ombro às vezes aparece com peito em vez de pernas) — o modelo aqui usa a convenção mais comum (ombro com pernas), mas não é uma regra fechada da literatura.",
     "Não existe ainda um campo no cadastro perguntando qual estilo a pessoa já treina/prefere hoje. Isso deveria pesar tanto ou mais que a regra de nível/objetivo — é o mesmo princípio de ancorar em currentRoutine já usado em exercise-selection-rules.json.",
     "abcde_bro_split sempre agrupa pernas inteira num dia só (quads+hamstrings+glutes+calves) — existe uma variação mais extrema (ex: dia de quadríceps separado de dia de posterior) que não foi modelada.",
     "idealDaysRange de cada estilo é uma estimativa própria de bom senso, não uma convenção fechada da literatura — calibrar com o que os usuários reais escolhem/preferem."
