@@ -39,6 +39,8 @@ O split não é mais um único estilo fixo por quantidade de dias: o motor conhe
 
 Ao cortar exercício por falta de tempo, o motor prioriza manter os grupos que não têm nenhum outro exercício estimulando eles secundariamente naquele dia (ex: deltoide posterior) e corta primeiro os que já são estimulados por outro composto (ex: tríceps via supino). Quando o mesmo tipo de dia se repete na semana (ex: Full Body 3x), a prioridade de grupo roda a cada repetição, pra não sacrificar sempre os mesmos grupos nos dias com pouco tempo.
 
+Primeira rodada de feedback real de personal trainer já incorporada ao motor: (1) exercícios com troca de carga pesada entre séries (ex: Levantamento Terra, Agachamento Livre barra — tag `highSetupOverhead`) somam +1min/série no cálculo de tempo; (2) quando musculação é a atividade prioridade e outra atividade cai no mesmo dia ANTES dela, o protocolo avisa que isso pode reduzir o estímulo; (3) um novo sinal `trainingConsistency` (contínuo/esporádico), separado do nível autodeclarado, faz o motor preferir equipamento guiado (máquina/smith/cabo) sobre peso livre pra quem treina de forma inconsistente — cobrindo o aluno que entra e sai da academia e se autodeclara "intermediário" sem ter a coordenação de quem treina sem pausas.
+
 Decisão de produto: o motor não atribui dia da semana aos treinos — gera sessões rotativas (Upper A/B, Lower A/B...) que o usuário encaixa na própria rotina, não um calendário fixo.
 
 Pendências conhecidas (ver `docs/engine-flow.md`):
@@ -47,3 +49,5 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
 - Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.
+- Cadastro também ainda não pergunta `trainingConsistency` nem `sameDayAsMusculacao` (campos novos desta rodada de feedback) — a lógica já está no motor, falta a tela.
+- Esperando retorno de outros personal trainers pra validar os 3 ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos).

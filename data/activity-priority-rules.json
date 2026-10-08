@@ -7,7 +7,8 @@
       {
         "rank": "number (1 = mais importante). Definido pelo usuário arrastando a lista no cadastro.",
         "name": "string, texto livre (ex: 'Musculação', 'Cardio', 'Vôlei', 'Jiu-jitsu', 'Corrida')",
-        "frequencyPerWeek": "number, 1-7. Quantos dias por semana a pessoa pratica essa atividade."
+        "frequencyPerWeek": "number, 1-7. Quantos dias por semana a pessoa pratica essa atividade.",
+        "sameDayAsMusculacao": "opcional, 'antes' | 'depois' | null. Só preenchido pra atividades que não são 'Musculação' e costumam cair no mesmo dia dela. Ver sameDayOrderingNote abaixo — não afeta weeklyLoadBudget, só gera um alerta no protocolo."
       }
     ]
   },
@@ -49,6 +50,8 @@
     ]
   },
 
+  "sameDayOrderingNote": "Feedback real de personal trainer: o tempo disponível e SE a pessoa treina musculação antes ou depois da atividade secundária no mesmo dia geralmente impactam o estímulo aplicado (ex: musculação depois de uma corrida longa tende a render menos que musculação fresca) — isso é diferente do knownFlaw acima (que é sobre CONTAGEM de dias pro orçamento de volume). O motor não tenta recalcular volume/RIR a partir disso (efeito de interferência varia demais de pessoa pra pessoa pra virar número fixo) — ele só sinaliza: quando musculação é rank 1 E outra atividade tem sameDayAsMusculacao='antes', o protocolo emite um alerta sugerindo inverter a ordem ou separar os dias, sem fechar isso numa regra automática.",
+
   "exerciseSelectionNote": "Quando a musculação é 'maintenance_support', preferir exercícios de menor custo de recuperação (menos trabalho excêntrico pesado, menos dor muscular tardia) — especialmente nos grupos musculares mais usados pela atividade rank 1. A seleção fina de exercício por atividade (ex: evitar posterior de coxa pesado perto de um jogo de futebol) depende do banco de exercícios, ainda não construído.",
 
   "schedulingNote": "Decisão de produto: o motor NÃO atribui dia da semana aos treinos (não existe 'segunda = Upper A'). Ele gera sessões rotativas (Upper A, Upper B, Lower A, Lower B...) e o usuário encaixa cada uma na semana dele do jeito que fizer sentido pra rotina dele — igual uma ficha de treino impressa normal. Evitar agendar musculação pesada de perna no dia anterior a um jogo é responsabilidade do usuário ao encaixar as sessões, não algo que o motor resolve de forma automática.",
@@ -56,7 +59,8 @@
   "openQuestions": [
     "A regra de corte de volume (tiers acima) é uma estimativa de bom senso, não uma referência científica fechada — ajustar com base em feedback real dos usuários nos check-ins.",
     "Hoje assume-se que existe sempre uma entrada chamada 'Musculação' na lista. Se o usuário não incluir musculação na lista (ex: só cadastrou outras atividades), o motor precisa de uma regra de fallback — ainda não definida.",
-    "O problema de dias sobrepostos descrito em weeklyLoadBudget.knownFlaw ainda não tem solução definitiva, só o stopgapMitigation."
+    "O problema de dias sobrepostos descrito em weeklyLoadBudget.knownFlaw ainda não tem solução definitiva, só o stopgapMitigation.",
+    "sameDayOrderingNote hoje só gera um alerta textual — não ajusta volume, RIR ou progressão. Falta decidir se, com mais dados de check-in, isso deveria virar um ajuste real (ex: RIR-alvo mais conservador no mesociclo) em vez de só um aviso."
   ],
 
   "rankClarification": "Rank é a prioridade DECLARADA pelo usuário pro que ele quer que o motor otimize — não é frequência semanal nem quão 'sério'/competitivo é o envolvimento com a atividade. Caso real: pessoa joga basquete 3x/semana (às vezes recreativo, às vezes competitivo por time amador) mas seu objetivo é saúde/estética, então musculação continua rank 1 mesmo o basquete sendo praticado com seriedade. O cadastro (UI de ranking) precisa deixar claro que é 'o que você quer que a gente priorize', não 'o que você leva mais a sério' — senão o usuário pode ranquear errado."

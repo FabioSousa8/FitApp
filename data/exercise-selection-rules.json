@@ -7,6 +7,7 @@
     "availableEquipment": "lista de equipamento que o usuário tem acesso, coletada no cadastro (pergunta direta: quais destes sua academia/casa tem? — opções de exercise-bank.json/equipmentTypes). Sem resposta, o motor NÃO deve assumir academia completa — assume o mínimo (bodyweight) e sinaliza que precisa dessa resposta.",
     "limitationTags": "lista de tags do vocabulário fechado (exercise-bank.json/contraindicationTagVocabulary), substituindo texto livre — ver migração em test-personas.json",
     "maintenanceSupportGroups": "grupos cujo objetivo é maintenance_support (activity-priority-rules.json) — preferem exercícios de recoveryCost baixo",
+    "trainingConsistency": "'continuo' | 'esporadico', coletado no cadastro — INDEPENDENTE do nível autodeclarado. Ver trainingConsistencyNote abaixo.",
     "maxSetsPerSession": "teto de séries do dia, de session-time-rules.json",
     "currentRoutine": "rotina atual que o usuário reporta no cadastro (exerciseCountByGroup: quantos exercícios por grupo ele já faz hoje). Opcional — null quando o usuário não informa."
   },
@@ -21,12 +22,15 @@
   "selectionAlgorithm": [
     "1. Para cada grupo muscular em targetMuscleGroupsForDay, filtrar exercise-bank.json: primaryMuscleGroup == grupo E nenhuma tag em contraindicationTags intersecta limitationTags E equipment intersecta availableEquipment.",
     "2. Determinar exerciseCount do grupo via exerciseCountFormula (ancorado em currentRoutine quando existir).",
+    "2.5. Se trainingConsistency == 'esporadico', ordenar as opções de cada papel (dentro do que sobrou do filtro acima) pela equipmentComplexityOrder de exercise-bank.json — machine/smith/cable antes de dumbbell/barbell — ANTES de montar o mix de papéis. Isso é um viés de preferência, não um filtro: se o único exercício disponível pro grupo é de barra, ele ainda é escolhido. Ver trainingConsistencyNote.",
     "3. Montar o mix de papéis pra preencher exerciseCount: 1x primary_compound (se existir e sobrou do filtro; senão cai pra secondary_compound) + 1x secondary_compound + o restante em isolation_accessory — usando as faixas de séries de exerciseRoleProgramming (progression-rules.json) por papel escolhido.",
     "4. Se o grupo está em maintenanceSupportGroups, em caso de empate entre duas opções do mesmo papel, preferir a de menor recoveryCost (mesmo critério de exerciseSelectionNote em activity-priority-rules.json).",
     "5. Somar as séries de todos os exercícios escolhidos no dia; se ultrapassar maxSetsPerSession, cortar primeiro os isolation_accessory extras antes de reduzir séries de compostos — mesma ordem de prioridade de sessionMinutesResolution em session-time-rules.json. Dentro dos isolation_accessory, cortar primeiro os de grupos que JÁ recebem estímulo secundário de algum composto mantido no dia (via secondaryMuscleGroups do exercício composto) — ex: tríceps via supino, bíceps via puxada/remada — e proteger por último os grupos sem nenhuma cobertura secundária naquele dia (ex: deltoide posterior, raramente secundário de um composto).",
     "6. Ordenar os exercícios do dia alternando grupos antagonistas quando possível (empurrar/puxar, anterior/posterior) — é o pressuposto que sustenta o modelo de tempo por série de session-time-rules.json (o 'descanso' de um exercício vira a execução do outro).",
     "7. Se um grupo fica sem NENHUM exercício depois do filtro de limitationTags + availableEquipment (ex: usuário sem acesso a máquina nenhuma e com múltiplas limitações), o motor sinaliza esse gap ao usuário em vez de pular o grupo silenciosamente."
   ],
+
+  "trainingConsistencyNote": "Feedback real de personal trainer: um perfil muito comum é o aluno que entra e sai da academia (treina 1-2 meses, para por vários meses, volta do zero) e se autodeclara 'intermediário' porque já treinou antes — mas não tem a coordenação motora de quem treina de forma contínua, então nível autodeclarado sozinho pode liberar peso livre pra quem não tem vivência pra executar com segurança. trainingConsistency captura isso como um sinal SEPARADO do level: level continua decidindo volume (training-volume-landmarks.json, é sobre capacidade de recuperação), trainingConsistency decide só o viés de equipamento dentro do que já é permitido pelas limitações e pelo que a pessoa tem disponível — nunca bloqueia um grupo, só reordena a preferência dentro dele.",
 
   "substitutionNote": "Quando um exercício precisa ser trocado no meio do mesociclo (equipamento ocupado, dor pontual), buscar no banco outro exercício com mesmo primaryMuscleGroup e mesmo role — mantém a lógica de séries/reps de exerciseRoleProgramming sem precisar recalcular nada.",
 
@@ -35,6 +39,8 @@
     "exerciseCountFormula.note: usar currentRoutine como sinal de nível de experiência ainda não é uma regra formal, só uma observação — falta decidir como isso se combina com anos de treino + consistência (engine-flow.md passo 1) sem virar auto-relato puro de novo.",
     "O passo 6 (alternar antagonistas) é uma heurística de ordenação validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.",
     "withoutCurrentRoutine usa 3 séries/exercício como média — mesma natureza de estimativa de bom senso que avgMinutesPerWorkingSet tinha antes de ser calibrado; vale revisar com dados reais.",
-    "O critério de cobertura secundária do passo 5 só olha pros compostos do MESMO dia, não da semana inteira — um grupo pode estar coberto no dia de hoje mas não estar recebendo nada em nenhum outro dia (ou vice-versa). Olhar a cobertura na semana toda é mais correto, mas exige acumular isso entre os dias do protocolo, não só dentro de cada dia isoladamente."
+    "O critério de cobertura secundária do passo 5 só olha pros compostos do MESMO dia, não da semana inteira — um grupo pode estar coberto no dia de hoje mas não estar recebendo nada em nenhum outro dia (ou vice-versa). Olhar a cobertura na semana toda é mais correto, mas exige acumular isso entre os dias do protocolo, não só dentro de cada dia isoladamente.",
+    "equipmentComplexityOrder (exercise-bank.json) é uma hierarquia de bom senso (machine/smith/cable > bodyweight > dumbbell > barbell), não uma escala validada — e hoje o viés do passo 2.5 vale igual pra composto e isolamento, mesmo o risco de execução sendo bem maior nos compostos. Vale revisar se isolamento deveria ficar de fora do viés conforme vier mais feedback.",
+    "Ainda não existe uma pergunta de cadastro pra trainingConsistency — fica pra quando desenharmos as telas, mesmo princípio da pendência de availableEquipment."
   ]
 }

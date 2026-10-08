@@ -25,6 +25,8 @@
     "smith",
     "bodyweight"
   ],
+  "equipmentComplexityOrder": ["machine", "smith", "cable", "bodyweight", "dumbbell", "barbell"],
+  "equipmentComplexityNote": "Ordem do mais guiado/estável pro mais técnico — usada só quando trainingConsistency do usuário é 'esporadico' (test-personas.json/exercise-selection-rules.json): máquina e smith fixam o trajeto da barra, cabo guia a resistência mas deixa o corpo livre, peso livre (halter/barra) exige mais controle motor e, na barra, ainda soma risco de segurança (arqueamento, desarmar do rack). Feedback real de personal trainer: aluno que entra e sai da academia (meses sem treinar, volta, treina 1-2 meses, para de novo) costuma se autodeclarar 'intermediário' mas não tem a coordenação de quem treina assim ininterruptamente — pra esse perfil, favorecer equipamento guiado reduz risco de execução errada independente do nível que a pessoa marcou no cadastro.",
   "contraindicationTagVocabulary": [
     "knee_sensitive",
     "lower_back_sensitive",
@@ -523,7 +525,8 @@
         "lower_back_sensitive",
         "knee_sensitive"
       ],
-      "recoveryCost": "high"
+      "recoveryCost": "high",
+      "highSetupOverhead": true
     },
     {
       "id": "backLats_levantamento_terra_sumo_barra",
@@ -542,7 +545,8 @@
         "lower_back_sensitive",
         "hip_sensitive"
       ],
-      "recoveryCost": "high"
+      "recoveryCost": "high",
+      "highSetupOverhead": true
     },
     {
       "id": "backLats_rack_pull_barra_do_joelho",
@@ -1940,7 +1944,8 @@
         "knee_sensitive",
         "lower_back_sensitive"
       ],
-      "recoveryCost": "high"
+      "recoveryCost": "high",
+      "highSetupOverhead": true
     },
     {
       "id": "quads_agachamento_no_smith",

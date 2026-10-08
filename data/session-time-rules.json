@@ -14,8 +14,10 @@
       "compound": 2.0,
       "isolation": 1.2
     },
+    "highSetupOverheadExtraMinutes": 1.0,
+    "highSetupOverheadNote": "Feedback real de personal trainer: o modelo flat de 2.0min/série composta subestima exercícios que exigem troca de carga pesada ou reajuste de equipamento entre séries (ex: Levantamento Terra — trocar anilhas grandes, reajustar postura/pegada a cada série). Exercícios tagueados com highSetupOverhead=true em exercise-bank.json somam +1.0min/série em cima do valor base de compound (total 3.0min/série nesses casos específicos) — não é uma categoria nova no formula geral, é um acréscimo pontual só nesses exercícios.",
     "generalWarmupMinutesPerSession": 5,
-    "formula": "maxSetsPerSession ≈ (sessionMinutesForMusculacao - generalWarmupMinutesPerSession) distribuído entre séries compostas (2.0min cada) e de isolamento (1.2min cada), na proporção que o dia pedir.",
+    "formula": "maxSetsPerSession ≈ (sessionMinutesForMusculacao - generalWarmupMinutesPerSession) distribuído entre séries compostas (2.0min cada, ou 3.0min se highSetupOverhead) e de isolamento (1.2min cada), na proporção que o dia pedir.",
     "calibratedAgainst": "Rotina real do fundador (Upper A do treino U/L 6x/semana): 16 séries compostas (supino, remada, supino inclinado, puxada alta, paralelas) + 7 de isolamento (peck deck, pulldown corda, encolhimento) = 23 séries totais em 45min reais. Conferindo: 16×2.0 + 7×1.2 + 5min aquecimento = 32 + 8.4 + 5 = 45.4min — bate com a sessão real.",
     "note": "2.0min/série composta e 1.2min/série de isolamento são mais agressivos que uma primeira estimativa (3min flat) porque assumem um recurso real de programação visto na própria rotina do fundador: alternar grupos antagonistas (empurrar/puxar) em sequência — supino → remada → supino inclinado → puxada alta — onde o 'descanso' de um exercício é preenchido pela execução do outro. Sem esse pareamento, o tempo real por série sobe perto da faixa de descanso declarada (90-120s composto, 60-75s isolamento) e cabem menos séries na sessão. 'Composto' e 'isolamento' aqui são uma classificação por exercício que ainda depende do banco de exercícios (pendência conhecida) — até lá, é uma estimativa manual."
   },
@@ -30,6 +32,7 @@
 
   "openQuestions": [
     "Os valores de avgMinutesPerWorkingSet (2.0 composto / 1.2 isolamento) foram calibrados contra UMA rotina real (a do fundador) — ainda não validados contra outros perfis. Calibrar com dados reais de duração de sessão reportados nos check-ins.",
+    "highSetupOverheadExtraMinutes (+1.0min) é uma estimativa de bom senso a partir do feedback do personal trainer, não uma medição real — e hoje só está tagueado em 3 exercícios (Levantamento Terra convencional/sumô, Agachamento Livre barra). Vale revisar quais outros exercícios mereceriam a mesma tag conforme chegar mais feedback.",
     "O modelo assume que o usuário organiza a sessão alternando grupos antagonistas (empurrar/puxar) pra aproveitar o descanso — se a seleção de exercícios do motor não fizer esse pareamento quando o banco de exercícios for construído, os tempos reais ficam mais próximos da faixa de descanso declarada (90-120s/60-75s) e maxSetsPerSession deveria cair.",
     "Classificar um exercício como 'composto' ou 'isolamento' ainda é manual — depende do banco de exercícios (ainda não construído) pra ser automático.",
     "A regra 5 (fatiar o tempo entre cardio e musculação no mesmo dia) depende de uma pergunta de cadastro (sim/não — essas atividades caem no mesmo dia?) que ainda não existe como tela. Não depende de agendamento por dia da semana — essa funcionalidade foi decidida como fora de escopo (ver schedulingNote em activity-priority-rules.json)."

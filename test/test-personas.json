@@ -9,9 +9,10 @@
       "goal": "hipertrofia + recomposição",
       "limitations": [],
       "background": "8+ anos de treino, ex-atleta de basquete",
+      "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 5 },
-        { "rank": 2, "name": "Cardio", "frequencyPerWeek": 3 }
+        { "rank": 2, "name": "Cardio", "frequencyPerWeek": 3, "sameDayAsMusculacao": "antes" }
       ],
       "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
       "currentRoutine": {
@@ -31,6 +32,7 @@
       "sessionMinutes": 50,
       "goal": "força + estética",
       "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}],
+      "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 3 },
         { "rank": 2, "name": "Caminhada", "frequencyPerWeek": 2 }
@@ -46,6 +48,7 @@
       "sessionMinutes": 40,
       "goal": "manutenção de massa em rotina corrida",
       "limitations": [],
+      "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Corrida", "frequencyPerWeek": 4 },
         { "rank": 2, "name": "Musculação", "frequencyPerWeek": 3 }
@@ -61,6 +64,7 @@
       "sessionMinutes": 60,
       "goal": "emagrecimento + ganho de força",
       "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}],
+      "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
       ],
@@ -71,6 +75,22 @@
           "chest": 2, "quads": 2, "backThickness": 2, "abs": 1
         }
       }
+    },
+    {
+      "id": "intermediario_treino_esporadico",
+      "level": "intermediate",
+      "age": 30,
+      "daysAvailable": 4,
+      "sessionMinutes": 60,
+      "goal": "hipertrofia",
+      "limitations": [],
+      "background": "Cenário real relatado por personal trainer: entra e sai da academia há anos (treina 1-2 meses, para por vários meses, volta do zero) — se autodeclara 'intermediário' porque já treinou bastante no passado, mas não tem a coordenação/vivência de quem treina de forma contínua.",
+      "trainingConsistency": "esporadico",
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": null
     }
   ]
 }

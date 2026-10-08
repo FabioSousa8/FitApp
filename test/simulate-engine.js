@@ -131,7 +131,15 @@ function repsForRole(role, goalKey) {
 
 // --- 5. Seleção de exercícios (exercise-bank.json + exercise-selection-rules.json) ---
 const RECOVERY_ORDER = { low: 0, medium: 1, high: 2 };
-function pickForGroup(group, exerciseCount, availableEquipment, limitationTags, preferLowRecovery, usedIds) {
+const EQUIPMENT_COMPLEXITY_ORDER = exerciseBank.equipmentComplexityOrder || [];
+function equipmentComplexityRank(e) {
+  const ranks = e.equipment.map((eq) => {
+    const i = EQUIPMENT_COMPLEXITY_ORDER.indexOf(eq);
+    return i === -1 ? EQUIPMENT_COMPLEXITY_ORDER.length : i;
+  });
+  return Math.min(...ranks);
+}
+function pickForGroup(group, exerciseCount, availableEquipment, limitationTags, preferLowRecovery, usedIds, preferGuidedEquipment) {
   const pool = exerciseBank.exercises.filter(
     (e) =>
       e.primaryMuscleGroup === group &&
@@ -150,6 +158,13 @@ function pickForGroup(group, exerciseCount, availableEquipment, limitationTags, 
   // sem perder a ordenação por recoveryCost já aplicada acima.
   if (usedIds) {
     Object.values(byRole).forEach((list) => list.sort((a, b) => (usedIds.has(a.id) ? 1 : 0) - (usedIds.has(b.id) ? 1 : 0)));
+  }
+  // trainingConsistency == "esporadico" (exercise-selection-rules.json passo 2.5): favorece
+  // equipamento guiado (máquina/smith/cabo) sobre peso livre, independente do nível autodeclarado.
+  // Vira o critério DOMINANTE (último sort, igual ao usedIds acima) — variedade e recoveryCost
+  // ainda decidem empates dentro do mesmo nível de complexidade de equipamento.
+  if (preferGuidedEquipment) {
+    Object.values(byRole).forEach((list) => list.sort((a, b) => equipmentComplexityRank(a) - equipmentComplexityRank(b)));
   }
   const chosen = [];
   const idx = { primary_compound: 0, secondary_compound: 0, isolation_accessory: 0 };
@@ -201,6 +216,7 @@ function buildProtocol(persona) {
   const currentRoutine = (persona.currentRoutine && persona.currentRoutine.exerciseCountByGroup) || {};
   const goalKey = objective.isRank1 || !objective.musc ? "hypertrophy" : "maintenance_support";
   const preferLowRecovery = goalKey === "maintenance_support";
+  const preferGuidedEquipment = persona.trainingConsistency === "esporadico";
 
   const groupInfo = {};
   groupsHit.forEach((g) => {
@@ -213,8 +229,22 @@ function buildProtocol(persona) {
   });
 
   const warnings = [];
-  const { avgMinutesPerWorkingSet, generalWarmupMinutesPerSession } = sessionTimeRules.setsPerMinuteModel;
+  const { avgMinutesPerWorkingSet, generalWarmupMinutesPerSession, highSetupOverheadExtraMinutes } = sessionTimeRules.setsPerMinuteModel;
   const budgetMinutes = Math.max(0, persona.sessionMinutes - generalWarmupMinutesPerSession);
+
+  // Ordem atividade secundária x musculação no mesmo dia (activity-priority-rules.json/
+  // sameDayOrderingNote): feedback real de PT é que isso impacta o estímulo aplicado,
+  // mas o motor não tenta recalcular volume/RIR a partir disso — só alerta quando
+  // musculação é a prioridade e outra atividade vem antes dela no mesmo dia.
+  if (objective.isRank1) {
+    (persona.physicalActivities || []).forEach((a) => {
+      if (a.name !== "Musculação" && a.sameDayAsMusculacao === "antes") {
+        warnings.push(
+          `${a.name} antes da musculação no mesmo dia pode reduzir o estímulo de força/hipertrofia — se musculação é prioridade, considere treiná-la primeiro ou separar os dias.`
+        );
+      }
+    });
+  }
 
   // Quando um tipo de dia se repete na semana (ex: fullbody#1/#2/#3, ou upper#1/#2),
   // dayMuscleMap lista os grupos sempre na mesma ordem — sem rotação, o corte por
@@ -240,19 +270,20 @@ function buildProtocol(persona) {
     let items = [];
     groups.forEach((g) => {
       const info = groupInfo[g];
-      const { chosen, gap } = pickForGroup(g, info.exerciseCount, availableEquipment, limitationTags, preferLowRecovery, usedIds);
+      const { chosen, gap } = pickForGroup(g, info.exerciseCount, availableEquipment, limitationTags, preferLowRecovery, usedIds, preferGuidedEquipment);
       if (gap) warnings.push(`Sem exercício disponível pra "${g}" com o equipamento/limitações informados.`);
       chosen.forEach((ex) => usedIds.add(ex.id));
       chosen.forEach((ex) => {
         const sets = setsForRole(ex.role);
         const [rlo, rhi] = repsForRole(ex.role, goalKey);
+        const baseMinutes = avgMinutesPerWorkingSet[ex.role === "isolation_accessory" ? "isolation" : "compound"];
         items.push({
           group: g,
           name: ex.name,
           role: ex.role,
           sets,
           repsLabel: `${rlo}-${rhi}`,
-          minutesPerSet: avgMinutesPerWorkingSet[ex.role === "isolation_accessory" ? "isolation" : "compound"],
+          minutesPerSet: baseMinutes + (ex.highSetupOverhead ? highSetupOverheadExtraMinutes : 0),
           secondaryMuscleGroups: ex.secondaryMuscleGroups || [],
         });
       });
@@ -318,6 +349,9 @@ personas.forEach((p) => {
   console.log(`Nível: ${p.level} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Sessão: ${p.sessionMinutes}min | Meta: ${p.goal}`);
   if (p.limitations.length) console.log(`Limitações: ${p.limitations.map((l) => `${l.description} [${l.tag}]`).join("; ")}`);
   console.log(`Equipamento disponível: ${(p.availableEquipment || []).join(", ")}`);
+  if (p.trainingConsistency === "esporadico") {
+    console.log(`Consistência de treino: esporádico → viés pra equipamento guiado (máquina/smith/cabo) nos exercícios, independente do nível autodeclarado.`);
+  }
 
   const protocol = buildProtocol(p);
   const { objective } = protocol;
