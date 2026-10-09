@@ -1,6 +1,6 @@
 # Fluxo do motor
 
-1. **Intake** → nível (anos de treino + consistência, não auto-relato puro), objetivo, dias disponíveis, tempo por sessão, equipamento, limitações, `trainingConsistency` (contínuo/esporádico — separado do nível, ver passo 5), e o ranking de atividades físicas com a ordem relativa à musculação quando cai no mesmo dia (ver passo 2).
+1. **Intake** → nível (anos de treino + consistência, não auto-relato puro), objetivo, dias disponíveis, tempo por sessão, equipamento, limitações, `trainingConsistency` (contínuo/esporádico — separado do nível, ver passo 5), `goalDurationDays` + `eventBound` opcionais (por quantos dias a pessoa quer seguir esse protocolo, e se tem uma data-alvo específica — ver passo 8), e o ranking de atividades físicas com a ordem relativa à musculação quando cai no mesmo dia (ver passo 2).
 
 2. **Classificação do objetivo via ranking de atividades** (`activity-priority-rules.json`) → o usuário ordena suas atividades físicas por importância (ex: Musculação, Cardio, Vôlei) e informa a frequência semanal de cada uma.
    - Se "Musculação" é rank 1 → objetivo segue normal (hipertrofia/força), progressão MEV → MAV sem restrição extra.
@@ -21,13 +21,18 @@
 
 6. **Geração do protocolo inicial** → treino + cardio + dieta (macro a parte) + suplementação, essa última só usando `supplementation-rules.json`.
 
-7. **Check-ins** → cada log de sessão passa por `progression-rules.json`: decide subir carga, segurar, reduzir, ou disparar deload/revisão. Nunca é o LLM decidindo isso livremente — é a regra que decide, o LLM só explica o "porquê" em linguagem natural.
+7. **Check-ins** → cada log de sessão passa por `progression-rules.json`: decide subir carga, segurar, reduzir, ou disparar deload/revisão. Nunca é o LLM decidindo isso livremente — é a regra que decide, o LLM só explica o "porquê" em linguagem natural. Isso NUNCA troca exercício — só ajusta carga dentro do mesmo treino.
 
-8. **Reavaliação de mesociclo** → ao fim do ciclo (ou por trigger de deload), sobe o volume-alvo em direção ao teto definido no passo 2 (MAV normal, ou o limite reduzido de quem não tem a musculação como rank 1).
+8. **Periodização por `goalDurationDays`** (`progression-rules.json`/`periodizationByGoalDuration`) → decisão de produto: o treino fica FIXO durante um bloco (trocar toda hora quebra aderência), mas o tamanho/quantidade de blocos NÃO é um número universal fixo (ex: "60 dias") — é calculado a partir da janela que a própria pessoa estipulou pra aquele protocolo, pra aproveitar bem o tempo que ela tem. Como o público não são iniciantes, não existe fase de rodagem.
+   - Sem `goalDurationDays` informado → 1 mesociclo padrão único (`mesocycleLengthWeeks`), igual ao comportamento anterior.
+   - Janela menor ou igual a um mesociclo ideal → bloco único cobrindo a janela inteira, sem troca de exercício; se for mais curta que o ideal, a rampa de volume acelera pra ainda chegar perto do MAV antes do fim (sem iniciante, sem rodagem lenta).
+   - Janela maior → múltiplos blocos encadeados (mesociclo + deload de 1 semana, repetindo), com a seleção de exercício só reconsiderada NA FRONTEIRA entre blocos — nunca dentro de um bloco, nunca semana a semana.
+   - `eventBound=true` (a pessoa tem uma data-alvo, não só um objetivo genérico) → o ÚLTIMO bloco tapera nos dias finais. Sem isso, o motor não tapera: mantém estímulo alto até o fim, já que pra estética/hipertrofia sem data-alvo não tem o que "poupar" pro dia seguinte.
+   - Isso substitui a ideia antiga de "reavaliação de mesociclo" num ciclo fixo de 5-6 semanas sempre — agora o mesociclo é a unidade interna do bloco, mas quantos blocos existem e onde eles terminam vem da janela do usuário.
 
 ## Status: motor rodando de ponta a ponta
 
-Desde a versão atual, `test/simulate-engine.js` liga TODAS as regras acima — ranking de atividade, teto de tempo por sessão, banco de exercícios — e gera o protocolo semanal completo (dia por dia, exercício, séries, reps) pras 4 personas de teste, não só a tabela de referência de MEV/MAV/MRV.
+Desde a versão atual, `test/simulate-engine.js` liga TODAS as regras acima — ranking de atividade, teto de tempo por sessão, banco de exercícios, periodização por `goalDurationDays` — e gera o protocolo completo (split, plano de blocos, dia por dia, exercício, séries, reps) pras 6 personas de teste, não só a tabela de referência de MEV/MAV/MRV. O treino detalhado exercício-a-exercício hoje só é materializado pro BLOCO 1 do plano — os blocos seguintes aparecem no plano (duração, deload, refresh, taper) mas ainda não têm a lista de exercício gerada (ver `openQuestions` em `periodizationByGoalDuration`).
 
 ## Decisão de produto: sem agendamento por dia da semana
 
@@ -36,7 +41,8 @@ O motor não atribui dia da semana aos treinos — gera sessões rotativas (Uppe
 ## Pendências conhecidas
 
 - **Primeira rodada de feedback de personal trainers (out/2026)**: 3 pontos levantados por um PT real já entraram no motor — tempo extra pra exercícios de troca de carga pesada (`highSetupOverhead`), alerta de ordem atividade-secundária×musculação (`sameDayAsMusculacao`), e viés de equipamento guiado por `trainingConsistency` em vez de só nível autodeclarado. Os outros 2 pontos dele (MEV/MAV/MRV e lógica de corte por tempo) foram confirmados como realistas, sem mudança necessária. Ainda esperando retorno de outros profissionais pra validar/ajustar esses 3 antes de calibrar mais a fundo.
-- **Equipamento disponível**: o campo existe (`availableEquipment` nas personas, usado no filtro), mas não existe pergunta real no cadastro ainda — fica pra quando desenharmos as telas. Mesma pendência vale pra `trainingConsistency` e `sameDayAsMusculacao` (campos novos desta rodada) — a lógica já está no motor, falta a tela.
+- **Periodização por `goalDurationDays`**: o plano de blocos (quantos, tamanho, deload, refresh de exercício, taper) já é calculado, mas só o bloco 1 tem exercício-a-exercício simulado — falta decidir se vale simular todos os blocos completos ou se o backend real gera o próximo bloco só quando a pessoa chegar nele (ver `openQuestions` em `periodizationByGoalDuration`).
+- **Equipamento disponível**: o campo existe (`availableEquipment` nas personas, usado no filtro), mas não existe pergunta real no cadastro ainda — fica pra quando desenharmos as telas. Mesma pendência vale pra `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays` e `eventBound` (campos novos) — a lógica já está no motor, falta a tela.
 - **Fórmula de quantos exercícios por grupo**: ancorada em `currentRoutine` quando o usuário informa (ver `exerciseCountFormula` em `exercise-selection-rules.json`); sem isso, cai num cálculo frio (volume ÷ 3 séries/exercício) que é só uma estimativa de bom senso.
 - **Cobertura secundária só olha o dia, não a semana**: o corte por falta de tempo agora protege grupos sem estímulo secundário de nenhum composto *naquele dia* (ex: deltoide posterior) e sacrifica primeiro quem já é estimulado por outro exercício (ex: tríceps via supino, bíceps via puxada) — ver `selectionAlgorithm` passo 5 em `exercise-selection-rules.json`. Falta expandir isso pra olhar a semana inteira, não só o dia isolado.
 - **Ordenação por antagonistas** (empurrar/puxar) validada contra UMA rotina real (a do fundador) — não testada contra outros perfis/splits ainda.

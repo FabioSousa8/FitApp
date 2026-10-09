@@ -115,6 +115,78 @@ function weeklyTargetSets(group, level, objective) {
   return { sets, mev: l.mev, mav: l.mav, mrv: l.mrv, capLabel: `teto: ${capType} (musculação não é rank 1)`, capSets };
 }
 
+// --- 3.5 Periodização por goalDurationDays (progression-rules.json/periodizationByGoalDuration) ---
+// O treino fica FIXO dentro de um bloco (não troca toda hora — aderência em primeiro lugar).
+// O que varia é o TAMANHO e a QUANTIDADE de blocos, calculados a partir da janela que a
+// própria pessoa estipulou (goalDurationDays), não um número universal fixo.
+function planPeriodization(goalDurationDays, level, eventBound) {
+  const { mesocycleLengthWeeks } = progression.volumeProgression;
+  const { minPartialBlockDaysToStandAlone } = progression.periodizationByGoalDuration.constants;
+  const idealWeeks = level === "advanced" ? mesocycleLengthWeeks.advanced : mesocycleLengthWeeks.default;
+  const idealBlockDays = idealWeeks * 7;
+  const deloadDays = progression.deloadProtocol.durationWeeks * 7;
+
+  if (!goalDurationDays) {
+    return {
+      mode: "sem_periodo_informado",
+      idealBlockDays,
+      blocks: [{ type: "treino", lengthDays: idealBlockDays, compressed: false, exerciseRefresh: false, taper: false }],
+    };
+  }
+
+  if (goalDurationDays <= idealBlockDays) {
+    return {
+      mode: "bloco_unico",
+      idealBlockDays,
+      blocks: [
+        {
+          type: "treino",
+          lengthDays: goalDurationDays,
+          compressed: goalDurationDays < idealBlockDays,
+          exerciseRefresh: false,
+          taper: !!eventBound,
+        },
+      ],
+    };
+  }
+
+  const fullCycleDays = idealBlockDays + deloadDays;
+  const numFullCycles = Math.floor(goalDurationDays / fullCycleDays);
+  const remainderDays = goalDurationDays - numFullCycles * fullCycleDays;
+
+  const blocks = [];
+  for (let i = 0; i < numFullCycles; i++) {
+    blocks.push({ type: "treino", lengthDays: idealBlockDays, compressed: false, exerciseRefresh: i > 0, taper: false });
+    blocks.push({ type: "deload", lengthDays: deloadDays });
+  }
+
+  const lastTreino = () => [...blocks].reverse().find((b) => b.type === "treino");
+
+  if (remainderDays >= minPartialBlockDaysToStandAlone) {
+    blocks.push({
+      type: "treino",
+      lengthDays: remainderDays,
+      compressed: remainderDays < idealBlockDays,
+      exerciseRefresh: true,
+      taper: !!eventBound,
+    });
+  } else if (remainderDays > 0) {
+    const t = lastTreino();
+    if (t) {
+      t.lengthDays += remainderDays;
+      if (eventBound) t.taper = true;
+    }
+  } else if (eventBound) {
+    const t = lastTreino();
+    if (t) t.taper = true;
+  }
+
+  // Nunca termina em deload: se não há bloco de treino depois, o deload final não serve a nada.
+  if (blocks.length && blocks[blocks.length - 1].type === "deload") blocks.pop();
+
+  return { mode: "multi_bloco", idealBlockDays, blocks };
+}
+
 // --- 4. Séries/reps por papel do exercício (progression-rules.json) ---
 function setsForRole(role) {
   const r = progression.exerciseRoleProgramming.roles[role];
@@ -336,7 +408,9 @@ function buildProtocol(persona) {
     return { dayLabel, items: kept, trimmedCount, usedMinutes: Math.round(used) };
   });
 
-  return { objective, split, groupInfo, dayPlans, warnings, goalKey, budgetMinutes, sessionMinutes: persona.sessionMinutes };
+  const periodization = planPeriodization(persona.goalDurationDays, persona.level, persona.eventBound);
+
+  return { objective, split, groupInfo, dayPlans, warnings, goalKey, budgetMinutes, sessionMinutes: persona.sessionMinutes, periodization };
 }
 
 // --- 7. Impressão ---
@@ -372,6 +446,28 @@ personas.forEach((p) => {
     console.log(`  (também viável pro perfil: ${protocol.split.alternatives.join(", ")} — não é resposta fechada, só o default sugerido)`);
   }
   console.log(`Teto de tempo: ${p.sessionMinutes}min → orçamento de trabalho ${protocol.budgetMinutes}min após aquecimento`);
+
+  const per = protocol.periodization;
+  const periodLabel =
+    per.mode === "sem_periodo_informado"
+      ? `sem goalDurationDays informado → 1 mesociclo padrão de ${per.idealBlockDays}d (fallback)`
+      : `goalDurationDays=${p.goalDurationDays}d${p.eventBound ? " (eventBound: taper no bloco final)" : ""}`;
+  console.log(`Periodização: ${periodLabel}`);
+  per.blocks.forEach((b, i) => {
+    if (b.type === "deload") {
+      console.log(`  Bloco ${i + 1}: DELOAD — ${b.lengthDays}d (${progression.deloadProtocol.volumeReduction} volume, RIR ${progression.deloadProtocol.intensityTargetRIR.join("-")})`);
+    } else {
+      const flags = [
+        b.compressed ? "comprimido: rampa de volume acelerada rumo ao MAV" : null,
+        b.exerciseRefresh ? "exercício reconsiderado no início deste bloco" : i === 0 ? "exercícios escolhidos para este protocolo" : "mesmos exercícios do bloco anterior",
+        b.taper ? "taper nos dias finais (eventBound)" : null,
+      ].filter(Boolean);
+      console.log(`  Bloco ${i + 1}: TREINO — ${b.lengthDays}d (${flags.join("; ")})`);
+    }
+  });
+  if (per.blocks.length > 1 || per.mode !== "sem_periodo_informado") {
+    console.log(`  (o treino detalhado abaixo é o do bloco 1 — blocos seguintes reaplicam a seleção de exercício no refresh, não simulados exercício-a-exercício ainda)`);
+  }
 
   protocol.dayPlans.forEach((day) => {
     console.log(`\n  ${day.dayLabel.toUpperCase()}  (~${day.usedMinutes}/${protocol.budgetMinutes}min)`);

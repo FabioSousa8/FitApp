@@ -39,6 +39,31 @@
     "capAt": "mrv_ou_sinal_de_fadiga",
     "note": "Este teto padrão (progressão rumo ao MRV) vale apenas quando a musculação é a atividade rank 1 do usuário. Quando não é, activity-priority-rules.json sobrescreve capAt (trava no MEV ou abaixo). Em ambos os casos, o volume do dia também não pode ultrapassar maxSetsPerSession de session-time-rules.json — esse teto de tempo é verificado depois do teto de prioridade de atividade."
   },
+
+  "periodizationByGoalDuration": {
+    "description": "Decisão de produto: o treino (seleção de exercícios dentro da divisão escolhida) fica FIXO durante um bloco — trocar toda hora quebra aderência. Mas o TAMANHO desse bloco, quantos blocos existem, e quando rola deload/troca de exercício não é um número universal fixo (ex: '60 dias') — é calculado a partir de goalDurationDays, o período que o PRÓPRIO USUÁRIO estipulou pra esse protocolo. A meta é aproveitar bem a janela específica da pessoa, não empurrar um template genérico. Como o público não são iniciantes, não existe fase de 'rodagem' — a pessoa já sabe executar, então o motor pode ir direto pra progressão real, inclusive acelerada quando a janela é curta.",
+    "inputs": {
+      "goalDurationDays": "number, opcional. Quantos dias a pessoa quer seguir esse protocolo até reavaliar com ela. Se não informado, o motor cai no comportamento antigo: um mesociclo padrão único (mesocycleLengthWeeks), sem data de reavaliação definida.",
+      "eventBound": "boolean, opcional (default false). true quando a pessoa tem uma data/evento específico pra 'chegar bem' (casamento, viagem, prova) — nesse caso o ÚLTIMO bloco antes do fim da janela ganha um taper (ver abaixo). Pra objetivo de estética/hipertrofia sem data-alvo (o default), o motor NÃO tapera — mantém estímulo alto até o fim, não desperdiça dias de treino com um deload que não serve a nada."
+    },
+    "constants": {
+      "minPartialBlockDaysToStandAlone": 14,
+      "note": "Se a sobra de dias depois de encaixar blocos completos for menor que 14 dias, ela funde no último bloco de treino em vez de virar um bloco próprio — um bloco de poucos dias não compensa o refresh de exercício."
+    },
+    "algorithm": [
+      "1. idealBlockDays = mesocycleLengthWeeks (default ou advanced, pelo nível) × 7.",
+      "2. Sem goalDurationDays informado → plano = um bloco único de idealBlockDays, sem troca de exercício, sem taper. É o comportamento de hoje, preservado como fallback.",
+      "3. goalDurationDays <= idealBlockDays → plano = um bloco único cobrindo a janela inteira, mesmos exercícios do início ao fim, sem deload agendado (deload só entra por deloadTriggers normais, não por calendário). Se goalDurationDays < idealBlockDays, o bloco é 'comprimido': weeklyVolumeStepSets sobe proporcionalmente pra ainda alcançar a faixa de MAV a poucos dias do fim, em vez de ficar preso numa rampa pensada pra uma janela maior — não é iniciante, não precisa de rodagem lenta.",
+      "4. goalDurationDays > idealBlockDays → múltiplos blocos: fullCycleDays = idealBlockDays + (deloadProtocol.durationWeeks × 7). numFullCycles = floor(goalDurationDays / fullCycleDays), cada um seguido de 1 semana de deload (deloadProtocol). A sobra (remainderDays = goalDurationDays - numFullCycles×fullCycleDays) vira um bloco final próprio se for >= minPartialBlockDaysToStandAlone (comprimido se menor que idealBlockDays), senão funde no último bloco de treino já planejado. O deload que ficaria depois do ÚLTIMO bloco de treino é removido — não faz sentido tapear pra um bloco que não vem.",
+      "5. Em QUALQUER plano de múltiplos blocos, a seleção de exercício só é reconsiderada (exerciseRefresh) na fronteira entre blocos de treino — nunca dentro de um bloco, nunca semana a semana. Dentro do bloco, exercise-selection-rules.json roda normal (mesmos exercícios, carga progredindo por loadProgressionRules).",
+      "6. taper (eventBound=true): só o ÚLTIMO bloco de treino do plano reduz intensidade/volume nos dias finais (mesmos parâmetros de deloadProtocol) — representa chegar descansado numa data específica. Sem eventBound, o último bloco NÃO tapera: mantém o padrão normal até o fim, porque pra estética/hipertrofia sem data-alvo não tem o que 'poupar' pro dia seguinte."
+    ],
+    "openQuestions": [
+      "eventBound hoje é um campo binário simples — não diferencia quanto antes do evento o taper deveria começar (1 semana é a estimativa de bom senso usada, igual ao deloadProtocol normal). Vale calibrar com feedback real.",
+      "O refresh de exercício na fronteira de bloco ainda não tem uma regra formal de QUANTO trocar (todos os exercícios? só os que estagnaram por plateauRule? só os que o usuário não gosta?) — por ora assume reaplicar exercise-selection-rules.json do zero pro mesmo grupo/papel, o que naturalmente varia pela lógica de variedade já existente (usedIds em simulate-engine.js), mas não é uma regra explícita ainda.",
+      "simulate-engine.js hoje só materializa o treino detalhado do PRIMEIRO bloco do plano — os blocos seguintes aparecem no plano (duração, se tem deload, se tem refresh/taper) mas não têm a lista de exercício gerada. Falta decidir se vale simular todos os blocos completos ou se o backend real gera o próximo bloco só quando a pessoa chegar nele."
+    ]
+  },
   "exerciseRoleProgramming": {
     "description": "Dentro de uma sessão, nem todo exercício segue a mesma série/reps fixa — isso varia pelo papel do exercício no dia, não só pelo objetivo geral. Baseado na rotina real do fundador (treino U/L 6x/semana): compostos principais com menos reps/mais carga, compostos secundários em faixa média, isolamento/acessórios com mais reps. O objetivo (ex: hypertrophy) define a faixa ampla em repRangesByGoal; o papel do exercício ajusta onde dentro (ou um pouco fora) dela.",
     "roles": {

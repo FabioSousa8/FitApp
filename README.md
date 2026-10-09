@@ -19,7 +19,7 @@ data/
   exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
   exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
 test/
-  test-personas.json               # 4 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
+  test-personas.json               # 6 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
@@ -33,7 +33,7 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo semanal completo (split, exercício, séries, reps por dia) pras 4 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização, exercício, séries, reps por dia) pras 6 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
 
 O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única. PPL e ABC são dois estilos de 3 dias DIFERENTES, não o mesmo nome em dois idiomas: PPL agrupa por função do movimento (empurrar/puxar/pernas), ABC agrupa por músculo principal + sinergista (peito+tríceps / costas+bíceps / pernas+ombro+abdômen).
 
@@ -43,11 +43,14 @@ Primeira rodada de feedback real de personal trainer já incorporada ao motor: (
 
 Decisão de produto: o motor não atribui dia da semana aos treinos — gera sessões rotativas (Upper A/B, Lower A/B...) que o usuário encaixa na própria rotina, não um calendário fixo.
 
+Decisão de produto: o treino fica FIXO durante um bloco (trocar toda semana quebra aderência), mas o tamanho e a quantidade de blocos não são um número universal fixo — são calculados a partir de `goalDurationDays`, o período que a própria pessoa estipulou pra aquele protocolo (ex: 35 dias, 60 dias, 90 dias — o que ela definir). Sem data informada, cai num mesociclo padrão único. Com data, o motor monta um plano de blocos (mesociclo + deload entre eles) e só reconsidera a seleção de exercício nas FRONTEIRAS entre blocos — nunca dentro de um bloco. Se a pessoa tem uma data-alvo específica (evento, não só um objetivo genérico), o último bloco tapera nos dias finais; sem isso, mantém estímulo alto até o fim. Como o público não são iniciantes, não existe fase de "rodagem" — janelas curtas aceleram a rampa de volume em vez de diluí-la. Ver `periodizationByGoalDuration` em `data/progression-rules.json`.
+
 Pendências conhecidas (ver `docs/engine-flow.md`):
 
 - Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem) — fica pra quando desenharmos as telas.
 - Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
 - Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.
-- Cadastro também ainda não pergunta `trainingConsistency` nem `sameDayAsMusculacao` (campos novos desta rodada de feedback) — a lógica já está no motor, falta a tela.
-- Esperando retorno de outros personal trainers pra validar os 3 ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos).
+- Cadastro também ainda não pergunta `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays` nem `eventBound` (campos novos) — a lógica já está no motor, falta a tela.
+- Esperando retorno de outros personal trainers pra validar os ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos).
+- O plano de periodização por `goalDurationDays` só materializa exercício-a-exercício o bloco 1 — blocos seguintes aparecem no plano (duração, deload, refresh, taper) mas sem a lista de exercício gerada ainda.

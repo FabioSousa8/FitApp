@@ -10,6 +10,7 @@
       "limitations": [],
       "background": "8+ anos de treino, ex-atleta de basquete",
       "trainingConsistency": "continuo",
+      "goalDurationDays": 42,
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 5 },
         { "rank": 2, "name": "Cardio", "frequencyPerWeek": 3, "sameDayAsMusculacao": "antes" }
@@ -33,6 +34,7 @@
       "goal": "força + estética",
       "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}],
       "trainingConsistency": "continuo",
+      "goalDurationDays": 28,
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 3 },
         { "rank": 2, "name": "Caminhada", "frequencyPerWeek": 2 }
@@ -48,6 +50,7 @@
       "sessionMinutes": 40,
       "goal": "manutenção de massa em rotina corrida",
       "limitations": [],
+      "background": "Objetivo contínuo (manutenção), sem data-alvo — por isso sem goalDurationDays: testa o fallback de periodização (mesociclo padrão único, sem plano de blocos).",
       "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Corrida", "frequencyPerWeek": 4 },
@@ -65,6 +68,7 @@
       "goal": "emagrecimento + ganho de força",
       "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}],
       "trainingConsistency": "continuo",
+      "goalDurationDays": 120,
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
       ],
@@ -86,8 +90,27 @@
       "limitations": [],
       "background": "Cenário real relatado por personal trainer: entra e sai da academia há anos (treina 1-2 meses, para por vários meses, volta do zero) — se autodeclara 'intermediário' porque já treinou bastante no passado, mas não tem a coordenação/vivência de quem treina de forma contínua.",
       "trainingConsistency": "esporadico",
+      "goalDurationDays": 60,
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": null
+    },
+    {
+      "id": "avancado_evento_data_alvo",
+      "level": "advanced",
+      "age": 31,
+      "daysAvailable": 5,
+      "sessionMinutes": 70,
+      "goal": "chegar em forma pro casamento",
+      "limitations": [],
+      "background": "Tem uma data-alvo específica (evento), não só um objetivo genérico de estética — testa eventBound=true (taper no bloco final) e o plano de múltiplos blocos com goalDurationDays maior.",
+      "trainingConsistency": "continuo",
+      "goalDurationDays": 90,
+      "eventBound": true,
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 5 }
       ],
       "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
       "currentRoutine": null
