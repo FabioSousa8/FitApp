@@ -18,6 +18,7 @@ data/
   split-style-rules.json           # Biblioteca de estilos de divisão (FB, FBEOD, U/L, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido) e como escolher um default por dias/nível/objetivo sem fechar nas outras opções
   exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
   exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
+  intake-flow-rules.json           # Ordem e ramificação das perguntas do cadastro — o que é sempre perguntado vs. o que só abre quando se aplica ao perfil
 test/
   test-personas.json               # 6 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
@@ -45,6 +46,8 @@ Decisão de produto: o motor não atribui dia da semana aos treinos — gera ses
 
 Decisão de produto: o treino fica FIXO durante um bloco (trocar toda semana quebra aderência), mas o tamanho e a quantidade de blocos não são um número universal fixo — são calculados a partir de `goalDurationDays`, o período que a própria pessoa estipulou pra aquele protocolo (ex: 35 dias, 60 dias, 90 dias — o que ela definir). Sem data informada, cai num mesociclo padrão único. Com data, o motor monta um plano de blocos (mesociclo + deload entre eles) e só reconsidera a seleção de exercício nas FRONTEIRAS entre blocos — nunca dentro de um bloco. Se a pessoa tem uma data-alvo específica (evento, não só um objetivo genérico), o último bloco tapera nos dias finais; sem isso, mantém estímulo alto até o fim. Como o público não são iniciantes, não existe fase de "rodagem" — janelas curtas aceleram a rampa de volume em vez de diluí-la. Ver `periodizationByGoalDuration` em `data/progression-rules.json`.
 
+Decisão de produto: o cadastro não é um formulário único e estático — a ordem e a ramificação das perguntas (o que é sempre perguntado vs. o que só abre quando se aplica) vêm de `data/intake-flow-rules.json`. Motivado por 2 usuários reais testando o MASTER PROMPT original (texto livre, 48 campos fixos pra qualquer perfil — uma mulher com hérnia de disco e um homem 40+ sem meta estética, os dois acharam grande): limitação física vira uma pergunta-porta fechada (sim/não) que só abre tags fechadas + 1 campo opcional de texto quando existe, em vez de um bloco clínico fixo nomeado por condição; e objetivo tem "saúde geral, sem meta estética específica" como resposta válida por si só. Rotina/alimentação/suplementação do master prompt original (24 dos 48 campos) ficam fora desta versão — não alimentam nenhuma regra do motor hoje.
+
 Pendências conhecidas (ver `docs/engine-flow.md`):
 
 - Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem) — fica pra quando desenharmos as telas.
@@ -52,5 +55,6 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
 - Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.
 - Cadastro também ainda não pergunta `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays` nem `eventBound` (campos novos) — a lógica já está no motor, falta a tela.
+- `intake-flow-rules.json` já define ordem/ramificação das perguntas, mas 3 pontos ficaram abertos: mapeamento de `goalCategory == 'saude_geral_sem_meta_especifica'` em `repRangesByGoal` (proposta provisória: tratar como hypertrophy); extração de `currentRoutineRaw` (texto livre/foto da ficha atual) pra `exerciseCountByGroup`; e regra formal de cruzamento entre `trainingTimeYears` (novo) e `level`/`trainingConsistency`.
 - Esperando retorno de outros personal trainers pra validar os ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos).
 - O plano de periodização por `goalDurationDays` só materializa exercício-a-exercício o bloco 1 — blocos seguintes aparecem no plano (duração, deload, refresh, taper) mas sem a lista de exercício gerada ainda.

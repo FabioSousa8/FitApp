@@ -1,0 +1,166 @@
+{
+  "version": "1.0",
+  "description": "Como o motor coleta as respostas do cadastro: ORDEM das perguntas e RAMIFICAÇÃO (quais perguntas só aparecem quando fazem sentido pro perfil respondendo). Este arquivo não redefine o schema de cada campo — isso já existe nos arquivos de regra correspondentes (ver fieldReference) — ele decide QUANDO perguntar O QUE, pra nenhum usuário encarar perguntas que não se aplicam a ele.",
+
+  "feedbackDiagnosis": {
+    "problem": "Dois usuários reais testaram o MASTER PROMPT (o questionário original, em texto livre, que deu origem ao projeto) e os dois acharam grande — uma mulher com hérnia de disco, e um homem 40+ que treina só pra se manter saudável, sem meta estética.",
+    "rootCause": "Não é a redação, é a estrutura: o master prompt é um formulário ÚNICO e ESTÁTICO com 48 campos em branco, os mesmos para qualquer perfil, cobrindo treino + rotina + alimentação + suplementação de uma vez (processo pessoal original do fundador, que pedia um protocolo completo, não só treino). Ele também trava uma seção nomeada 'HÉRNIA DE DISCO' direto no texto, em vez de abrir dinamicamente só quando existe limitação — prova de que o documento foi editado à mão por perfil, não gerado por um fluxo adaptativo.",
+    "whyBothProfilesFeltIt": [
+      "24 dos 48 campos (Rotina + Alimentação + Suplementação) não alimentam nenhuma regra do motor hoje — é peso morto pra QUALQUER perfil, independente de limitação ou objetivo.",
+      "Hérnia de disco: além dos 24 campos genéricos, ainda enfrenta um bloco fixo de 10 campos clínicos (diagnóstico, acompanhamento, crises recentes etc.) quando o motor só precisa de tags fechadas pra filtrar exercício — o resto é detalhe clínico que não é essa a decisão do app (ver limitationSafetyNote abaixo).",
+      "Homem 40+ sem meta estética: os campos de objetivo (`Objetivo estético/físico de referência`, `Prazo/evento importante`) pressupõem uma meta de aparência ou um evento-alvo — ele não tem resposta natural pra isso, e tem que preencher ou adivinhar que pode pular."
+    ]
+  },
+
+  "scope": {
+    "coveredByThisVersion": "Só os campos que o motor de TREINO já consome hoje (split, volume, seleção de exercício, progressão, periodização) — os mesmos arquivos em data/*.json já construídos.",
+    "explicitlyExcludedFromThisVersion": [
+      { "masterPromptSection": "MEUS DADOS (parcial)", "fields": ["Sexo", "Altura", "Peso", "BF%"], "why": "Identidade/composição corporal — não é consumido por nenhuma regra de treino hoje. Vai esperar a decisão de escopo de dieta/composição corporal." },
+      { "masterPromptSection": "ROTINA", "fields": ["horário que acordo/durmo", "horas de sono", "trabalho/estudo", "nível de atividade diária", "passos/dia", "nível de estresse"], "why": "8 campos, zero uso no motor hoje. Fica fora até existir uma regra que realmente dependa de sono/estresse (ex: ajuste de RIR-alvo por fadiga reportada já existe via check-in, não via cadastro)." },
+      { "masterPromptSection": "ALIMENTAÇÃO", "fields": ["todos os 13 campos"], "why": "Motor de dieta ainda não existe. Decisão de se/quando entra no escopo é a PRÓXIMA conversa, depois deste arquivo." },
+      { "masterPromptSection": "SUPLEMENTAÇÃO", "fields": ["suplementos que uso", "medicamentos", "acompanhamento médico p/ suplementação"], "why": "`supplementation-rules.json` já classifica itens, mas nada no motor ainda PERGUNTA isso no cadastro — mesma decisão de escopo pendente da Alimentação." },
+      { "masterPromptSection": "HÉRNIA DE DISCO (bloco clínico)", "fields": ["diagnóstico médico", "acompanhamento médico/fisio", "crises recentes", "formigamento/dormência/perda de força"], "why": "O motor só precisa de tags fechadas pra decidir QUAIS EXERCÍCIOS EVITAR (contraindicationTagVocabulary) — não de uma anamnese clínica. Ver limitationSafetyNote: o que sobra desse bloco vira UM campo opcional de texto livre, não 10 campos obrigatórios." }
+    ]
+  },
+
+  "steps": [
+    {
+      "id": 1,
+      "label": "Treino básico",
+      "alwaysAsked": true,
+      "fields": [
+        { "field": "level", "type": "enum[beginner,intermediate,advanced]", "required": true },
+        { "field": "trainingTimeYears", "type": "number", "required": true, "note": "Quantos anos (pode ser fração, ex: 0.5) a pessoa treina musculação. Novo campo — serve de sinal de apoio pro nível autodeclarado, junto com trainingConsistency (passo 5) e currentRoutine (passo 7). Ver openQuestions." },
+        { "field": "daysAvailable", "type": "number[1-7]", "required": true },
+        { "field": "sessionMinutes", "type": "number", "required": false, "note": "Se não informado, o motor assume referenceSessionBudget (session-time-rules.json: 45min musculação, +30min se cardio no mesmo dia)." }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "Objetivo",
+      "alwaysAsked": true,
+      "fields": [
+        {
+          "field": "goalCategory",
+          "type": "enum[hypertrophy_estetica,forca,emagrecimento_recomposicao,saude_geral_sem_meta_especifica,evento_especifico]",
+          "required": true,
+          "note": "Substitui o campo livre 'goal' usado nas personas de teste. 'saude_geral_sem_meta_especifica' existe como opção de primeira classe — não é o usuário tendo que adivinhar que pode deixar em branco. Ver openQuestions pra como isso mapeia em repRangesByGoal."
+        },
+        { "field": "goalDetail", "type": "string", "required": false, "note": "Elaboração livre e OPCIONAL (ex: 'quero ficar mais definido pra praia'). Nunca bloqueia o fluxo se deixado em branco." }
+      ],
+      "branch": [
+        {
+          "when": "goalCategory == 'evento_especifico'",
+          "ask": ["goalDurationDays (quantos dias até o evento/checkpoint desejado)"],
+          "setsAutomatically": { "eventBound": true }
+        },
+        {
+          "when": "goalCategory != 'evento_especifico'",
+          "ask": ["goalDurationDays, perguntado como OPCIONAL ('quer definir um período pra esse protocolo até reavaliarmos? ex: 35, 60, 90 dias — ou deixa em aberto')"],
+          "setsAutomatically": { "eventBound": false }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "Limitações físicas",
+      "alwaysAsked": true,
+      "note": "A pergunta-porta é sempre feita, mas só UMA pergunta fechada (sim/não) — nunca um bloco nomeado por condição igual o master prompt fazia.",
+      "fields": [
+        { "field": "hasLimitations", "type": "boolean", "required": true }
+      ],
+      "branch": [
+        {
+          "when": "hasLimitations == true",
+          "ask": [
+            { "field": "limitationTags", "type": "array<contraindicationTagVocabulary>", "note": "Multi-seleção fechada (exercise-bank.json) — knee_sensitive, lower_back_sensitive, shoulder_sensitive, wrist_sensitive, elbow_sensitive, neck_sensitive, hip_sensitive, ankle_sensitive. Hérnia de disco lombar mapeia pra lower_back_sensitive." },
+            { "field": "limitationSafetyNote", "type": "string", "required": false, "note": "UM campo opcional de texto livre ('alguma recomendação específica do seu médico/fisioterapeuta que devemos saber?') — substitui os 10 campos clínicos fixos do master prompt. Não é usado por nenhuma regra de seleção de exercício hoje (isso é feito só por limitationTags); serve como contexto de segurança pra exibir junto do protocolo, não pra filtrar nada automaticamente." }
+          ]
+        },
+        {
+          "when": "hasLimitations == false",
+          "ask": [],
+          "note": "Fluxo termina aqui pra esse passo — zero campos extras, diferente do master prompt que sempre mostrava o bloco de hérnia pra todo mundo."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "label": "Atividades físicas",
+      "alwaysAsked": true,
+      "fields": [
+        {
+          "field": "physicalActivities",
+          "type": "array<{rank, name, frequencyPerWeek, sameDayAsMusculacao?}>",
+          "required": true,
+          "note": "Schema completo já definido em activity-priority-rules.json/intakeSchema — este arquivo só fixa quando sameDayAsMusculacao é perguntado: toda entrada com name != 'Musculação' recebe a pergunta fechada ('antes'/'depois'/'não costuma cair no mesmo dia'), não só quando o motor suspeita de sobreposição."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "label": "Consistência de treino",
+      "alwaysAsked": true,
+      "fields": [
+        {
+          "field": "trainingConsistency",
+          "type": "enum[continuo,esporadico]",
+          "required": true,
+          "note": "Pergunta única e simples (ex: 'nos últimos 6 meses você treinou sem parar, ou teve pausas longas de meses?'), não uma seção separada. Já existe em exercise-selection-rules.json."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "label": "Equipamento disponível",
+      "alwaysAsked": true,
+      "fields": [
+        { "field": "availableEquipment", "type": "array<equipmentTypes>", "required": true, "note": "Multi-seleção fechada (exercise-bank.json/equipmentTypes). Já existe como campo; só faltava a tela (ver openQuestions em exercise-selection-rules.json)." }
+      ]
+    },
+    {
+      "id": 7,
+      "label": "Rotina atual (opcional)",
+      "alwaysAsked": false,
+      "fields": [
+        {
+          "field": "currentRoutineRaw",
+          "type": "string | upload",
+          "required": false,
+          "note": "Formato LEVE: a pessoa cola ou envia a própria ficha como já faz hoje no processo original ('vou enviar minha série atual') — NÃO precisa preencher exerciseCountByGroup campo a campo (13 números). A extração de currentRoutineRaw pra exerciseCountByGroup (training-volume-landmarks.json, 13 grupos) acontece na geração do protocolo, não no intake. Se a pessoa pular, currentRoutine fica null e exercise-selection-rules.json cai no coldStartCount (cálculo frio)."
+        }
+      ]
+    }
+  ],
+
+  "fieldReference": {
+    "note": "Onde cada campo é consumido de fato — pra não duplicar/discordar do schema já definido nos outros arquivos.",
+    "level": "training-volume-landmarks.json (MEV/MAV/MRV por nível), split-style-rules.json (suitsLevel), exercise-selection-rules.json",
+    "trainingTimeYears": "NOVO — só sinal de apoio, ainda sem regra formal de cruzamento (ver openQuestions)",
+    "daysAvailable": "split-style-rules.json (cycle.length <= daysAvailable)",
+    "sessionMinutes": "session-time-rules.json (maxSetsPerSession)",
+    "goalCategory / goalDetail": "progression-rules.json (repRangesByGoal) — mapeamento de saude_geral_sem_meta_especifica ainda aberto, ver openQuestions",
+    "goalDurationDays / eventBound": "progression-rules.json/periodizationByGoalDuration",
+    "hasLimitations / limitationTags": "exercise-selection-rules.json (filtro) + exercise-bank.json (contraindicationTagVocabulary)",
+    "limitationSafetyNote": "NOVO — contexto de exibição, não entra em nenhuma regra de seleção",
+    "physicalActivities": "activity-priority-rules.json (intakeSchema, weeklyLoadBudget, sameDayOrderingNote)",
+    "trainingConsistency": "exercise-selection-rules.json (equipmentComplexityOrder bias)",
+    "availableEquipment": "exercise-selection-rules.json (filtro) + exercise-bank.json (equipmentTypes)",
+    "currentRoutineRaw / currentRoutine": "exercise-selection-rules.json (exerciseCountFormula.withCurrentRoutine)"
+  },
+
+  "beforeAfterComparison": {
+    "masterPrompt": "48 campos em branco, texto livre, os mesmos pra qualquer perfil, mais a seção HÉRNIA DE DISCO fixa no documento.",
+    "novoFluxo_casoTipico_semLimitacaoSemEvento": "~11 itens (metade deles opcionais ou de seleção fechada, não texto livre): level, trainingTimeYears, daysAvailable, sessionMinutes*, goalCategory, goalDetail*, goalDurationDays*, hasLimitations (resposta 'não' fecha o passo 3 sem mais nada), physicalActivities, trainingConsistency, availableEquipment, currentRoutineRaw* (*opcional).",
+    "novoFluxo_herniaDeDisco": "Os mesmos ~11 itens do caso típico + 2 (limitationTags, limitationSafetyNote opcional) — não +10 campos clínicos fixos.",
+    "novoFluxo_saudeGeral40mais": "Os mesmos ~11 itens, sem nenhum campo de objetivo estético/evento forçado — goalCategory='saude_geral_sem_meta_especifica' é uma resposta válida e completa por si só."
+  },
+
+  "openQuestions": [
+    "Como goalCategory == 'saude_geral_sem_meta_especifica' mapeia em repRangesByGoal (progression-rules.json)? Proposta provisória: tratar como hypertrophy (mesmo estímulo de treino geral, só sem cobrança de meta estética) — precisa validar, não é uma categoria que já existe formalmente em repRangesByGoal.",
+    "currentRoutineRaw aceita texto livre ou foto da ficha, mas a extração disso pra exerciseCountByGroup (13 grupos) ainda não tem regra — depende de uma etapa de leitura/extração na geração do protocolo, não deste arquivo.",
+    "trainingTimeYears é coletado mas ainda não tem regra formal de cruzamento com level/trainingConsistency (ex: nível autodeclarado 'intermediário' com trainingTimeYears baixo) — engine-flow.md passo 1 já citava 'anos de treino' como parte da classificação de nível, mas nunca foi formalizado como regra com limiares.",
+    "sameDayAsMusculacao (passo 4) hoje é perguntado pra TODA atividade que não é musculação, mesmo quando a sobreposição de dia é improvável — vale revisar se isso cansa quem tem 3+ atividades secundárias cadastradas.",
+    "Copy exata de cada pergunta (texto, placeholder, ordem visual dentro do passo) ainda é decisão de tela — este arquivo define schema e ramificação, não o microcopy."
+  ]
+}
