@@ -7,6 +7,8 @@
       "daysAvailable": 5,
       "sessionMinutes": 75,
       "goal": "hipertrofia + recomposição",
+      "goalCategory": "hypertrophy_estetica",
+      "cardioPreference": "gosta de bike e HIIT ocasional, não gosta de corrida de rua",
       "limitations": [],
       "background": "8+ anos de treino, ex-atleta de basquete",
       "trainingConsistency": "continuo",
@@ -32,6 +34,7 @@
       "daysAvailable": 3,
       "sessionMinutes": 50,
       "goal": "força + estética",
+      "goalCategory": "forca",
       "limitations": [{"tag": "lower_back_sensitive", "description": "dor lombar leve — evitar terra convencional pesado"}],
       "trainingConsistency": "continuo",
       "goalDurationDays": 28,
@@ -49,8 +52,9 @@
       "daysAvailable": 3,
       "sessionMinutes": 40,
       "goal": "manutenção de massa em rotina corrida",
+      "goalCategory": "saude_geral_sem_meta_especifica",
       "limitations": [],
-      "background": "Objetivo contínuo (manutenção), sem data-alvo — por isso sem goalDurationDays: testa o fallback de periodização (mesociclo padrão único, sem plano de blocos).",
+      "background": "Objetivo contínuo (manutenção), sem data-alvo — por isso sem goalDurationDays: testa o fallback de periodização (mesociclo padrão único, sem plano de blocos). Musculação é rank 2 aqui (Corrida é rank 1), então maintenance_support já dispara pelo gatilho rankBased — não exercita o novo gatilho goalBased (ver persona intermediario_saude_geral_sem_meta).",
       "trainingConsistency": "continuo",
       "physicalActivities": [
         { "rank": 1, "name": "Corrida", "frequencyPerWeek": 4 },
@@ -66,6 +70,8 @@
       "daysAvailable": 4,
       "sessionMinutes": 60,
       "goal": "emagrecimento + ganho de força",
+      "goalCategory": "emagrecimento_recomposicao",
+      "cardioPreference": "sem preferência forte, topa qualquer coisa",
       "limitations": [{"tag": "knee_sensitive", "description": "joelho sensível em agachamento profundo"}],
       "trainingConsistency": "continuo",
       "goalDurationDays": 120,
@@ -87,6 +93,7 @@
       "daysAvailable": 4,
       "sessionMinutes": 60,
       "goal": "hipertrofia",
+      "goalCategory": "hypertrophy_estetica",
       "limitations": [],
       "background": "Cenário real relatado por personal trainer: entra e sai da academia há anos (treina 1-2 meses, para por vários meses, volta do zero) — se autodeclara 'intermediário' porque já treinou bastante no passado, mas não tem a coordenação/vivência de quem treina de forma contínua.",
       "trainingConsistency": "esporadico",
@@ -104,6 +111,7 @@
       "daysAvailable": 5,
       "sessionMinutes": 70,
       "goal": "chegar em forma pro casamento",
+      "goalCategory": "evento_especifico",
       "limitations": [],
       "background": "Tem uma data-alvo específica (evento), não só um objetivo genérico de estética — testa eventBound=true (taper no bloco final) e o plano de múltiplos blocos com goalDurationDays maior.",
       "trainingConsistency": "continuo",
@@ -113,6 +121,24 @@
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 5 }
       ],
       "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": null
+    },
+    {
+      "id": "intermediario_saude_geral_sem_meta",
+      "level": "intermediate",
+      "age": 44,
+      "daysAvailable": 4,
+      "sessionMinutes": 50,
+      "goal": "se manter saudável, sem meta de ganho de massa ou estética",
+      "goalCategory": "saude_geral_sem_meta_especifica",
+      "cardioPreference": "gosta de caminhada, não gosta de corrida",
+      "limitations": [],
+      "background": "Cenário real relatado pelo fundador: homem 40+ já treinado, treina regularmente, musculação É rank 1 (não tem outra atividade competindo), mas o objetivo pessoal é só manutenção de saúde — testa o novo gatilho goalBased de maintenanceSupportTriggers (activity-priority-rules.json): rank 1 não deveria empurrar esse perfil pra MAV/MRV só porque é tecnicamente prioritário. level='intermediate' (não beginner) é o que permite o gatilho disparar.",
+      "trainingConsistency": "continuo",
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
       "currentRoutine": null
     }
   ]

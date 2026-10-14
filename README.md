@@ -19,8 +19,9 @@ data/
   exercise-bank.json               # 209 exercícios: grupo muscular, papel, equipamento, tags de contraindicação, custo de recuperação
   exercise-selection-rules.json    # Como cruzar grupo-alvo × papel × equipamento × limitações pra escolher os exercícios do dia
   intake-flow-rules.json           # Ordem e ramificação das perguntas do cadastro — o que é sempre perguntado vs. o que só abre quando se aplica ao perfil
+  cardio-rules.json                # Cardio decidido por recoverySlack (folga de recuperação da musculação) × cardioEmphasis (objetivo do usuário) — modalidade, frequência, duração
 test/
-  test-personas.json               # 6 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
+  test-personas.json               # 7 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
@@ -34,7 +35,7 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização, exercício, séries, reps por dia) pras 6 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização, exercício, séries, reps por dia, e agora cardio) pras 7 personas de teste, já aplicando ranking de atividade, teto de tempo por sessão e banco de exercícios.
 
 O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única. PPL e ABC são dois estilos de 3 dias DIFERENTES, não o mesmo nome em dois idiomas: PPL agrupa por função do movimento (empurrar/puxar/pernas), ABC agrupa por músculo principal + sinergista (peito+tríceps / costas+bíceps / pernas+ombro+abdômen).
 
@@ -46,7 +47,11 @@ Decisão de produto: o motor não atribui dia da semana aos treinos — gera ses
 
 Decisão de produto: o treino fica FIXO durante um bloco (trocar toda semana quebra aderência), mas o tamanho e a quantidade de blocos não são um número universal fixo — são calculados a partir de `goalDurationDays`, o período que a própria pessoa estipulou pra aquele protocolo (ex: 35 dias, 60 dias, 90 dias — o que ela definir). Sem data informada, cai num mesociclo padrão único. Com data, o motor monta um plano de blocos (mesociclo + deload entre eles) e só reconsidera a seleção de exercício nas FRONTEIRAS entre blocos — nunca dentro de um bloco. Se a pessoa tem uma data-alvo específica (evento, não só um objetivo genérico), o último bloco tapera nos dias finais; sem isso, mantém estímulo alto até o fim. Como o público não são iniciantes, não existe fase de "rodagem" — janelas curtas aceleram a rampa de volume em vez de diluí-la. Ver `periodizationByGoalDuration` em `data/progression-rules.json`.
 
-Decisão de produto: o cadastro não é um formulário único e estático — a ordem e a ramificação das perguntas (o que é sempre perguntado vs. o que só abre quando se aplica) vêm de `data/intake-flow-rules.json`. Motivado por 2 usuários reais testando o MASTER PROMPT original (texto livre, 48 campos fixos pra qualquer perfil — uma mulher com hérnia de disco e um homem 40+ sem meta estética, os dois acharam grande): limitação física vira uma pergunta-porta fechada (sim/não) que só abre tags fechadas + 1 campo opcional de texto quando existe, em vez de um bloco clínico fixo nomeado por condição; e objetivo tem "saúde geral, sem meta estética específica" como resposta válida por si só. Rotina/alimentação/suplementação do master prompt original (24 dos 48 campos) ficam fora desta versão — não alimentam nenhuma regra do motor hoje.
+Decisão de produto: o cadastro não é um formulário único e estático — a ordem e a ramificação das perguntas (o que é sempre perguntado vs. o que só abre quando se aplica) vêm de `data/intake-flow-rules.json`. Motivado por 2 usuários reais testando o MASTER PROMPT original (texto livre, 48 campos fixos pra qualquer perfil — uma mulher com hérnia de disco e um homem 40+ sem meta estética, os dois acharam grande): limitação física vira uma pergunta-porta fechada (sim/não) que só abre tags fechadas + 1 campo opcional de texto quando existe, em vez de um bloco clínico fixo nomeado por condição; e objetivo tem "saúde geral, sem meta estética específica" como resposta válida por si só.
+
+Decisão de produto (definitiva, não pendência de prioridade): dieta e suplementação ficam de fora do app — precisam ser feitas e direcionadas por profissionais. `supplementation-rules.json` continua existindo pra classificar itens que já vêm de fora, mas o cadastro não pergunta isso. Cardio, por outro lado, entrou em escopo: `data/cardio-rules.json` decide modalidade (LISS/MISS/HIIT), frequência e duração a partir de dois eixos que não são perguntas novas — `recoverySlack` (quanta folga de recuperação a musculação deixa) × `cardioEmphasis` (qual papel o cardio deve ter, derivado do objetivo do usuário).
+
+Correção de feedback do fundador: "saúde geral, sem meta específica" (`goalCategory`) NÃO é o mesmo que hipertrofia — é `maintenance_support` (MV/MEV, sem rampa de crescimento) quando a pessoa já é treinada (`level != beginner`). Rank 1 decide prioridade entre atividades, não implica objetivo de crescimento: `maintenanceSupportTriggers` em `data/activity-priority-rules.json` agora tem 2 gatilhos independentes pra isso (rank-based e goal-based), ver também `data/progression-rules.json`.
 
 Pendências conhecidas (ver `docs/engine-flow.md`):
 
@@ -55,6 +60,9 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
 - Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.
 - Cadastro também ainda não pergunta `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays` nem `eventBound` (campos novos) — a lógica já está no motor, falta a tela.
-- `intake-flow-rules.json` já define ordem/ramificação das perguntas, mas 3 pontos ficaram abertos: mapeamento de `goalCategory == 'saude_geral_sem_meta_especifica'` em `repRangesByGoal` (proposta provisória: tratar como hypertrophy); extração de `currentRoutineRaw` (texto livre/foto da ficha atual) pra `exerciseCountByGroup`; e regra formal de cruzamento entre `trainingTimeYears` (novo) e `level`/`trainingConsistency`.
+- `intake-flow-rules.json` já define ordem/ramificação das perguntas, mas 2 pontos ficaram abertos: extração de `currentRoutineRaw` (texto livre/foto da ficha atual) pra `exerciseCountByGroup`; e regra formal de cruzamento entre `trainingTimeYears` (novo) e `level`/`trainingConsistency` (afeta também o `beginnerException` de `maintenanceSupportTriggers`, que hoje só olha `level`).
+- `cardio-rules.json`: a tabela de decisão (recoverySlack × cardioEmphasis) é estimativa de bom senso, não validada. `evento_especifico` ainda não tem regra de `cardioEmphasis` (depende do tipo de evento). Não existe um "banco de cardio" — modalidade específica fica solta em `cardioPreference`, texto livre.
+- Periodização × `maintenance_support`: o "compressed" da periodização acelera rampa de volume rumo ao MAV — não faz sentido quando o objetivo é `maintenance_support` (não existe MAV pra ramp). Falta decidir se deveria ficar inerte nesse caso.
 - Esperando retorno de outros personal trainers pra validar os ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos).
 - O plano de periodização por `goalDurationDays` só materializa exercício-a-exercício o bloco 1 — blocos seguintes aparecem no plano (duração, deload, refresh, taper) mas sem a lista de exercício gerada ainda.
+- Nenhuma persona de teste tem `level: "beginner"` ainda — o `beginnerException` de `maintenanceSupportTriggers` (goal-based) não foi validado contra nenhum caso real na simulação.

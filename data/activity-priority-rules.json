@@ -15,10 +15,26 @@
 
   "howItWorks": [
     "1. O motor localiza a entrada com name == 'Musculação' (ou equivalente) na lista e lê seu rank.",
-    "2. Se rank == 1: musculação segue o objetivo normal (hipertrofia/força, conforme o que o usuário declarou), com progressão MEV → MAV de progression-rules.json sem restrição extra.",
-    "3. Se rank > 1: o objetivo da musculação muda para 'maintenance_support' (repRangesByGoal.maintenance_support e targetRIRByPhase.maintenance_support em progression-rules.json), e o teto de volume semanal é decidido por weeklyLoadBudget abaixo — não por capAt padrão.",
-    "4. Em qualquer caso, soma-se frequencyPerWeek de TODAS as atividades da lista (incluindo musculação) para achar totalWeeklyActivityDays, e esse total decide o quanto o motor pode empurrar o volume das atividades que não são rank 1."
+    "2. Se rank == 1 E nenhum dos gatilhos de maintenanceSupportTriggers (abaixo) se aplica: musculação segue o objetivo normal (hipertrofia/força, conforme o que o usuário declarou), com progressão MEV → MAV de progression-rules.json sem restrição extra.",
+    "3. Se algum gatilho de maintenanceSupportTriggers se aplica (rank > 1, OU goalCategory == 'saude_geral_sem_meta_especifica' com level != 'beginner'): o objetivo da musculação muda para 'maintenance_support' (repRangesByGoal.maintenance_support e targetRIRByPhase.maintenance_support em progression-rules.json). O teto de volume semanal depende de QUAL gatilho disparou — ver maintenanceSupportTriggers.",
+    "4. Em qualquer caso, soma-se frequencyPerWeek de TODAS as atividades da lista (incluindo musculação) para achar totalWeeklyActivityDays, e esse total decide o quanto o motor pode empurrar o volume das atividades que não são rank 1 — mas só quando o gatilho que levou a maintenance_support foi o rank-based (ver maintenanceSupportTriggers.goalBased)."
   ],
+
+  "maintenanceSupportTriggers": {
+    "description": "Duas situações INDEPENDENTES levam o objetivo da musculação a 'maintenance_support' — correção de feedback do fundador: rank 1 decide PRIORIDADE entre atividades, não implica objetivo de crescimento. Alguém treinado que só quer manter a saúde, sem pretensão de ganho de massa, não deveria ser empurrado pra MAV/MRV só porque musculação é tecnicamente rank 1.",
+    "rankBased": {
+      "condition": "rank > 1 (musculação não é a atividade prioritária do usuário)",
+      "volumeCap": "decidido pelos tiers de weeklyLoadBudget abaixo (mav / mev / below_mev, conforme totalWeeklyActivityDays)",
+      "why": "A recuperação está sendo dividida com uma atividade mais prioritária — o teto depende de quanto sobra depois dela."
+    },
+    "goalBased": {
+      "condition": "rank == 1 (musculação é a atividade prioritária) E goalCategory == 'saude_geral_sem_meta_especifica' (intake-flow-rules.json) E level != 'beginner'",
+      "volumeCap": "direto no MV/MEV (training-volume-landmarks.json) via progression-rules.json, SEM passar pelos tiers de weeklyLoadBudget — não existe atividade concorrente disputando recuperação aqui, é escolha pessoal de não perseguir crescimento/mudança.",
+      "why": "Mesmo raciocínio do rankBased, mas disparado pelo objetivo declarado, não pela prioridade entre atividades.",
+      "beginnerException": "Se level == 'beginner' com esse mesmo goalCategory, este gatilho NÃO dispara — ainda não existe base construída pra 'manter'. O motor usa a progressão normal MEV → MAV (mesmo caminho de hypertrophy/força) até existir alguma base real, independente do que a pessoa declarou querer a longo prazo."
+    },
+    "sharedBehavior": "Nos dois casos, repRangesByGoal.maintenance_support e targetRIRByPhase.maintenance_support (progression-rules.json) se aplicam igual, e exerciseSelectionNote (preferir menor recoveryCost) também vale pros dois — a diferença entre os dois gatilhos é SÓ de onde vem o teto de volume (weeklyLoadBudget vs. direto no MV/MEV)."
+  },
 
   "weeklyLoadBudget": {
     "totalWeeklyActivityDaysFormula": "soma de frequencyPerWeek de todas as entradas em physicalActivities — ATENÇÃO: isso superestima quando atividades acontecem no mesmo dia calendário (ver knownFlaw abaixo). Até existir agendamento por dia da semana, tratar o resultado como teto conservador, não como contagem exata de dias distintos.",
@@ -60,7 +76,8 @@
     "A regra de corte de volume (tiers acima) é uma estimativa de bom senso, não uma referência científica fechada — ajustar com base em feedback real dos usuários nos check-ins.",
     "Hoje assume-se que existe sempre uma entrada chamada 'Musculação' na lista. Se o usuário não incluir musculação na lista (ex: só cadastrou outras atividades), o motor precisa de uma regra de fallback — ainda não definida.",
     "O problema de dias sobrepostos descrito em weeklyLoadBudget.knownFlaw ainda não tem solução definitiva, só o stopgapMitigation.",
-    "sameDayOrderingNote hoje só gera um alerta textual — não ajusta volume, RIR ou progressão. Falta decidir se, com mais dados de check-in, isso deveria virar um ajuste real (ex: RIR-alvo mais conservador no mesociclo) em vez de só um aviso."
+    "sameDayOrderingNote hoje só gera um alerta textual — não ajusta volume, RIR ou progressão. Falta decidir se, com mais dados de check-in, isso deveria virar um ajuste real (ex: RIR-alvo mais conservador no mesociclo) em vez de só um aviso.",
+    "maintenanceSupportTriggers.goalBased é binário por level (beginner vs. não-beginner) — não considera trainingTimeYears nem trainingConsistency (intake-flow-rules.json) pra decidir se 'já existe uma base pra manter'. Um intermediate com trainingConsistency='esporadico' e poucos meses de volta à academia pode estar mais perto de precisar construir base do que de manter."
   ],
 
   "rankClarification": "Rank é a prioridade DECLARADA pelo usuário pro que ele quer que o motor otimize — não é frequência semanal nem quão 'sério'/competitivo é o envolvimento com a atividade. Caso real: pessoa joga basquete 3x/semana (às vezes recreativo, às vezes competitivo por time amador) mas seu objetivo é saúde/estética, então musculação continua rank 1 mesmo o basquete sendo praticado com seriedade. O cadastro (UI de ranking) precisa deixar claro que é 'o que você quer que a gente priorize', não 'o que você leva mais a sério' — senão o usuário pode ranquear errado."

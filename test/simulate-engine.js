@@ -18,6 +18,7 @@ const activityPriority = loadData("activity-priority-rules.json");
 const sessionTimeRules = loadData("session-time-rules.json");
 const exerciseBank = loadData("exercise-bank.json");
 const splitStyleRules = loadData("split-style-rules.json");
+const cardioRules = loadData("cardio-rules.json");
 const personas = JSON.parse(fs.readFileSync(path.join(__dirname, "test-personas.json"), "utf8")).personas;
 
 // --- 1. Seleção de split (split-style-rules.json) ---
@@ -85,6 +86,11 @@ function dayType(dayLabel) {
 }
 
 // --- 2. Objetivo via ranking de atividades (activity-priority-rules.json) ---
+// maintenanceSupportTriggers (activity-priority-rules.json): DOIS gatilhos independentes
+// levam a "maintenance_support" — rankBased (rank > 1, tratado abaixo via tier) e goalBased
+// (rank == 1 mas a pessoa escolheu "saúde geral, sem meta específica" E já é treinada —
+// level != beginner). Correção de feedback do fundador: rank 1 decide PRIORIDADE entre
+// atividades, não implica objetivo de crescimento.
 function resolveActivityObjective(persona) {
   const activities = persona.physicalActivities || [];
   const musc = activities.find((a) => a.name === "Musculação");
@@ -95,12 +101,17 @@ function resolveActivityObjective(persona) {
     const max = t.maxTotalDays === undefined ? Infinity : t.maxTotalDays;
     return totalWeeklyActivityDays >= min && totalWeeklyActivityDays <= max;
   });
-  return { musc, isRank1, totalWeeklyActivityDays, tier };
+  const goalBasedMaintenance =
+    isRank1 && persona.goalCategory === "saude_geral_sem_meta_especifica" && persona.level !== "beginner";
+  return { musc, isRank1, totalWeeklyActivityDays, tier, goalBasedMaintenance };
 }
 
 // --- 3. Volume semanal alvo por grupo (MEV como início de mesociclo, com teto de prioridade) ---
 function weeklyTargetSets(group, level, objective) {
   const l = landmarks.muscleGroups[group][level];
+  if (objective.goalBasedMaintenance) {
+    return { sets: l.mev, mev: l.mev, mav: l.mav, mrv: l.mrv, capLabel: "teto: mev (maintenance_support — objetivo pessoal, sem atividade concorrente, ver maintenanceSupportTriggers.goalBased)" };
+  }
   if (objective.isRank1 || !objective.musc) {
     return { sets: l.mev, mev: l.mev, mav: l.mav, mrv: l.mrv, capLabel: "progressão normal rumo ao MAV/MRV (rank 1)" };
   }
@@ -269,6 +280,66 @@ function pickForGroup(group, exerciseCount, availableEquipment, limitationTags, 
   return { chosen, gap: chosen.length === 0 };
 }
 
+// --- 5.5 Cardio (cardio-rules.json) ---
+// recoverySlack e cardioEmphasis não são perguntas novas — vêm da classificação de
+// objetivo da musculação (goalKey, já calculado) e do goalCategory declarado.
+function resolveRecoverySlack(goalKey, level) {
+  if (goalKey === "maintenance_support") return "alta";
+  if (level === "advanced") return "baixa";
+  return "moderada"; // beginner ou intermediate com objetivo normal
+}
+function resolveCardioEmphasis(goalCategory) {
+  const row = cardioRules.cardioEmphasisTable.rows.find((r) => r.goalCategory === goalCategory);
+  return row ? row.cardioEmphasis : null; // null = evento_especifico (sem regra geral) ou goalCategory não informado
+}
+// cardioPreference (texto livre) só escolhe a modalidade DENTRO da banda já decidida —
+// nunca muda frequência/duração. Heurística simples de palavra-chave com negação curta
+// (ex: "não gosta de corrida"), não é parsing real — fica fácil de confundir com frases
+// mais complexas, mas evita o erro óbvio de recomendar algo que a pessoa disse que evita.
+function pickModality(band, cardioPreference) {
+  const text = (cardioPreference || "").toLowerCase();
+  const keywordMap = [
+    { keywords: ["caminhada", "liss", "leve"], modality: "LISS" },
+    { keywords: ["corrida", "elíptico", "eliptico", "miss"], modality: "MISS" },
+    { keywords: ["tiro", "intervalado", "hiit"], modality: "HIIT" },
+  ];
+  const negators = ["não gosta", "nao gosta", "não gosto", "nao gosto", "odeio", "evita", "evito", "detesto"];
+  const liked = new Set();
+  const disliked = new Set();
+  keywordMap.forEach(({ keywords, modality }) => {
+    keywords.forEach((k) => {
+      const idx = text.indexOf(k);
+      if (idx === -1) return;
+      const before = text.slice(Math.max(0, idx - 15), idx);
+      if (negators.some((n) => before.includes(n))) disliked.add(modality);
+      else liked.add(modality);
+    });
+  });
+  const likedInBand = band.find((m) => liked.has(m) && !disliked.has(m));
+  if (likedInBand) return likedInBand;
+  const bandWithoutDisliked = band.filter((m) => !disliked.has(m));
+  return (bandWithoutDisliked.length ? bandWithoutDisliked : band)[0]; // sem preferência utilizável → menor custo de recuperação, evitando o que foi explicitamente rejeitado
+}
+function buildCardioPlan(persona, goalKey) {
+  const recoverySlack = resolveRecoverySlack(goalKey, persona.level);
+  const cardioEmphasis = resolveCardioEmphasis(persona.goalCategory);
+  if (!cardioEmphasis) {
+    return { skipped: true, reason: `goalCategory="${persona.goalCategory || "não informado"}" ainda sem regra de cardioEmphasis (ver openQuestions em cardio-rules.json)` };
+  }
+  const row = cardioRules.decisionMatrix.rows.find((r) => r.cardioEmphasis === cardioEmphasis && r.recoverySlack === recoverySlack);
+  if (!row) return { skipped: true, reason: `combinação ${cardioEmphasis}×${recoverySlack} sem linha na decisionMatrix` };
+  return {
+    skipped: false,
+    recoverySlack,
+    cardioEmphasis,
+    modality: pickModality(row.modality, persona.cardioPreference),
+    band: row.modality,
+    frequencyPerWeek: row.frequencyPerWeek,
+    minutesPerSession: row.minutesPerSession,
+    note: row.note,
+  };
+}
+
 // --- 6. Monta o protocolo completo de uma persona ---
 function buildProtocol(persona) {
   const objective = resolveActivityObjective(persona);
@@ -286,7 +357,10 @@ function buildProtocol(persona) {
   const limitationTags = (persona.limitations || []).map((l) => l.tag);
   const availableEquipment = persona.availableEquipment || ["bodyweight"];
   const currentRoutine = (persona.currentRoutine && persona.currentRoutine.exerciseCountByGroup) || {};
-  const goalKey = objective.isRank1 || !objective.musc ? "hypertrophy" : "maintenance_support";
+  // maintenance_support agora tem 2 gatilhos independentes (ver resolveActivityObjective) —
+  // o rankBased (musc existe e não é rank1) OU o goalBased (já calculado em objective).
+  const isMaintenance = objective.goalBasedMaintenance || (!!objective.musc && !objective.isRank1);
+  const goalKey = isMaintenance ? "maintenance_support" : "hypertrophy";
   const preferLowRecovery = goalKey === "maintenance_support";
   const preferGuidedEquipment = persona.trainingConsistency === "esporadico";
 
@@ -410,17 +484,29 @@ function buildProtocol(persona) {
 
   const periodization = planPeriodization(persona.goalDurationDays, persona.level, persona.eventBound);
 
-  return { objective, split, groupInfo, dayPlans, warnings, goalKey, budgetMinutes, sessionMinutes: persona.sessionMinutes, periodization };
+  const cardioPlan = buildCardioPlan(persona, goalKey);
+  // orderingAndSafety (cardio-rules.json): quando cardioEmphasis é mínima e existe uma
+  // entrada "Cardio" caindo no mesmo dia da musculação, sinalizar — nunca recalcular nada.
+  if (!cardioPlan.skipped && cardioPlan.cardioEmphasis === "minima") {
+    const cardioActivity = (persona.physicalActivities || []).find((a) => a.name === "Cardio" && a.sameDayAsMusculacao);
+    if (cardioActivity) {
+      warnings.push(
+        `Cardio e musculação no mesmo dia com cardioEmphasis mínima: priorizar musculação primeiro e preferir LISS nesse dia específico, mesmo que a banda geral permita mais (cardio-rules.json/orderingAndSafety).`
+      );
+    }
+  }
+
+  return { objective, split, groupInfo, dayPlans, warnings, goalKey, budgetMinutes, sessionMinutes: persona.sessionMinutes, periodization, cardioPlan };
 }
 
 // --- 7. Impressão ---
 console.log("=".repeat(70));
-console.log("SIMULAÇÃO DO MOTOR — protocolo completo das 4 personas de teste");
+console.log(`SIMULAÇÃO DO MOTOR — protocolo completo das ${personas.length} personas de teste`);
 console.log("=".repeat(70));
 
 personas.forEach((p) => {
   console.log(`\n${"-".repeat(70)}\nPersona: ${p.id}`);
-  console.log(`Nível: ${p.level} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Sessão: ${p.sessionMinutes}min | Meta: ${p.goal}`);
+  console.log(`Nível: ${p.level} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Sessão: ${p.sessionMinutes}min | Meta: ${p.goal} [goalCategory: ${p.goalCategory || "não informado"}]`);
   if (p.limitations.length) console.log(`Limitações: ${p.limitations.map((l) => `${l.description} [${l.tag}]`).join("; ")}`);
   console.log(`Equipamento disponível: ${(p.availableEquipment || []).join(", ")}`);
   if (p.trainingConsistency === "esporadico") {
@@ -433,8 +519,13 @@ personas.forEach((p) => {
     console.log(
       `Atividades: ${p.physicalActivities.map((a) => `${a.name} (rank ${a.rank}, ${a.frequencyPerWeek}x/sem)`).join(" | ")}`
     );
+    const maintenanceOrigin = objective.goalBasedMaintenance
+      ? " — goalBased (rank 1, mas goalCategory=saude_geral_sem_meta_especifica + level!=beginner — teto direto no MEV, sem passar por weeklyLoadBudget)"
+      : !objective.isRank1
+      ? ` — rankBased (${objective.tier ? objective.tier.label : "sem tier"})`
+      : "";
     console.log(
-      `Objetivo da musculação: ${protocol.goalKey}${objective.isRank1 ? "" : ` — ${objective.tier ? objective.tier.label : "sem tier"}`} ` +
+      `Objetivo da musculação: ${protocol.goalKey}${maintenanceOrigin} ` +
         `(totalWeeklyActivityDays=${objective.totalWeeklyActivityDays}, soma simples — ver knownFlaw em activity-priority-rules.json)`
     );
   } else {
@@ -467,6 +558,17 @@ personas.forEach((p) => {
   });
   if (per.blocks.length > 1 || per.mode !== "sem_periodo_informado") {
     console.log(`  (o treino detalhado abaixo é o do bloco 1 — blocos seguintes reaplicam a seleção de exercício no refresh, não simulados exercício-a-exercício ainda)`);
+  }
+
+  const cp = protocol.cardioPlan;
+  if (cp.skipped) {
+    console.log(`Cardio: não gerado — ${cp.reason}`);
+  } else {
+    console.log(
+      `Cardio (cardio-rules.json): ${cp.modality} — ${cp.frequencyPerWeek[0]}-${cp.frequencyPerWeek[1]}x/semana, ${cp.minutesPerSession[0]}-${cp.minutesPerSession[1]}min/sessão ` +
+        `(recoverySlack=${cp.recoverySlack}, cardioEmphasis=${cp.cardioEmphasis}${cp.band.length > 1 ? `, banda=${cp.band.join("/")}` : ""})`
+    );
+    if (cp.note) console.log(`  (${cp.note})`);
   }
 
   protocol.dayPlans.forEach((day) => {

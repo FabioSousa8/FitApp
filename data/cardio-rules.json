@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "description": "Decisão de produto (Fabio, out/2026): cardio entra no escopo do motor agora, mas não é um valor fixo nem um auto-relato puro — é decidido a partir de DOIS eixos: quanta folga de recuperação a musculação deixa (recoverySlack, derivado da classificação de objetivo da musculação, não perguntado de novo) × qual papel o cardio deve ter no objetivo do usuário (cardioEmphasis, derivado de goalCategory). Isso preenche a lacuna citada em engine-flow.md passo 6 ('treino + cardio + dieta + suplementação' — cardio ainda não tinha regra própria).",
+
+  "inputs": {
+    "musculacaoGoalClassification": "'normal' (hypertrophy/força, progressão MEV→MAV/MRV) | 'maintenance_support' (MV/MEV, teto fixo) — já calculado no passo 2 do fluxo (activity-priority-rules.json/maintenanceSupportTriggers). Não é uma pergunta nova, é reaproveitado.",
+    "level": "beginner | intermediate | advanced — já coletado (intake-flow-rules.json passo 1). Usado só dentro do caminho 'normal' (ver recoverySlackTable), já que advanced tende a rodar mais perto do MRV (training-volume-landmarks.json) e sobra menos recuperação pro cardio.",
+    "goalCategory": "já coletado (intake-flow-rules.json passo 2). Decide cardioEmphasis.",
+    "cardioPreference": "string opcional, texto livre — o que a pessoa gosta/evita em cardio (ex: 'gosto de correr', 'odeio esteira'). Novo campo, coletado em intake-flow-rules.json passo 4. Usado só pra escolher a MODALIDADE dentro da banda que a decisionMatrix já decidiu, nunca pra mudar frequência/duração/intensidade.",
+    "sameDayAsMusculacao": "já existe (activity-priority-rules.json/intakeSchema) — quando a pessoa tem uma entrada 'Cardio' em physicalActivities que cai no mesmo dia da musculação.",
+    "limitationTags": "já existe (exercise-bank.json/contraindicationTagVocabulary) — reaproveitado aqui só pra filtrar modalidade de alto impacto, não pra bloquear cardio."
+  },
+
+  "recoverySlackTable": {
+    "description": "Quanta folga de recuperação sobra pra cardio, derivada da classificação de objetivo da musculação — não é uma pergunta nova no cadastro.",
+    "rows": [
+      { "musculacaoGoalClassification": "maintenance_support", "level": "qualquer", "recoverySlack": "alta", "why": "Volume de musculação já travado no MV/MEV (ver maintenanceSupportTriggers) — sobra bastante capacidade de recuperação pro cardio, independente do nível." },
+      { "musculacaoGoalClassification": "normal", "level": "beginner", "recoverySlack": "moderada", "why": "Volume de musculação ainda baixo (MEV do beginner), mas a capacidade total de recuperação também é menor — tratado como meio-termo, não alta." },
+      { "musculacaoGoalClassification": "normal", "level": "intermediate", "recoverySlack": "moderada" },
+      { "musculacaoGoalClassification": "normal", "level": "advanced", "recoverySlack": "baixa", "why": "MRV do advanced (training-volume-landmarks.json) é bem mais alto — a musculação já consome boa parte da capacidade de recuperação, sobra menos pro cardio." }
+    ],
+    "note": "Simplificação de bom senso: não acompanha a posição real dentro do mesociclo (alguém no início de um bloco 'normal', perto do MEV, tem mais folga do que no fim, perto do MAV/MRV) — ver openQuestions."
+  },
+
+  "cardioEmphasisTable": {
+    "description": "Qual papel o cardio deve ter, derivado do objetivo declarado (goalCategory, intake-flow-rules.json) — não é o usuário escolhendo 'quanto cardio eu quero', é o motor decidindo o que serve ao objetivo.",
+    "rows": [
+      { "goalCategory": "emagrecimento_recomposicao", "cardioEmphasis": "alta", "why": "Cardio tem papel deliberado no gasto calórico — dentro do que a recuperação permitir (ver decisionMatrix)." },
+      { "goalCategory": "hypertrophy_estetica", "cardioEmphasis": "minima", "why": "Prioridade é o estímulo de hipertrofia — cardio mantido só pelo mínimo de saúde cardiovascular, minimizando efeito de interferência." },
+      { "goalCategory": "forca", "cardioEmphasis": "minima", "why": "Mesmo raciocínio de hypertrophy_estetica — cardio não deve competir com a recuperação pra força/carga." },
+      { "goalCategory": "saude_geral_sem_meta_especifica", "cardioEmphasis": "moderada", "why": "Saúde cardiovascular geral, sem agenda de perda de peso nem minimização por performance." },
+      { "goalCategory": "evento_especifico", "cardioEmphasis": null, "why": "Depende do TIPO de evento (casamento tende a estética/emagrecimento_recomposicao; uma prova de corrida pede condicionamento específico) — sem regra geral ainda, ver openQuestions." }
+    ]
+  },
+
+  "modalityVocabulary": {
+    "LISS": "Intensidade baixa e constante (ex: caminhada rápida, bike leve) — zona de conseguir conversar confortavelmente. Menor custo de recuperação, menor risco de interferência com ganho de força/hipertrofia.",
+    "MISS": "Intensidade moderada e constante (ex: corrida leve, elíptico moderado) — zona de só conseguir frases curtas, não um papo corrido.",
+    "HIIT": "Intervalado de alta intensidade (ex: tiros, bike/remo intervalado) — maior custo de recuperação e maior efeito de interferência se feito perto de musculação pesada; melhor retorno por minuto pra quem tem pouco tempo e folga de recuperação pra absorver."
+  },
+
+  "decisionMatrix": {
+    "description": "cardioEmphasis × recoverySlack → modalidade preferida, frequência, duração por sessão. Estimativa de bom senso (mesma natureza das outras tabelas do motor, ex: weeklyLoadBudget), não uma referência fechada.",
+    "rows": [
+      { "cardioEmphasis": "minima", "recoverySlack": "baixa", "modality": ["LISS"], "frequencyPerWeek": [2, 2], "minutesPerSession": [15, 20] },
+      { "cardioEmphasis": "minima", "recoverySlack": "moderada", "modality": ["LISS"], "frequencyPerWeek": [2, 2], "minutesPerSession": [20, 25] },
+      { "cardioEmphasis": "minima", "recoverySlack": "alta", "modality": ["LISS", "MISS"], "frequencyPerWeek": [2, 3], "minutesPerSession": [20, 30], "note": "Mesmo com folga de recuperação alta, mantém emphasis mínima — a prioridade declarada é força/estética, não condicionamento. Folga não é motivo pra empurrar cardio além do que o objetivo pede." },
+      { "cardioEmphasis": "moderada", "recoverySlack": "baixa", "modality": ["LISS", "MISS"], "frequencyPerWeek": [2, 2], "minutesPerSession": [20, 25] },
+      { "cardioEmphasis": "moderada", "recoverySlack": "moderada", "modality": ["MISS"], "frequencyPerWeek": [2, 3], "minutesPerSession": [25, 30] },
+      { "cardioEmphasis": "moderada", "recoverySlack": "alta", "modality": ["MISS", "HIIT"], "frequencyPerWeek": [3, 3], "minutesPerSession": [25, 35] },
+      { "cardioEmphasis": "alta", "recoverySlack": "baixa", "modality": ["MISS"], "frequencyPerWeek": [2, 3], "minutesPerSession": [25, 30], "note": "Emphasis alta (emagrecimento) mas slack baixo (musculação consumindo muita recuperação): o motor NÃO empurra cardio além da recuperação disponível. Déficit calórico adicional fica a cargo da dieta (fora de escopo), não de sacrificar recuperação da musculação." },
+      { "cardioEmphasis": "alta", "recoverySlack": "moderada", "modality": ["MISS", "HIIT"], "frequencyPerWeek": [3, 4], "minutesPerSession": [25, 35] },
+      { "cardioEmphasis": "alta", "recoverySlack": "alta", "modality": ["MISS", "HIIT"], "frequencyPerWeek": [3, 5], "minutesPerSession": [30, 40], "note": "Maior margem porque a musculação já está em maintenance_support (MV/MEV) — bastante folga de recuperação pra absorver mais cardio." }
+    ],
+    "modalityChoiceWithinBand": "Quando a banda permite mais de uma modalidade (ex: ['MISS','HIIT']), cardioPreference decide qual — se a pessoa não informar preferência, o motor prefere a modalidade de menor custo de recuperação dentro da banda (LISS > MISS > HIIT) pelo mesmo motivo de exerciseSelectionNote em activity-priority-rules.json."
+  },
+
+  "orderingAndSafety": {
+    "sameDaySequencing": "Quando cardio e musculação caem no mesmo dia (sameDayAsMusculacao) E cardioEmphasis == 'minima': cardio SEMPRE depois da musculação nesse dia específico, preferindo LISS mesmo que a banda geral permita MISS — protege o estímulo de força/hipertrofia fresco. Mesmo espírito de sameDayOrderingNote em activity-priority-rules.json: é um sinalizador/preferência, não uma regra que bloqueia a ordem contrária.",
+    "jointImpactSafety": "limitationTags de sensibilidade articular (knee_sensitive, ankle_sensitive, hip_sensitive) sinalizam preferência por modalidade de baixo impacto (bike, elíptico, caminhada) em vez de HIIT de alto impacto (tiros, pliometria) — sinalização, não bloqueio automático, mesmo padrão usado no resto do motor."
+  },
+
+  "openQuestions": [
+    "decisionMatrix é estimativa de bom senso, não validada contra dados reais — mesma natureza de weeklyLoadBudget.tiers (activity-priority-rules.json) quando foi criada.",
+    "recoverySlackTable deriva só de musculacaoGoalClassification + level — não acompanha a posição real dentro do mesociclo (ex: início vs. fim de um bloco 'normal', mais perto do MEV ou do MAV/MRV). Refinar isso exige rastrear % do caminho MEV→MAV/MRV, não só a classificação binária.",
+    "evento_especifico não tem regra de cardioEmphasis — depende do tipo de evento (estético vs. condicionamento específico como uma prova), que hoje só existe como texto livre em goalDetail (intake-flow-rules.json). Sem regra geral ainda.",
+    "Não existe um 'banco de cardio' equivalente ao exercise-bank.json — modalidade aqui é um vocabulário fechado de 3 itens (LISS/MISS/HIIT), não exercícios específicos (esteira vs. bike vs. elíptico vs. corrida de rua). cardioPreference cobre isso de forma solta, via texto livre, por ora.",
+    "jointImpactSafety hoje só sinaliza — não existe uma tabela fechada de qual modalidade é 'alto impacto' por tag de limitação, é uma heurística direta no texto da regra."
+  ]
+}

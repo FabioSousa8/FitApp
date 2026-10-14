@@ -37,7 +37,7 @@
     "weeklyVolumeStepSets": 1.5,
     "startAt": "mev",
     "capAt": "mrv_ou_sinal_de_fadiga",
-    "note": "Este teto padrão (progressão rumo ao MRV) vale apenas quando a musculação é a atividade rank 1 do usuário. Quando não é, activity-priority-rules.json sobrescreve capAt (trava no MEV ou abaixo). Em ambos os casos, o volume do dia também não pode ultrapassar maxSetsPerSession de session-time-rules.json — esse teto de tempo é verificado depois do teto de prioridade de atividade."
+    "note": "Este teto padrão (progressão rumo ao MRV) vale só quando o objetivo classificado é hypertrophy/força — ou seja, quando NENHUM gatilho de maintenanceSupportTriggers (activity-priority-rules.json) disparou. Existem dois gatilhos independentes pra 'maintenance_support' em vez do teto padrão: (1) rank > 1 — capAt vem dos tiers de weeklyLoadBudget, porque a recuperação é compartilhada com uma atividade mais prioritária; (2) rank == 1 mas goalCategory == 'saude_geral_sem_meta_especifica' (intake-flow-rules.json) E level != 'beginner' — capAt vai direto pro MV/MEV, sem passar pelos tiers, porque aqui não existe atividade concorrente, é escolha pessoal de não perseguir crescimento. Pra um beginner com esse mesmo goalCategory, ainda não existe base construída pra 'manter' — o motor usa a progressão normal MEV→MAV até existir alguma base real. Em qualquer caso, o volume do dia também não pode ultrapassar maxSetsPerSession de session-time-rules.json — esse teto de tempo é verificado depois do teto de prioridade/objetivo."
   },
 
   "periodizationByGoalDuration": {
@@ -61,7 +61,8 @@
     "openQuestions": [
       "eventBound hoje é um campo binário simples — não diferencia quanto antes do evento o taper deveria começar (1 semana é a estimativa de bom senso usada, igual ao deloadProtocol normal). Vale calibrar com feedback real.",
       "O refresh de exercício na fronteira de bloco ainda não tem uma regra formal de QUANTO trocar (todos os exercícios? só os que estagnaram por plateauRule? só os que o usuário não gosta?) — por ora assume reaplicar exercise-selection-rules.json do zero pro mesmo grupo/papel, o que naturalmente varia pela lógica de variedade já existente (usedIds em simulate-engine.js), mas não é uma regra explícita ainda.",
-      "simulate-engine.js hoje só materializa o treino detalhado do PRIMEIRO bloco do plano — os blocos seguintes aparecem no plano (duração, se tem deload, se tem refresh/taper) mas não têm a lista de exercício gerada. Falta decidir se vale simular todos os blocos completos ou se o backend real gera o próximo bloco só quando a pessoa chegar nele."
+      "simulate-engine.js hoje só materializa o treino detalhado do PRIMEIRO bloco do plano — os blocos seguintes aparecem no plano (duração, se tem deload, se tem refresh/taper) mas não têm a lista de exercício gerada. Falta decidir se vale simular todos os blocos completos ou se o backend real gera o próximo bloco só quando a pessoa chegar nele.",
+      "'compressed' (algoritmo passo 3/4) acelera a rampa de volume rumo ao MAV em janelas curtas — mas isso não faz sentido quando o objetivo é 'maintenance_support' (ver maintenanceSupportTriggers em activity-priority-rules.json): não existe MAV pra ramp, o teto já é MV/MEV fixo. Falta decidir se 'compressed' deveria simplesmente ficar inerte (sem efeito) nesse caso, em vez de tentar acelerar rumo a um teto que não existe."
     ]
   },
   "exerciseRoleProgramming": {
