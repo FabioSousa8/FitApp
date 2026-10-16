@@ -9,6 +9,16 @@ O motor deste app nasceu de um processo pessoal: usar IA para montar um protocol
 ## Estrutura
 
 ```
+engine/
+  index.js                          # Ponto de entrada público do motor — generateProtocol(persona). Extraído de test/simulate-engine.js em out/2026.
+  data.js                            # Carrega as regras de data/*.json uma vez só
+  level.js                           # Classificação de nível (cruzamento autodeclarado × tempo de treino)
+  activity.js                        # Objetivo da musculação via ranking de atividades
+  volume.js                          # Volume semanal alvo por grupo muscular (MEV/MAV/MRV)
+  periodization.js                   # Blocos de treino/deload por goalDurationDays + modelo de descanso
+  exercises.js                       # Séries/reps por papel do exercício + seleção no banco
+  cardio.js                          # Modalidade/frequência/duração de cardio
+  protocol.js                        # Orquestra tudo acima em buildProtocol(persona)
 data/
   training-volume-landmarks.json   # Volume (séries/semana) por grupo muscular e nível: MV, MEV, MAV, MRV
   progression-rules.json           # Regras de progressão de carga, deload, platô e aderência
@@ -22,7 +32,7 @@ data/
   cardio-rules.json                # Cardio decidido por recoverySlack (folga de recuperação da musculação) × cardioEmphasis (objetivo do usuário) — modalidade, frequência, duração
 test/
   test-personas.json               # 11 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
-  simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
+  simulate-engine.js                # Simulador: roda as personas contra engine/ e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
 legal/
@@ -33,11 +43,21 @@ legal/
 
 ```bash
 node test/simulate-engine.js
+# ou: npm test
 ```
+
+## Usar o motor em outro lugar
+
+```js
+const { generateProtocol } = require("./engine");
+const protocol = generateProtocol(persona); // persona: mesmo shape de test/test-personas.json
+```
+
+`generateProtocol` é a única função que um consumidor externo (API, app mobile, outro script) deveria precisar — ver o cabeçalho de `engine/index.js` pra entender como os módulos internos se encaixam.
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 11 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios.
+Motor rodando de ponta a ponta, agora como módulo reutilizável em `engine/` (extraído de dentro do simulador em out/2026 — antes só existia como script de teste/print, sem como ser consumido por nada além do terminal): `node test/simulate-engine.js` chama `generateProtocol()` e gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 11 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios. Validado byte-a-byte contra a versão anterior (pré-extração): mesma saída, exceto a mensagem final do simulador.
 
 Decisão de produto: o app será mobile pra iOS e Android (abordagem técnica — ex: React Native/Expo — delegada ao fundador, ainda não iniciada; o site é só uma página explicativa, sem o motor).
 

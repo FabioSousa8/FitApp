@@ -1,0 +1,10 @@
+{
+  "name": "fitapp-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Motor de geração de protocolo de treino do FitApp — regras de volume, periodização, split, seleção de exercício e cardio. Ver README.md e docs/engine-flow.md.",
+  "main": "engine/index.js",
+  "scripts": {
+    "test": "node test/simulate-engine.js"
+  }
+}
