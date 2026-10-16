@@ -43,6 +43,7 @@ docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
 legal/
   termo-de-uso.md                   # Termo de uso e aviso de responsabilidade (rascunho — precisa de revisão jurídica antes de publicar)
+  politica-de-privacidade.md        # Política de privacidade LGPD (rascunho — mesma pendência de revisão jurídica)
 ```
 
 ## Rodar a simulação
@@ -68,6 +69,8 @@ Motor rodando de ponta a ponta, agora como módulo reutilizável em `engine/` (e
 Decisão de produto: o app será mobile pra iOS e Android (o site é só uma página explicativa, sem o motor). Scaffold iniciado out/2026 em `app/` (Expo + TypeScript + Expo Router) — login/cadastro de usuário e o wizard de cadastro (7 passos, fiel a `data/intake-flow-rules.json`) já funcionam de ponta a ponta: cadastro → `generateProtocol()` (o motor roda embarcado no app, mesma função de `test/simulate-engine.js`) → tela de protocolo. Autenticação usa Supabase quando configurado, com um modo local de fallback só pra navegar o app sem backend ainda (ver `app/README.md`). Validado rodando `npx expo export -p ios` com sucesso (bundla sem simulador, confirma que o Metro resolve o motor através do workspace). Branding (nome/paleta/ícone, decisão #3) continua aberta — a UI usa uma paleta neutra até isso ser decidido.
 
 Rascunho do termo de uso e aviso de responsabilidade (decisão #8) em `legal/termo-de-uso.md` — cobre a natureza do serviço (não substitui profissional/médico), responsabilidades do usuário, riscos do exercício e limitação de responsabilidade. **Precisa de revisão jurídica antes de publicar pra qualquer usuário**, mesmo beta fechado.
+
+Rascunho da política de privacidade (decisão #9, out/2026) em `legal/politica-de-privacidade.md` — descreve com precisão os dados reais coletados (conta via Supabase Auth ou modo local; cadastro completo; protocolo gerado), onde ficam guardados (aparelho sempre; Supabase quando configurado), e os direitos do usuário sob a LGPD. Levanta um ponto que a revisão jurídica precisa confirmar: se as limitações físicas do cadastro contam como dado sensível de saúde (art. 5º LGPD) e, se contarem, se o consentimento atual (aceitar o termo ao criar conta) é suficiente. Também precisa, antes de publicar: nome legal do responsável, região de hospedagem do projeto Supabase, e um e-mail de contato real (recomendação de formato já em `legal/termo-de-uso.md` seção 12 — falta criar a conta de verdade).
 
 O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única. PPL e ABC são dois estilos de 3 dias DIFERENTES, não o mesmo nome em dois idiomas: PPL agrupa por função do movimento (empurrar/puxar/pernas), ABC agrupa por músculo principal + sinergista (peito+tríceps / costas+bíceps / pernas+ombro+abdômen).
 

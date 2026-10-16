@@ -57,7 +57,7 @@ O conteúdo, as regras do motor, a marca e os materiais do FitApp pertencem aos 
 
 ## 8. Dados pessoais e privacidade
 
-O cadastro coleta dados como nível de treino, tempo de experiência, objetivo, limitações físicas e preferências — usados exclusivamente para gerar e ajustar seu protocolo. **Este termo não substitui uma Política de Privacidade completa** (ainda a ser escrita, alinhada à LGPD — Lei Geral de Proteção de Dados), que deve detalhar quais dados são coletados, por quanto tempo são guardados, com quem podem ser compartilhados e como o usuário pode solicitar correção ou exclusão. Diagnósticos médicos específicos e dados de saúde sensíveis (ex: BF%, peso, exames) não são coletados pelo app — decisão de produto definitiva (ver `docs/engine-flow.md`).
+O cadastro coleta dados como nível de treino, tempo de experiência, objetivo, limitações físicas e preferências — usados exclusivamente para gerar e ajustar seu protocolo. **Este termo não substitui a Política de Privacidade completa**, em `legal/politica-de-privacidade.md`, alinhada à LGPD (Lei Geral de Proteção de Dados) — ela detalha quais dados são coletados, onde ficam guardados, por quanto tempo, com quem podem ser compartilhados e como solicitar correção ou exclusão. Diagnósticos médicos específicos e dados de saúde sensíveis (ex: BF%, peso, exames) não são coletados pelo app — decisão de produto definitiva (ver `docs/engine-flow.md`). A política de privacidade levanta um ponto que ainda precisa de confirmação jurídica: se as limitações físicas do cadastro (tags + descrição livre) contam como dado sensível sob a LGPD e, se contarem, se o aceite deste termo é suficiente como consentimento ou se é preciso algo mais específico.
 
 ## 9. Alterações no serviço e neste termo
 
@@ -73,7 +73,7 @@ Este termo é regido pelas leis da República Federativa do Brasil. Fica eleito 
 
 ## 12. Contato
 
-Dúvidas sobre este termo: [e-mail/canal de contato a definir].
+Dúvidas sobre este termo, sobre a Política de Privacidade (`legal/politica-de-privacidade.md`) ou solicitações relacionadas aos seus dados: **recomendação de canal — um e-mail dedicado ao app (não o e-mail pessoal do Fabio), por exemplo algo como `contato.fitapp@gmail.com`, até existir um domínio próprio.** Essa é só uma recomendação de formato; a conta em si ainda precisa ser criada de fato (ação de quem é responsável pelo app — não posso criar contas em nome de ninguém) e o endereço real precisa substituir este texto antes de publicar.
 
 ---
 
@@ -81,6 +81,6 @@ Dúvidas sobre este termo: [e-mail/canal de contato a definir].
 
 - Revisão por advogado (Brasil, direito do consumidor + LGPD) — condição pra publicar, não opcional.
 - Definir o nome legal/jurídico do responsável pelo app (pessoa física/CNPJ) pra preencher as lacunas de identificação e foro.
-- Escrever a Política de Privacidade completa (LGPD) referenciada na seção 8 — documento separado, ainda não iniciado.
-- Decidir o canal de contato oficial (e-mail, formulário) antes de publicar.
+- ~~Escrever a Política de Privacidade completa (LGPD) referenciada na seção 8~~ — resolvido (out/2026): `legal/politica-de-privacidade.md`. Ainda precisa da mesma revisão jurídica.
+- Criar de verdade o e-mail de contato recomendado na seção 12 (ou outro, se preferir) — ação de quem é responsável pelo app, não deste assistente.
 - Confirmar o nome do produto antes da versão final — ainda em aberto (decisão de branding, #3 na lista de pendências).
