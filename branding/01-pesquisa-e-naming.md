@@ -1,6 +1,6 @@
 # Branding — Etapa 1: entendimento do produto, pesquisa de mercado e naming
 
-**Status: em andamento.** Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação). Pelo próprio desenho do processo, ele **para aqui**: as etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) dependem do nome escolhido — não faz sentido desenhar um logotipo antes de saber quais letras ele precisa formar.
+**Status: em andamento.** Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais uma seção 6 com uma rodada extra de exploração internacional de nomes, pedida depois da primeira leitura. Pelo próprio desenho do processo, ele **para aqui**: as etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) dependem do nome escolhido — não faz sentido desenhar um logotipo antes de saber quais letras ele precisa formar.
 
 _out/2026._
 
@@ -20,9 +20,9 @@ _out/2026._
 
 **Personalidade de marca.** A forma como este projeto foi construído até aqui — recusar features que exigiriam dado sensível, incorporar feedback real de personal trainer, preferir "sem meta específica" como resposta válida em vez de forçar todo mundo pra estética, nomear decisões como "definitivas" só depois de evidência — sugere uma marca que se apoia em **rigor e raciocínio, não em hype**. Minha hipótese de personalidade: competente, direta, confiável — mais "a lógica de um treinador de verdade, sistematizada" do que "motivação de internet" (sem abrir mão de energia; é sóbrio, não é clínico/frio).
 
-**Modelo de negócio / registro de preço.** Não está documentado em nenhum lugar do projeto se o app será gratuito, pago ou freemium. Isso muda o registro visual (minimalista-acessível é diferente de minimalista-premium/exclusivo, mesmo os dois sendo minimalistas). Minha hipótese, só pelo próprio motivo de existir do produto ("quem não pode pagar personal trainer"): **acessível**, não um posicionamento de luxo. Preciso que você confirme — isso entra direto na escolha de paleta e tom mais adiante.
+Em termos mais concretos (reformulando depois de uma primeira pergunta que saiu abstrata demais): é a diferença entre um app que fala "VAMOS DESTRUIR ESSE TREINO 🔥💪" e um que fala "seu protocolo foi recalculado — nível reclassificado pra avançado com base no seu histórico". A hipótese é a segunda linha, não a primeira. **Ainda em aberto, aguardando você confirmar ou corrigir.**
 
-Essas são as únicas duas perguntas que considero essenciais pra seguir com critério — o resto dá pra inferir do que já existe.
+**Modelo de negócio / registro de preço.** ~~Não está documentado...~~ **Respondido: o app será pago.** Isso ajusta a hipótese anterior de "acessível" (seção original) pra algo mais específico: não é bargain/gratuito, mas também não é luxo/exclusivo — é "ferramenta profissional que vale pagar, porque ainda é mais barato que contratar alguém" — o registro visual pode pesar mais pra sóbrio/confiável do que pra democrático/casual. Isso também favorece nomes com som mais "sério" (Lastro, Sinapse) sobre os mais lúdicos (Rumo).
 
 ## 2. Pesquisa de mercado e concorrência
 
@@ -190,9 +190,41 @@ Escala 1-10. Nenhuma nota de risco de conflito é tratada como definitiva — to
 
 ---
 
-### Perguntas em aberto (seção 1) — preciso da sua resposta antes de seguir pra identidade visual
+## 6. Exploração internacional (após feedback: você gostou de Lastro e Forja, pediu pra olhar outras línguas)
 
-1. A hipótese de personalidade — **rigor/raciocínio, não hype** — está certa, ou você imagina um tom diferente?
-2. O produto vai ser gratuito, pago ou freemium? Isso muda o registro visual entre "acessível" e "premium".
+Testei dois caminhos: (a) o equivalente direto de Forja em inglês e italiano, já que "pensar internacional" pra um nome de conceito forte normalmente significa checar a tradução óbvia primeiro; (b) uma rodada nova de candidatos com raiz latina/internacional, no mesmo campo semântico dos cinco originais (força, precisão, direção, núcleo).
 
-E, claro, a decisão principal desta etapa: **qual nome seguir** — Lastro, Sinapse, ou algum ajuste/combinação das duas, ou nenhum dos cinco. A partir daí, as etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) entram em ação.
+### Forja → o equivalente inglês já está tomado, de verdade
+
+"Forge" (o equivalente óbvio em inglês) não é só um nome de academia genérico como eu já tinha apontado — é pior do que isso pra uso internacional: encontrei **múltiplos apps de treino já publicados com esse nome** ("[Forge - Training](https://apps.apple.com/us/app/-/id6757342999)", "Forge AI Workout Trainer", "Workout Forge for Home and Gym", "Forge Strength Trainer", "FORGE - Zero Decision Training", "Forge - Social Gym Tracker") e **marcas registradas nos EUA** em nome de empresas de fitness ("[Forge Fitness, LLC](https://trademarks.justia.com/owners/forge-fitness-llc-2714835)", "Forged Fitness Concepts, LLC"). Pensar em mercado internacional torna Forja **mais arriscado**, não menos — é justamente no mercado americano/inglês que esse nome já está saturado. Testei a variante italiana **Fucina** (= forja/fundição em italiano) como alternativa que mantém o conceito: não encontrei nenhum app ou marca de fitness usando esse nome, soa distinto, e línguas latinas "exóticas" têm precedente como nome de marca (do jeito que Illy, Ferrari soam premium por som mesmo fora da Itália). Pronúncia pra falante de português é razoável (fu-SI-na). Se o conceito de "forjar/transformar pelo esforço repetido" é o que você não quer perder, **Fucina é a forma de manter essa ideia sem herdar a saturação do inglês.**
+
+### Lastro segue limpo mesmo testando mais fundo
+
+Não achei nenhum app ou empresa de fitness usando Lastro, nem equivalentes diretos (Lastre em espanhol, Ballast em inglês) nesse nicho. Um ponto de atenção que encontrei, mas não consegui confirmar com uma fonte forte — então trato como hipótese linguística, não fato: em espanhol, "lastre" aparece usado tanto no sentido neutro (lastro de navio) quanto, informalmente, como "peso que atrapalha" (ex: "ser un lastre para alguien"). Em português o uso é quase sempre neutro/positivo (lastro financeiro, base). **Vale confirmar com um nativo de espanhol antes de fechar**, porque é exatamente o tipo de nuance que eu não tenho como validar com certeza numa busca.
+
+### Outros nomes testados nesta rodada (raiz latina/internacional)
+
+| Nome | Origem/conceito | Veredito |
+|---|---|---|
+| Vector | Latim — grandeza + direção | **Descartado**: múltiplos apps de treino já existentes ("Vector Strength Training", "VECTOR Limitless Training", "Vector Fitness"). |
+| Axis / Eixo | Latim — eixo central, pivô | **Descartado**: múltiplos apps já existentes ("Axis Fitness + Training", "Axis Fitness Method"). |
+| Anima | Latim — alma/força vital | **Descartado**: nicho de bem-estar/meditação saturado, inclusive com marca registrada ("ANIMA" nos EUA) — risco de confusão de categoria (meditação, não força). |
+| Fortis | Latim — forte/corajoso | **Arriscado**: usado globalmente em saúde/seguros (Fortis Healthcare, seguradoras), e carrega associação negativa específica na Holanda/Bélgica (o banco Fortis quebrou em 2008 e o nome foi abandonado por causa disso). |
+| Temper / Têmpera | Inglês/PT — tratamento térmico que torna o metal mais resiliente (etapa seguinte à forja) | **Moderado**: existe "Tempered Strength" (app próximo, não idêntico) — não é um bloqueio claro, mas não é tão limpo quanto Lastro. Conceitualmente interessante (é a etapa de refinamento depois da forja), mas não pesquisei a fundo. |
+| Robur | Latim — carvalho / robustez | **Inconclusivo, mas sem conflito claro encontrado** — nome pouco comum, vale olhar com mais profundidade se interessar. |
+| Metron / Ferrum | Grego (medida) / Latim (ferro) | **Inconclusivo** — a busca não trouxe nada definitivo em nenhum dos dois sentidos; existe pelo menos um app chamado "Ferrum" (categoria não confirmada). Precisariam de mais uma rodada de pesquisa dedicada se você quiser levá-los a sério. |
+
+### Leitura dessa rodada
+
+O padrão que apareceu: **quase toda palavra forte e "óbvia" em inglês relacionada a força/estrutura (Forge, Vector, Axis, Fortis) já foi usada por algum app ou empresa de fitness** — é exatamente pelo mesmo motivo que elas parecem boas (todo mundo que monta um app de treino em inglês chega nas mesmas palavras). Isso torna **Lastro mais forte, não mais fraco**, depois dessa rodada: continua sem conflito aparente, e funciona do mesmo jeito que "Strava" ou "Oura" funcionam internacionalmente — como nome próprio que não compete com busca de palavra comum em nenhum idioma relevante.
+
+**Recomendação atualizada**: manter **Lastro** como principal. Se quiser preservar o conceito de "Forja" com ambição internacional, **Fucina** é a alternativa que resolve o problema de saturação em inglês sem abandonar a ideia. Nenhum dos nomes testados nesta rodada superou os dois.
+
+---
+
+### Perguntas em aberto — preciso da sua resposta antes de seguir pra identidade visual
+
+1. A hipótese de personalidade (reformulada acima: "protocolo recalculado — nível reclassificado" vs. "VAMOS DESTRUIR ESSE TREINO 🔥💪") — qual dos dois tons é mais parecido com o que você imagina, ou é outra coisa?
+2. ~~Modelo de negócio~~ — respondido (pago).
+
+E a decisão principal: **Lastro, Fucina, ou quer que eu pesquise Têmpera/Robur/Metron/Ferrum mais a fundo antes de decidir?** A partir da escolha, as etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) entram em ação.
