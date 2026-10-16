@@ -1,6 +1,6 @@
 # Branding — Etapa 1: entendimento do produto, pesquisa de mercado e naming
 
-**Status: em andamento.** Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais duas rodadas extras pedidas depois da primeira leitura: seção 6 (exploração internacional de nomes) e seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz). Pelo próprio desenho do processo, ele **para aqui**: as etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) dependem do nome escolhido — não faz sentido desenhar um logotipo antes de saber quais letras ele precisa formar.
+**Status: CONCLUÍDO.** Nome final: **Lastro.** Tom de voz aprovado. Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais duas rodadas extras: seção 6 (exploração internacional de nomes) e seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz) — até a decisão final na seção "Decisões fechadas". As etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) continuam em `branding/02-identidade-visual.md`.
 
 _out/2026._
 
@@ -259,9 +259,12 @@ Se o meio bate, sigo com esse registro pra qualquer copy futura (telas, notifica
 
 ---
 
-### Perguntas em aberto
+### Decisões fechadas (out/2026)
 
-1. ~~Tom de voz~~ — calibrado acima; confirma se os exemplos do meio batem ou se eu ainda preciso ajustar pra mais ou menos informal.
-2. ~~Modelo de negócio~~ — respondido (pago).
+1. **Tom de voz**: aprovado o registro do meio ("Recalculamos seu protocolo — pelo seu histórico, você já é avançado." / "Bateu PR? Hora de ajustar a carga.") — nem o formal ("protocolo foi recalculado... reclassificado"), nem o informal-hype ("Mano, você tá voando! 🔥"). Esse é o registro de copy pra qualquer tela, notificação ou nome de estado a partir de agora.
+2. **Modelo de negócio**: pago.
+3. **Nome**: **Lastro.** Decisão fechada pelo Fabio em out/2026, depois de duas rodadas de exploração (internacional e vocabulário de treino) que só reforçaram essa escolha — nenhum concorrente encontrado, personalidade certa, baixo risco aparente de conflito.
 
-Decisão principal: **Lastro, Fucina, ou aprofundar mais em algum termo específico** (seja da rodada internacional — Têmpera/Robur/Metron/Ferrum — seja do vocabulário de treino desta seção — Brace/All You/TUT/ATG/RIR)? A partir da escolha do nome, as etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) entram em ação.
+As etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) continuam em `branding/02-identidade-visual.md`.
+
+**Pendência que não bloqueia o trabalho visual, mas precisa de decisão do Fabio em algum momento**: o repositório, os pacotes (`app/package.json`, `app.json`) e todos os documentos (README, legal/, docs/) ainda dizem "FitApp" — isso é só o nome de trabalho até aqui. Trocar tudo pra "Lastro" é uma tarefa mecânica que posso fazer quando o Fabio quiser (inclusive o nome do repositório no GitHub, se ele topar) — não fiz ainda porque não foi pedido e prefiro não misturar um rename grande no meio do trabalho de identidade visual sem confirmar.
