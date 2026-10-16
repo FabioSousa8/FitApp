@@ -21,7 +21,7 @@ data/
   intake-flow-rules.json           # Ordem e ramificação das perguntas do cadastro — o que é sempre perguntado vs. o que só abre quando se aplica ao perfil
   cardio-rules.json                # Cardio decidido por recoverySlack (folga de recuperação da musculação) × cardioEmphasis (objetivo do usuário) — modalidade, frequência, duração
 test/
-  test-personas.json               # 9 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
+  test-personas.json               # 11 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
@@ -37,7 +37,7 @@ node test/simulate-engine.js
 
 ## Status
 
-Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 9 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios.
+Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 11 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios.
 
 Decisão de produto: o app será mobile pra iOS e Android (abordagem técnica — ex: React Native/Expo — delegada ao fundador, ainda não iniciada; o site é só uma página explicativa, sem o motor).
 
@@ -71,5 +71,5 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - `highly_advanced` (nova 4ª faixa de nível, out/2026) ainda não tem landmark próprio de MEV/MAV/MRV, perfil de split nem `recoverySlack` — colapsa em `advanced` nesses lookups (simplificação documentada), diferenciando-se só na classificação por tempo de treino.
 - Esperando retorno de outros personal trainers pra validar os ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos, e agora também a cadência mínima de descanso do `restDayModel`).
 - O plano de periodização por `goalDurationDays` só materializa exercício-a-exercício o bloco 1 — blocos seguintes aparecem no plano (duração em treinos, deload, refresh, taper) mas sem a lista de exercício gerada ainda.
-- Nenhuma persona de teste autodeclara `level: "beginner"` ou `"highly_advanced"` diretamente ainda — o caminho beginner foi validado por CRUZAMENTO (`intermediario_base_recente_sem_meta`, autodeclara intermediate mas `levelFinal` vira beginner), mas falta uma persona beginner "pura" e uma highly_advanced.
+- ~~Nenhuma persona de teste autodeclara `level: "beginner"` ou `"highly_advanced"` diretamente~~ — resolvido: `beginner_puro` e `highly_advanced_puro` (out/2026) cobrem os dois extremos da escala por autodeclaração direta, além do caminho beginner por cruzamento já validado em `intermediario_base_recente_sem_meta`.
 - Plataforma mobile (iOS + Android) é decisão fechada; abordagem técnica (recomendação: React Native/Expo) ainda não iniciada — motor continua sendo construído antes de qualquer UI.

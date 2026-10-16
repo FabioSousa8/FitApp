@@ -187,6 +187,46 @@
       ],
       "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
       "currentRoutine": null
+    },
+    {
+      "id": "beginner_puro",
+      "level": "beginner",
+      "trainingTimeYears": 0.2,
+      "age": 24,
+      "daysAvailable": 3,
+      "sessionMinutes": 50,
+      "goal": "aprender a treinar e ganhar base",
+      "goalCategory": "hypertrophy_estetica",
+      "cardioPreference": "sem preferência",
+      "limitations": [],
+      "background": "Nova persona (out/2026) — primeira a autodeclarar 'beginner' DIRETAMENTE, não por cruzamento (diferente de intermediario_base_recente_sem_meta, que chega em beginner via trainingTimeYears baixo). Valida de ponta a ponta o caminho beginner que já existia nas tabelas mas nunca tinha sido exercitado por uma persona de teste: landmarks.muscleGroups[*].beginner (training-volume-landmarks.json), split-style-rules.json/preferredOrderByProfile.rank1_beginner (prioriza frequência — FBEOD/FB — sobre especialização), mesocycleLengthWeeks.default (progression-rules.json, beginner usa o mesmo default que intermediate, só advanced diverge), e coldStartCount (exercise-selection-rules.json) sem currentRoutine pra ancorar.",
+      "trainingConsistency": "continuo",
+      "goalDurationDays": 30,
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 3 }
+      ],
+      "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
+      "currentRoutine": null
+    },
+    {
+      "id": "highly_advanced_puro",
+      "level": "highly_advanced",
+      "trainingTimeYears": 10,
+      "age": 34,
+      "daysAvailable": 6,
+      "sessionMinutes": 80,
+      "goal": "hipertrofia, muitos anos de treino ininterrupto",
+      "goalCategory": "hypertrophy_estetica",
+      "cardioPreference": "gosta de qualquer modalidade",
+      "limitations": [],
+      "background": "Nova persona (out/2026) — primeira a autodeclarar 'highly_advanced' DIRETAMENTE (4ª opção do enum, intake-flow-rules.json passo 1), não só via derivedLevelFromTime. Valida engineLevel() colapsando highly_advanced→advanced em TODOS os lookups que ainda só têm 3 faixas (training-volume-landmarks.json/muscleGroups, split-style-rules.json/preferredOrderByProfile.rank1_advanced, cardio-rules.json/recoverySlackTable, mesocycleLengthWeeks.advanced) sem quebrar nada, enquanto o print de 'Nível autodeclarado' continua mostrando highly_advanced corretamente (não é silenciosamente rebaixado na exibição, só nos lookups internos — ver training-volume-landmarks.json/levelClassification.engineLevelMapping). goalDurationDays=150 também exercita múltiplos blocos (deload incluído) com a janela de mesociclo do advanced (6 semanas = 42 treinos por bloco).",
+      "trainingConsistency": "continuo",
+      "goalDurationDays": 150,
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 6 }
+      ],
+      "availableEquipment": ["barbell", "dumbbell", "machine", "cable", "smith", "bodyweight"],
+      "currentRoutine": null
     }
   ]
 }
