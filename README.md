@@ -45,6 +45,8 @@ docs/
 legal/
   termo-de-uso.md                   # Termo de uso e aviso de responsabilidade (rascunho — precisa de revisão jurídica antes de publicar)
   politica-de-privacidade.md        # Política de privacidade LGPD (rascunho — mesma pendência de revisão jurídica)
+branding/
+  01-pesquisa-e-naming.md           # Entendimento do produto, pesquisa de concorrência (Hevy/Strong/Fitbod/NTC), 5 candidatos a nome, investigação do nome "FitApp" e recomendação — parado aguardando decisão de nome antes da identidade visual
 ```
 
 ## Rodar a simulação
@@ -67,7 +69,7 @@ const protocol = generateProtocol(persona); // persona: mesmo shape de test/test
 
 Motor rodando de ponta a ponta, agora como módulo reutilizável em `engine/` (extraído de dentro do simulador em out/2026 — antes só existia como script de teste/print, sem como ser consumido por nada além do terminal): `node test/simulate-engine.js` chama `generateProtocol()` e gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 11 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios. Validado byte-a-byte contra a versão anterior (pré-extração): mesma saída, exceto a mensagem final do simulador.
 
-Decisão de produto: o app será mobile pra iOS e Android (o site é só uma página explicativa, sem o motor). Scaffold iniciado out/2026 em `app/` (Expo + TypeScript + Expo Router) — login/cadastro de usuário e o wizard de cadastro (7 passos, fiel a `data/intake-flow-rules.json`) já funcionam de ponta a ponta: cadastro → `generateProtocol()` (o motor roda embarcado no app, mesma função de `test/simulate-engine.js`) → tela de protocolo. Autenticação usa Supabase quando configurado, com um modo local de fallback só pra navegar o app sem backend ainda (ver `app/README.md`). Validado rodando `npx expo export -p ios` com sucesso (bundla sem simulador, confirma que o Metro resolve o motor através do workspace). Branding (nome/paleta/ícone, decisão #3) continua aberta — a UI usa uma paleta neutra até isso ser decidido.
+Decisão de produto: o app será mobile pra iOS e Android (o site é só uma página explicativa, sem o motor). Scaffold iniciado out/2026 em `app/` (Expo + TypeScript + Expo Router) — login/cadastro de usuário e o wizard de cadastro (7 passos, fiel a `data/intake-flow-rules.json`) já funcionam de ponta a ponta: cadastro → `generateProtocol()` (o motor roda embarcado no app, mesma função de `test/simulate-engine.js`) → tela de protocolo. Autenticação usa Supabase quando configurado, com um modo local de fallback só pra navegar o app sem backend ainda (ver `app/README.md`). Validado rodando `npx expo export -p ios` com sucesso (bundla sem simulador, confirma que o Metro resolve o motor através do workspace). Branding (nome/paleta/ícone, decisão #3) está em andamento — pesquisa de mercado, 5 candidatos a nome e investigação de risco do nome "FitApp" em `branding/01-pesquisa-e-naming.md` (out/2026); parado nessa etapa aguardando decisão de nome antes de seguir pra identidade visual. A UI usa uma paleta neutra até isso ser decidido.
 
 Rascunho do termo de uso e aviso de responsabilidade (decisão #8) em `legal/termo-de-uso.md` — cobre a natureza do serviço (não substitui profissional/médico), responsabilidades do usuário, riscos do exercício e limitação de responsabilidade. **Precisa de revisão jurídica antes de publicar pra qualquer usuário**, mesmo beta fechado.
 
