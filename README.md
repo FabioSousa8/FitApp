@@ -9,6 +9,12 @@ O motor deste app nasceu de um processo pessoal: usar IA para montar um protocol
 ## Estrutura
 
 ```
+app/
+  src/app/                          # Rotas do app mobile (Expo Router): login, cadastro, protocolo — ver app/README.md
+  src/intake/IntakeWizard.tsx       # Os 7 passos do cadastro, fiéis a data/intake-flow-rules.json
+  src/lib/engine.ts                 # Reexporta engine/ (motor rodando embarcado no app, sem backend ainda)
+  src/ctx.tsx                       # Autenticação (Supabase, com modo local de fallback)
+  supabase/migrations/              # Schema da tabela profiles (RLS por usuário)
 engine/
   index.js                          # Ponto de entrada público do motor — generateProtocol(persona). Extraído de test/simulate-engine.js em out/2026.
   data.js                            # Carrega as regras de data/*.json uma vez só
@@ -59,7 +65,7 @@ const protocol = generateProtocol(persona); // persona: mesmo shape de test/test
 
 Motor rodando de ponta a ponta, agora como módulo reutilizável em `engine/` (extraído de dentro do simulador em out/2026 — antes só existia como script de teste/print, sem como ser consumido por nada além do terminal): `node test/simulate-engine.js` chama `generateProtocol()` e gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 11 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios. Validado byte-a-byte contra a versão anterior (pré-extração): mesma saída, exceto a mensagem final do simulador.
 
-Decisão de produto: o app será mobile pra iOS e Android (abordagem técnica — ex: React Native/Expo — delegada ao fundador, ainda não iniciada; o site é só uma página explicativa, sem o motor).
+Decisão de produto: o app será mobile pra iOS e Android (o site é só uma página explicativa, sem o motor). Scaffold iniciado out/2026 em `app/` (Expo + TypeScript + Expo Router) — login/cadastro de usuário e o wizard de cadastro (7 passos, fiel a `data/intake-flow-rules.json`) já funcionam de ponta a ponta: cadastro → `generateProtocol()` (o motor roda embarcado no app, mesma função de `test/simulate-engine.js`) → tela de protocolo. Autenticação usa Supabase quando configurado, com um modo local de fallback só pra navegar o app sem backend ainda (ver `app/README.md`). Validado rodando `npx expo export -p ios` com sucesso (bundla sem simulador, confirma que o Metro resolve o motor através do workspace). Branding (nome/paleta/ícone, decisão #3) continua aberta — a UI usa uma paleta neutra até isso ser decidido.
 
 Rascunho do termo de uso e aviso de responsabilidade (decisão #8) em `legal/termo-de-uso.md` — cobre a natureza do serviço (não substitui profissional/médico), responsabilidades do usuário, riscos do exercício e limitação de responsabilidade. **Precisa de revisão jurídica antes de publicar pra qualquer usuário**, mesmo beta fechado.
 
@@ -81,15 +87,19 @@ Correção de feedback do fundador: "saúde geral, sem meta específica" (`goalC
 
 Pendências conhecidas (ver `docs/engine-flow.md`):
 
-- Tela de cadastro pra coletar equipamento disponível (o campo e o filtro já existem) — fica pra quando desenharmos as telas.
-- Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar.
+- ~~Tela de cadastro pra coletar equipamento disponível~~ — resolvido (out/2026): passo 6 do wizard em `app/src/intake/IntakeWizard.tsx`.
+- Fórmula de quantos exercícios por grupo ainda é uma estimativa de bom senso quando não há rotina atual informada pra ancorar — o wizard já coleta `currentRoutineRaw` (passo 7, opcional), mas isso ainda não alimenta `exerciseCountByGroup` (ver bullet de extração abaixo), então cai sempre no cálculo frio por ora.
 - A cobertura secundária que decide o corte por tempo só olha o dia, não a semana inteira.
 - Cadastro ainda não pergunta qual split o usuário já treina/prefere — isso devia pesar na escolha, não só dias/nível/rank.
-- Cadastro também ainda não pergunta `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays`, `eventBound` nem `eventSubFocus` (campos novos) — a lógica já está no motor, falta a tela. A copy de `goalDurationDays` em particular merece atenção: é perguntado em linguagem de dias mas consumido pelo motor como treinos (ver `docs/engine-flow.md`).
+- ~~Cadastro ainda não pergunta `trainingConsistency`, `sameDayAsMusculacao`, `goalDurationDays`, `eventBound` nem `eventSubFocus`~~ — resolvido (out/2026): os 7 passos do wizard (`app/src/intake/IntakeWizard.tsx`) cobrem tudo isso, incluindo a ramificação de `evento_especifico` e o `sameDayAsMusculacao` simplificado (pergunta direta com 1 atividade secundária, agregada com 2+). A copy de `goalDurationDays` já é explícita sobre ser contado em treinos, não em dias de calendário.
 - `intake-flow-rules.json` já define ordem/ramificação das perguntas, cruzamento de nível e foco aninhado de evento. Só ficou aberto: extração de `currentRoutineRaw` (texto livre/foto da ficha atual) pra `exerciseCountByGroup`.
 - `cardio-rules.json`: a tabela de decisão (recoverySlack × cardioEmphasis) é estimativa de bom senso, não validada. Não existe um "banco de cardio" — modalidade específica fica solta em `cardioPreference`, texto livre.
 - `highly_advanced` (nova 4ª faixa de nível, out/2026) ainda não tem landmark próprio de MEV/MAV/MRV, perfil de split nem `recoverySlack` — colapsa em `advanced` nesses lookups (simplificação documentada), diferenciando-se só na classificação por tempo de treino.
 - Esperando retorno de outros personal trainers pra validar os ajustes desta rodada antes de calibrar mais a fundo (ex: `highSetupOverheadExtraMinutes`, quais outros exercícios mereceriam a tag, se o viés de equipamento guiado devia valer só pra compostos, e agora também a cadência mínima de descanso do `restDayModel`).
 - O plano de periodização por `goalDurationDays` só materializa exercício-a-exercício o bloco 1 — blocos seguintes aparecem no plano (duração em treinos, deload, refresh, taper) mas sem a lista de exercício gerada ainda.
 - ~~Nenhuma persona de teste autodeclara `level: "beginner"` ou `"highly_advanced"` diretamente~~ — resolvido: `beginner_puro` e `highly_advanced_puro` (out/2026) cobrem os dois extremos da escala por autodeclaração direta, além do caminho beginner por cruzamento já validado em `intermediario_base_recente_sem_meta`.
-- Plataforma mobile (iOS + Android) é decisão fechada; abordagem técnica (recomendação: React Native/Expo) ainda não iniciada — motor continua sendo construído antes de qualquer UI.
+- ~~Plataforma mobile (iOS + Android) é decisão fechada; abordagem técnica ainda não iniciada~~ — resolvido (out/2026): scaffold React Native/Expo em `app/`, com login/cadastro e geração de protocolo já de ponta a ponta (ver `app/README.md`).
+- **Autenticação em modo local (sem Supabase configurado ainda)**: `app/src/ctx.tsx` cai num fallback que não autentica de verdade (qualquer e-mail/senha entra) — existe só pra navegar o app sem backend. Precisa de um projeto Supabase real (`app/supabase/migrations/0001_profiles.sql` já define o schema) antes de qualquer usuário real usar isso.
+- **Extração de `currentRoutineRaw` pra `exerciseCountByGroup`**: o wizard já coleta o texto (passo 7), mas a extração em si — texto livre/foto da ficha → quantidade de exercícios por grupo — ainda não tem regra nem no motor, nem no app.
+- **Reordenar atividades físicas no wizard** usa botões ▲▼ em vez de arrastar — funciona, mas não é o gesto de arrastar que `activity-priority-rules.json/intakeSchema` menciona.
+- **Geração de protocolo roda embarcada no app** (sem backend) — rápido pra validar o fluxo hoje, mas significa que mudar uma regra do motor exige publicar uma nova versão do app. Mover isso pra um backend/Edge Function é uma opção a revisitar quando isso incomodar (ver `app/README.md`).

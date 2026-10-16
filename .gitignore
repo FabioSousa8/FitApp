@@ -1,0 +1,9 @@
+# Monorepo raiz (engine/ + app/, workspace npm) — node_modules fica só aqui,
+# hoisted pelo workspace; app/ não tem o próprio.
+node_modules/
+
+# macOS
+.DS_Store
+
+# logs
+npm-debug.log*
