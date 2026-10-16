@@ -29,8 +29,8 @@
       "label": "Treino básico",
       "alwaysAsked": true,
       "fields": [
-        { "field": "level", "type": "enum[beginner,intermediate,advanced]", "required": true },
-        { "field": "trainingTimeYears", "type": "number", "required": true, "note": "Quantos anos (pode ser fração, ex: 0.5) a pessoa treina musculação. Novo campo — serve de sinal de apoio pro nível autodeclarado, junto com trainingConsistency (passo 5) e currentRoutine (passo 7). Ver openQuestions." },
+        { "field": "level", "type": "enum[beginner,intermediate,advanced,highly_advanced]", "required": true, "note": "4a opção ('highly_advanced') adicionada pra acompanhar o cruzamento com trainingTimeYears — ver training-volume-landmarks.json/levelClassification. Autodeclaração sozinha nunca decide: é cruzada com trainingTimeYears (abaixo) pra formar levelFinal, e levelFinal é o que o motor de fato usa em todo lugar que antes usava 'level' puro." },
+        { "field": "trainingTimeYears", "type": "number", "required": true, "note": "Quantos anos (pode ser fração, ex: 0.5) a pessoa treina musculação. Agora tem regra formal de cruzamento com 'level': training-volume-landmarks.json/levelClassification deriva um nível a partir deste campo (bandas baseadas em Santos Junior et al. 2021, ajustadas pelo fundador) e levelFinal = min(autodeclarado, derivado) — o tempo de treino só pode puxar o nível pra baixo, nunca promover." },
         { "field": "daysAvailable", "type": "number[1-7]", "required": true },
         { "field": "sessionMinutes", "type": "number", "required": false, "note": "Se não informado, o motor assume referenceSessionBudget (session-time-rules.json: 45min musculação, +30min se cardio no mesmo dia)." }
       ]
@@ -51,7 +51,10 @@
       "branch": [
         {
           "when": "goalCategory == 'evento_especifico'",
-          "ask": ["goalDurationDays (quantos dias até o evento/checkpoint desejado)"],
+          "ask": [
+            "goalDurationDays (quantos dias até o evento/checkpoint desejado)",
+            { "field": "eventSubFocus", "type": "enum[hypertrophy_estetica,forca,emagrecimento_recomposicao,saude_geral_sem_meta_especifica]", "required": true, "note": "Pergunta aninhada (Fabio, out/2026): 'existe um foco específico ou objetivo em mente pra esse evento?' — evento_especifico NUNCA é tratado como uma categoria paralela com regras próprias de cardio/rep-range; ele sempre reaproveita as regras de UM dos outros 4 focos (cardioEmphasisTable em cardio-rules.json, por exemplo), só que com eventBound=true por cima pra disparar o taper no bloco final. Resolve a lacuna que antes deixava cardioEmphasis null pra evento_especifico (ver cardio-rules.json)." }
+          ],
           "setsAutomatically": { "eventBound": true }
         },
         {
@@ -93,7 +96,7 @@
           "field": "physicalActivities",
           "type": "array<{rank, name, frequencyPerWeek, sameDayAsMusculacao?}>",
           "required": true,
-          "note": "Schema completo já definido em activity-priority-rules.json/intakeSchema — este arquivo só fixa quando sameDayAsMusculacao é perguntado: toda entrada com name != 'Musculação' recebe a pergunta fechada ('antes'/'depois'/'não costuma cair no mesmo dia'), não só quando o motor suspeita de sobreposição."
+          "note": "Schema completo já definido em activity-priority-rules.json/intakeSchema. Pergunta de sameDayAsMusculacao simplificada (Fabio, out/2026) pra não cansar quem tem muitas atividades secundárias: com exatamente 1 atividade secundária (name != 'Musculação'), pergunta direta de 1 toque pra ela ('[atividade] costuma cair no mesmo dia da musculação? não / sim, antes / sim, depois'). Com 2+ atividades secundárias, pergunta AGREGADA primeiro ('quais dessas atividades você costuma fazer no mesmo dia da musculação?', multi-seleção sobre a lista já cadastrada) e só pra quem for selecionado ali, uma segunda pergunta rápida de antes/depois. Substitui o comportamento anterior de perguntar antes/depois pra TODA atividade incondicionalmente."
         },
         {
           "field": "cardioPreference",
@@ -141,12 +144,13 @@
 
   "fieldReference": {
     "note": "Onde cada campo é consumido de fato — pra não duplicar/discordar do schema já definido nos outros arquivos.",
-    "level": "training-volume-landmarks.json (MEV/MAV/MRV por nível), split-style-rules.json (suitsLevel), exercise-selection-rules.json",
-    "trainingTimeYears": "NOVO — só sinal de apoio, ainda sem regra formal de cruzamento (ver openQuestions)",
-    "daysAvailable": "split-style-rules.json (cycle.length <= daysAvailable)",
+    "level": "training-volume-landmarks.json/levelClassification (cruzado com trainingTimeYears pra formar levelFinal — MEV/MAV/MRV por nível usa levelFinal, não o autodeclarado puro), split-style-rules.json (suitsLevel), exercise-selection-rules.json",
+    "trainingTimeYears": "training-volume-landmarks.json/levelClassification — deriva um nível por tempo de treino (bandas Santos Junior et al. 2021, ajustadas pelo fundador) e forma levelFinal junto com 'level' autodeclarado",
+    "daysAvailable": "split-style-rules.json (cycle.length <= daysAvailable), progression-rules.json/restDayModel (cadência mínima de descanso)",
     "sessionMinutes": "session-time-rules.json (maxSetsPerSession)",
-    "goalCategory / goalDetail": "progression-rules.json (repRangesByGoal) — mapeamento de saude_geral_sem_meta_especifica ainda aberto, ver openQuestions",
-    "goalDurationDays / eventBound": "progression-rules.json/periodizationByGoalDuration",
+    "goalCategory / goalDetail": "progression-rules.json (repRangesByGoal) — mapeamento de saude_geral_sem_meta_especifica já resolvido (maintenanceSupportTriggers.goalBased); evento_especifico reaproveita o foco escolhido em eventSubFocus",
+    "eventSubFocus": "NOVO — cardio-rules.json (cardioEmphasisTable, reaproveitando a linha do foco escolhido) + progression-rules.json (repRangesByGoal, mesmo reaproveitamento). Só perguntado quando goalCategory == 'evento_especifico'.",
+    "goalDurationDays / eventBound": "progression-rules.json/periodizationByGoalDuration — ATENÇÃO: desde a mudança pra bloco-por-sessões-completadas (out/2026), este número é consumido pelo motor como ALVO DE TREINOS (sessões), não dias de calendário decorridos, mesmo sendo perguntado em linguagem de dias no cadastro (ver openQuestions ali).",
     "hasLimitations / limitationTags": "exercise-selection-rules.json (filtro) + exercise-bank.json (contraindicationTagVocabulary)",
     "limitationSafetyNote": "NOVO — contexto de exibição, não entra em nenhuma regra de seleção",
     "physicalActivities": "activity-priority-rules.json (intakeSchema, weeklyLoadBudget, sameDayOrderingNote)",
@@ -165,9 +169,6 @@
 
   "openQuestions": [
     "currentRoutineRaw aceita texto livre ou foto da ficha, mas a extração disso pra exerciseCountByGroup (13 grupos) ainda não tem regra — depende de uma etapa de leitura/extração na geração do protocolo, não deste arquivo.",
-    "maintenanceSupportTriggers.goalBased (activity-priority-rules.json) decide 'já tem base pra manter' só pelo level (beginner vs. não) — não cruza com trainingTimeYears nem trainingConsistency. Um intermediate esporádico recém-voltado à academia pode estar mais perto de precisar construir base do que de manter.",
-    "trainingTimeYears é coletado mas ainda não tem regra formal de cruzamento com level/trainingConsistency (ex: nível autodeclarado 'intermediário' com trainingTimeYears baixo) — engine-flow.md passo 1 já citava 'anos de treino' como parte da classificação de nível, mas nunca foi formalizado como regra com limiares.",
-    "sameDayAsMusculacao (passo 4) hoje é perguntado pra TODA atividade que não é musculação, mesmo quando a sobreposição de dia é improvável — vale revisar se isso cansa quem tem 3+ atividades secundárias cadastradas.",
-    "Copy exata de cada pergunta (texto, placeholder, ordem visual dentro do passo) ainda é decisão de tela — este arquivo define schema e ramificação, não o microcopy."
+    "Copy exata de cada pergunta (texto, placeholder, ordem visual dentro do passo) ainda é decisão de tela — este arquivo define schema e ramificação, não o microcopy. Isso agora inclui a pergunta de goalDurationDays: ela é feita em linguagem de dias ('35, 60, 90 dias') mas o motor passou a contar o número como treinos/sessões, não dias de calendário (ver progression-rules.json/periodizationByGoalDuration) — vale revisitar a copy pra deixar isso explícito pro usuário (ex: perguntar em treinos em vez de dias), mas isso não muda o schema, só a redação da tela."
   ]
 }

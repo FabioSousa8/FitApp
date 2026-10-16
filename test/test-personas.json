@@ -3,6 +3,7 @@
     {
       "id": "avancado_sem_limitacao",
       "level": "advanced",
+      "trainingTimeYears": 8,
       "age": 36,
       "daysAvailable": 5,
       "sessionMinutes": 75,
@@ -30,6 +31,7 @@
     {
       "id": "intermediario_dor_lombar",
       "level": "intermediate",
+      "trainingTimeYears": 2,
       "age": 29,
       "daysAvailable": 3,
       "sessionMinutes": 50,
@@ -48,6 +50,7 @@
     {
       "id": "avancado_pouco_tempo",
       "level": "advanced",
+      "trainingTimeYears": 5,
       "age": 33,
       "daysAvailable": 3,
       "sessionMinutes": 40,
@@ -66,6 +69,7 @@
     {
       "id": "intermediario_comeco_tardio",
       "level": "intermediate",
+      "trainingTimeYears": 0.7,
       "age": 42,
       "daysAvailable": 4,
       "sessionMinutes": 60,
@@ -89,6 +93,7 @@
     {
       "id": "intermediario_treino_esporadico",
       "level": "intermediate",
+      "trainingTimeYears": 2,
       "age": 30,
       "daysAvailable": 4,
       "sessionMinutes": 60,
@@ -107,13 +112,15 @@
     {
       "id": "avancado_evento_data_alvo",
       "level": "advanced",
+      "trainingTimeYears": 4,
       "age": 31,
       "daysAvailable": 5,
       "sessionMinutes": 70,
       "goal": "chegar em forma pro casamento",
       "goalCategory": "evento_especifico",
+      "eventSubFocus": "hypertrophy_estetica",
       "limitations": [],
-      "background": "Tem uma data-alvo específica (evento), não só um objetivo genérico de estética — testa eventBound=true (taper no bloco final) e o plano de múltiplos blocos com goalDurationDays maior.",
+      "background": "Tem uma data-alvo específica (evento), não só um objetivo genérico de estética — testa eventBound=true (taper no bloco final), o plano de múltiplos blocos com goalDurationDays maior, e agora eventSubFocus (foco aninhado, out/2026): reaproveita a linha de cardioEmphasis de 'hypertrophy_estetica' em vez de ficar sem regra (cardioPlan.skipped).",
       "trainingConsistency": "continuo",
       "goalDurationDays": 90,
       "eventBound": true,
@@ -126,6 +133,7 @@
     {
       "id": "intermediario_saude_geral_sem_meta",
       "level": "intermediate",
+      "trainingTimeYears": 3.5,
       "age": 44,
       "daysAvailable": 4,
       "sessionMinutes": 50,
@@ -133,8 +141,47 @@
       "goalCategory": "saude_geral_sem_meta_especifica",
       "cardioPreference": "gosta de caminhada, não gosta de corrida",
       "limitations": [],
-      "background": "Cenário real relatado pelo fundador: homem 40+ já treinado, treina regularmente, musculação É rank 1 (não tem outra atividade competindo), mas o objetivo pessoal é só manutenção de saúde — testa o novo gatilho goalBased de maintenanceSupportTriggers (activity-priority-rules.json): rank 1 não deveria empurrar esse perfil pra MAV/MRV só porque é tecnicamente prioritário. level='intermediate' (não beginner) é o que permite o gatilho disparar.",
+      "background": "Cenário real relatado pelo fundador: homem 40+ já treinado, treina regularmente, musculação É rank 1 (não tem outra atividade competindo), mas o objetivo pessoal é só manutenção de saúde — testa o novo gatilho goalBased de maintenanceSupportTriggers (activity-priority-rules.json): rank 1 não deveria empurrar esse perfil pra MAV/MRV só porque é tecnicamente prioritário. levelFinal='intermediate' (trainingTimeYears=3.5 deriva 'highly_advanced', mas min(intermediate, highly_advanced)=intermediate — cruzamento não muda nada aqui, é o autodeclarado que já decide) é o que permite o gatilho disparar. Comparar com intermediario_base_recente_sem_meta (mesmo cenário, trainingTimeYears baixo) e intermediario_saude_geral_escalada_manual (mesmo cenário + userRequestedEscalation).",
       "trainingConsistency": "continuo",
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
+      "currentRoutine": null
+    },
+    {
+      "id": "intermediario_base_recente_sem_meta",
+      "level": "intermediate",
+      "trainingTimeYears": 0.3,
+      "age": 38,
+      "daysAvailable": 4,
+      "sessionMinutes": 50,
+      "goal": "se manter saudável, sem meta de ganho de massa ou estética — mas voltou há pouco tempo",
+      "goalCategory": "saude_geral_sem_meta_especifica",
+      "cardioPreference": "sem preferência forte",
+      "limitations": [],
+      "background": "Nova persona (out/2026) pra validar o cruzamento de nível por trainingTimeYears (training-volume-landmarks.json/levelClassification) junto com o beginnerException de maintenanceSupportTriggers.goalBased (activity-priority-rules.json). Mesmo setup de goalCategory+rank1 que intermediario_saude_geral_sem_meta, mas aqui trainingTimeYears=0.3 deriva 'beginner' (banda 0-0.5 anos) → levelFinal=min(intermediate, beginner)=beginner → beginnerException dispara → o gatilho goalBased NÃO ativa maintenance_support, mesmo a pessoa tendo se autodeclarado 'intermediate' e escolhido 'saúde geral sem meta'. Resultado esperado: progressão normal MEV→MAV (ainda não existe base real pra 'manter'), diferente da persona-irmã acima que SIM cai em maintenance_support.",
+      "trainingConsistency": "esporadico",
+      "physicalActivities": [
+        { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
+      ],
+      "availableEquipment": ["dumbbell", "machine", "cable", "bodyweight"],
+      "currentRoutine": null
+    },
+    {
+      "id": "intermediario_saude_geral_escalada_manual",
+      "level": "intermediate",
+      "trainingTimeYears": 3.5,
+      "age": 44,
+      "daysAvailable": 4,
+      "sessionMinutes": 50,
+      "goal": "se manter saudável, mas ficou insatisfeito com o protocolo e pediu pra evoluir",
+      "goalCategory": "saude_geral_sem_meta_especifica",
+      "cardioPreference": "gosta de caminhada, não gosta de corrida",
+      "limitations": [],
+      "background": "Nova persona (out/2026) — mesmo perfil de intermediario_saude_geral_sem_meta (mesmo levelFinal='intermediate', mesmo gatilho goalBased disparando), mas aqui userRequestedEscalation=true: o usuário tomou a iniciativa de pedir mais volume (activity-priority-rules.json/manualEscalation). Resultado esperado: teto sai do MEV fixo e volta pra progressão normal MEV→MAV/MRV, mantendo repRangesByGoal/targetRIRByPhase de maintenance_support (ainda é uma retomada, não hipertrofia do zero) e com 'comprimido' voltando a valer na periodização se a janela for curta.",
+      "trainingConsistency": "continuo",
+      "userRequestedEscalation": true,
       "physicalActivities": [
         { "rank": 1, "name": "Musculação", "frequencyPerWeek": 4 }
       ],

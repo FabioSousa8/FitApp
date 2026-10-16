@@ -83,7 +83,7 @@
   },
 
   "selectionGuidance": {
-    "approach": "O motor não decide UM estilo fechado — calcula quais estilos são viáveis pros dias disponíveis do usuário (cycle.length <= daysAvailable) e sugere um default dentro dos viáveis, com base em nível e se musculação é a atividade rank 1 (ver activity-priority-rules.json). As outras opções viáveis continuam sendo mostradas, nunca escondidas — o usuário pode preferir qualquer uma.",
+    "approach": "O motor não decide UM estilo fechado — calcula quais estilos são viáveis pros dias disponíveis do usuário (cycle.length <= daysAvailable) e sugere um default dentro dos viáveis, com base em nível e se musculação é a atividade rank 1 (ver activity-priority-rules.json). As outras opções viáveis continuam sendo mostradas, nunca escondidas — o usuário pode preferir qualquer uma. 'Nível' aqui é engineLevel(levelFinal) (training-volume-landmarks.json/levelClassification) — 'highly_advanced' usa a mesma chave 'advanced' abaixo, já que ainda não existe um perfil de preferência próprio pra esse tier.",
     "idealFitFirst": "Prioriza estilos cujo idealDaysRange cobre daysAvailable; só cai pra 'qualquer estilo mecanicamente viável' se nenhum dos ideais encaixar (ex: 2 dias disponíveis com um perfil que preferia ABCD).",
     "preferredOrderByProfile": {
       "nonRank1_qualquerNivel": ["full_body", "full_body_eod", "upper_lower", "abc", "ppl", "ul_ppl_hybrid", "abcd", "abcde_bro_split"],

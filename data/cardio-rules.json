@@ -4,9 +4,10 @@
 
   "inputs": {
     "musculacaoGoalClassification": "'normal' (hypertrophy/força, progressão MEV→MAV/MRV) | 'maintenance_support' (MV/MEV, teto fixo) — já calculado no passo 2 do fluxo (activity-priority-rules.json/maintenanceSupportTriggers). Não é uma pergunta nova, é reaproveitado.",
-    "level": "beginner | intermediate | advanced — já coletado (intake-flow-rules.json passo 1). Usado só dentro do caminho 'normal' (ver recoverySlackTable), já que advanced tende a rodar mais perto do MRV (training-volume-landmarks.json) e sobra menos recuperação pro cardio.",
+    "level": "beginner | intermediate | advanced — na prática, engineLevel(levelFinal) (training-volume-landmarks.json/levelClassification), já que recoverySlackTable usa as mesmas 3 faixas de training-volume-landmarks.json e 'highly_advanced' colapsa em 'advanced' pra esse lookup. Usado só dentro do caminho 'normal' (ver recoverySlackTable), já que advanced tende a rodar mais perto do MRV (training-volume-landmarks.json) e sobra menos recuperação pro cardio.",
     "goalCategory": "já coletado (intake-flow-rules.json passo 2). Decide cardioEmphasis.",
     "cardioPreference": "string opcional, texto livre — o que a pessoa gosta/evita em cardio (ex: 'gosto de correr', 'odeio esteira'). Novo campo, coletado em intake-flow-rules.json passo 4. Usado só pra escolher a MODALIDADE dentro da banda que a decisionMatrix já decidiu, nunca pra mudar frequência/duração/intensidade.",
+    "eventSubFocus": "string, obrigatório SÓ quando goalCategory == 'evento_especifico' (intake-flow-rules.json passo 2, pergunta aninhada). Um dos outros 4 valores de goalCategory (hypertrophy_estetica/forca/emagrecimento_recomposicao/saude_geral_sem_meta_especifica). Resolve a lacuna que esta tabela tinha pra evento_especifico: em vez de uma linha própria, o motor REAPROVEITA a linha do foco escolhido aqui — ver cardioEmphasisTable.rows abaixo.",
     "sameDayAsMusculacao": "já existe (activity-priority-rules.json/intakeSchema) — quando a pessoa tem uma entrada 'Cardio' em physicalActivities que cai no mesmo dia da musculação.",
     "limitationTags": "já existe (exercise-bank.json/contraindicationTagVocabulary) — reaproveitado aqui só pra filtrar modalidade de alto impacto, não pra bloquear cardio."
   },
@@ -29,7 +30,7 @@
       { "goalCategory": "hypertrophy_estetica", "cardioEmphasis": "minima", "why": "Prioridade é o estímulo de hipertrofia — cardio mantido só pelo mínimo de saúde cardiovascular, minimizando efeito de interferência." },
       { "goalCategory": "forca", "cardioEmphasis": "minima", "why": "Mesmo raciocínio de hypertrophy_estetica — cardio não deve competir com a recuperação pra força/carga." },
       { "goalCategory": "saude_geral_sem_meta_especifica", "cardioEmphasis": "moderada", "why": "Saúde cardiovascular geral, sem agenda de perda de peso nem minimização por performance." },
-      { "goalCategory": "evento_especifico", "cardioEmphasis": null, "why": "Depende do TIPO de evento (casamento tende a estética/emagrecimento_recomposicao; uma prova de corrida pede condicionamento específico) — sem regra geral ainda, ver openQuestions." }
+      { "goalCategory": "evento_especifico", "cardioEmphasis": null, "why": "evento_especifico NUNCA tem linha própria aqui, de propósito — não é um objetivo paralelo, é sempre um dos outros 4 focos com eventBound=true por cima (taper no bloco final, progression-rules.json). Resolvido (Fabio, out/2026): o motor pergunta eventSubFocus (intake-flow-rules.json passo 2) e reaproveita a linha ACIMA correspondente a esse foco — cardioEmphasis null aqui é só o marcador de 'resolver por reaproveitamento', não uma lacuna sem regra. Ver resolveCardioEmphasis em simulate-engine.js." }
     ]
   },
 
@@ -63,7 +64,6 @@
   "openQuestions": [
     "decisionMatrix é estimativa de bom senso, não validada contra dados reais — mesma natureza de weeklyLoadBudget.tiers (activity-priority-rules.json) quando foi criada.",
     "recoverySlackTable deriva só de musculacaoGoalClassification + level — não acompanha a posição real dentro do mesociclo (ex: início vs. fim de um bloco 'normal', mais perto do MEV ou do MAV/MRV). Refinar isso exige rastrear % do caminho MEV→MAV/MRV, não só a classificação binária.",
-    "evento_especifico não tem regra de cardioEmphasis — depende do tipo de evento (estético vs. condicionamento específico como uma prova), que hoje só existe como texto livre em goalDetail (intake-flow-rules.json). Sem regra geral ainda.",
     "Não existe um 'banco de cardio' equivalente ao exercise-bank.json — modalidade aqui é um vocabulário fechado de 3 itens (LISS/MISS/HIIT), não exercícios específicos (esteira vs. bike vs. elíptico vs. corrida de rua). cardioPreference cobre isso de forma solta, via texto livre, por ora.",
     "jointImpactSafety hoje só sinaliza — não existe uma tabela fechada de qual modalidade é 'alto impacto' por tag de limitação, é uma heurística direta no texto da regra."
   ]

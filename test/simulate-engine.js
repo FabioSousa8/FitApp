@@ -21,6 +21,29 @@ const splitStyleRules = loadData("split-style-rules.json");
 const cardioRules = loadData("cardio-rules.json");
 const personas = JSON.parse(fs.readFileSync(path.join(__dirname, "test-personas.json"), "utf8")).personas;
 
+// --- 0. Classificação de nível (training-volume-landmarks.json/levelClassification) ---
+// levelFinal = MENOR entre o nível autodeclarado e o derivado por trainingTimeYears (bandas
+// de Santos Junior et al. 2021, ajustadas pelo fundador) — o tempo de treino só pode puxar
+// o nível pra baixo, nunca promover. engineLevel() colapsa "highly_advanced" em "advanced"
+// pros lookups que ainda só têm 3 faixas (landmarks, split, cardio) — ver engineLevelMapping.
+const LEVEL_ORDER = landmarks.levelClassification.levelOrder;
+function derivedLevelFromTime(trainingTimeYears) {
+  const bands = landmarks.levelClassification.derivedLevelFromTimeBands;
+  const years = trainingTimeYears || 0;
+  const band = bands.find((b) => years >= b.minYears && (b.maxYears == null || years < b.maxYears));
+  return band ? band.level : bands[0].level;
+}
+function resolveLevelFinal(selfDeclaredLevel, trainingTimeYears) {
+  const derived = derivedLevelFromTime(trainingTimeYears);
+  const selfIdx = LEVEL_ORDER.indexOf(selfDeclaredLevel);
+  const derivedIdx = LEVEL_ORDER.indexOf(derived);
+  const finalIdx = Math.min(selfIdx, derivedIdx);
+  return { derived, final: LEVEL_ORDER[finalIdx] };
+}
+function engineLevel(level) {
+  return level === "highly_advanced" ? "advanced" : level;
+}
+
 // --- 1. Seleção de split (split-style-rules.json) ---
 // Não existe UM estilo certo por quantidade de dias: cada estilo (FB, FBEOD, U/L,
 // PPL/ABC, ABCD, ABCDE/Bro Split, híbrido) define um ciclo de tipos de dia, e o
@@ -91,7 +114,7 @@ function dayType(dayLabel) {
 // (rank == 1 mas a pessoa escolheu "saúde geral, sem meta específica" E já é treinada —
 // level != beginner). Correção de feedback do fundador: rank 1 decide PRIORIDADE entre
 // atividades, não implica objetivo de crescimento.
-function resolveActivityObjective(persona) {
+function resolveActivityObjective(persona, levelFinalValue) {
   const activities = persona.physicalActivities || [];
   const musc = activities.find((a) => a.name === "Musculação");
   const totalWeeklyActivityDays = activities.reduce((s, a) => s + a.frequencyPerWeek, 0);
@@ -101,14 +124,23 @@ function resolveActivityObjective(persona) {
     const max = t.maxTotalDays === undefined ? Infinity : t.maxTotalDays;
     return totalWeeklyActivityDays >= min && totalWeeklyActivityDays <= max;
   });
+  // beginnerException (activity-priority-rules.json/maintenanceSupportTriggers.goalBased) agora
+  // olha levelFinal (cruzado com trainingTimeYears), não o "level" autodeclarado puro — um
+  // intermediate autodeclarado com poucos meses reais de treino não escapa mais da exceção.
   const goalBasedMaintenance =
-    isRank1 && persona.goalCategory === "saude_geral_sem_meta_especifica" && persona.level !== "beginner";
+    isRank1 && persona.goalCategory === "saude_geral_sem_meta_especifica" && levelFinalValue !== "beginner";
   return { musc, isRank1, totalWeeklyActivityDays, tier, goalBasedMaintenance };
 }
 
 // --- 3. Volume semanal alvo por grupo (MEV como início de mesociclo, com teto de prioridade) ---
-function weeklyTargetSets(group, level, objective) {
+function weeklyTargetSets(group, level, objective, userRequestedEscalation) {
   const l = landmarks.muscleGroups[group][level];
+  // manualEscalation (activity-priority-rules.json): SÓ o gatilho goalBased pode ser escalado
+  // manualmente — o rankBased reflete recuperação de fato dividida com outra atividade, não
+  // escolha pessoal, então nunca é levantado por essa via (ver whyNotRankBased).
+  if (objective.goalBasedMaintenance && userRequestedEscalation) {
+    return { sets: l.mev, mev: l.mev, mav: l.mav, mrv: l.mrv, capLabel: "teto: mav/mrv (maintenance_support, mas escalada manual solicitada pelo usuário — ver activity-priority-rules.json/manualEscalation; volta pra progressão normal MEV→MAV/MRV mesmo mantendo rep range/RIR de maintenance_support)" };
+  }
   if (objective.goalBasedMaintenance) {
     return { sets: l.mev, mev: l.mev, mav: l.mav, mrv: l.mrv, capLabel: "teto: mev (maintenance_support — objetivo pessoal, sem atividade concorrente, ver maintenanceSupportTriggers.goalBased)" };
   }
@@ -130,30 +162,38 @@ function weeklyTargetSets(group, level, objective) {
 // O treino fica FIXO dentro de um bloco (não troca toda hora — aderência em primeiro lugar).
 // O que varia é o TAMANHO e a QUANTIDADE de blocos, calculados a partir da janela que a
 // própria pessoa estipulou (goalDurationDays), não um número universal fixo.
-function planPeriodization(goalDurationDays, level, eventBound) {
+// goalDurationDays é perguntado em linguagem de dias no cadastro, mas desde out/2026 o motor
+// conta esse número em TREINOS completados, não dias de calendário (progression-rules.json/
+// periodizationByGoalDuration.unitChange_outOfOutubro2026) — exemplo do fundador: um bloco de
+// "25 dias" é contado como 25 TREINOS, descanso no meio do caminho não entra nessa contagem.
+// isMaintenance (já considerando escalada manual) deixa "comprimido" inerte: não existe MAV
+// pra acelerar rumo a quando o teto é maintenance_support sem escalada.
+function planPeriodization(goalDurationDays, level, eventBound, isMaintenance) {
   const { mesocycleLengthWeeks } = progression.volumeProgression;
-  const { minPartialBlockDaysToStandAlone } = progression.periodizationByGoalDuration.constants;
+  const { minPartialBlockSessionsToStandAlone } = progression.periodizationByGoalDuration.constants;
   const idealWeeks = level === "advanced" ? mesocycleLengthWeeks.advanced : mesocycleLengthWeeks.default;
-  const idealBlockDays = idealWeeks * 7;
-  const deloadDays = progression.deloadProtocol.durationWeeks * 7;
+  const idealBlockSessions = idealWeeks * 7; // reinterpretado: treinos-alvo do bloco, não dias de calendário
+  const deloadDays = progression.deloadProtocol.durationWeeks * 7; // deload continua em dias de calendário — ver nota abaixo
+
+  const isCompressible = (sessions) => !isMaintenance && sessions < idealBlockSessions;
 
   if (!goalDurationDays) {
     return {
       mode: "sem_periodo_informado",
-      idealBlockDays,
-      blocks: [{ type: "treino", lengthDays: idealBlockDays, compressed: false, exerciseRefresh: false, taper: false }],
+      idealBlockSessions,
+      blocks: [{ type: "treino", lengthSessions: idealBlockSessions, compressed: false, exerciseRefresh: false, taper: false }],
     };
   }
 
-  if (goalDurationDays <= idealBlockDays) {
+  if (goalDurationDays <= idealBlockSessions) {
     return {
       mode: "bloco_unico",
-      idealBlockDays,
+      idealBlockSessions,
       blocks: [
         {
           type: "treino",
-          lengthDays: goalDurationDays,
-          compressed: goalDurationDays < idealBlockDays,
+          lengthSessions: goalDurationDays,
+          compressed: isCompressible(goalDurationDays),
           exerciseRefresh: false,
           taper: !!eventBound,
         },
@@ -161,30 +201,32 @@ function planPeriodization(goalDurationDays, level, eventBound) {
     };
   }
 
-  const fullCycleDays = idealBlockDays + deloadDays;
-  const numFullCycles = Math.floor(goalDurationDays / fullCycleDays);
-  const remainderDays = goalDurationDays - numFullCycles * fullCycleDays;
+  // O deload (calendário, 1 semana) fica FORA do orçamento de sessões — cada ciclo completo
+  // soma só idealBlockSessions treinos ao orçamento; a semana de deload entre blocos é "de
+  // graça", do mesmo jeito que um dia de descanso não conta contra o contador de treinos.
+  const numFullCycles = Math.floor(goalDurationDays / idealBlockSessions);
+  const remainderSessions = goalDurationDays - numFullCycles * idealBlockSessions;
 
   const blocks = [];
   for (let i = 0; i < numFullCycles; i++) {
-    blocks.push({ type: "treino", lengthDays: idealBlockDays, compressed: false, exerciseRefresh: i > 0, taper: false });
+    blocks.push({ type: "treino", lengthSessions: idealBlockSessions, compressed: false, exerciseRefresh: i > 0, taper: false });
     blocks.push({ type: "deload", lengthDays: deloadDays });
   }
 
   const lastTreino = () => [...blocks].reverse().find((b) => b.type === "treino");
 
-  if (remainderDays >= minPartialBlockDaysToStandAlone) {
+  if (remainderSessions >= minPartialBlockSessionsToStandAlone) {
     blocks.push({
       type: "treino",
-      lengthDays: remainderDays,
-      compressed: remainderDays < idealBlockDays,
+      lengthSessions: remainderSessions,
+      compressed: isCompressible(remainderSessions),
       exerciseRefresh: true,
       taper: !!eventBound,
     });
-  } else if (remainderDays > 0) {
+  } else if (remainderSessions > 0) {
     const t = lastTreino();
     if (t) {
-      t.lengthDays += remainderDays;
+      t.lengthSessions += remainderSessions;
       if (eventBound) t.taper = true;
     }
   } else if (eventBound) {
@@ -195,7 +237,25 @@ function planPeriodization(goalDurationDays, level, eventBound) {
   // Nunca termina em deload: se não há bloco de treino depois, o deload final não serve a nada.
   if (blocks.length && blocks[blocks.length - 1].type === "deload") blocks.pop();
 
-  return { mode: "multi_bloco", idealBlockDays, blocks };
+  return { mode: "multi_bloco", idealBlockSessions, blocks };
+}
+
+// --- 3.6 Descanso (progression-rules.json/restDayModel, Opção B confirmada) ---
+// Cadência mínima derivada de daysAvailable — aviso não-bloqueante (nunca impede o registro
+// de treino). O simulador é estático (sem log de sessão real pra simular passagem de tempo),
+// então reporta a cadência e uma ESTIMATIVA de quantos descansos cada bloco deveria ter ao
+// longo do caminho — o aviso dinâmico em si é lógica do backend de check-in, não deste arquivo.
+function maxConsecutiveSessionsWithoutRest(daysAvailable) {
+  const row = progression.restDayModel.minRestCadenceTable.rows.find((r) => {
+    const min = r.minDaysAvailable || 0;
+    const max = r.maxDaysAvailable === undefined ? Infinity : r.maxDaysAvailable;
+    return daysAvailable >= min && daysAvailable <= max;
+  });
+  return row ? row.maxConsecutiveSessionsWithoutRest : 3;
+}
+function estimateRestDays(lengthSessions, cadence) {
+  if (!lengthSessions) return 0;
+  return Math.floor(lengthSessions / cadence);
 }
 
 // --- 4. Séries/reps por papel do exercício (progression-rules.json) ---
@@ -288,9 +348,13 @@ function resolveRecoverySlack(goalKey, level) {
   if (level === "advanced") return "baixa";
   return "moderada"; // beginner ou intermediate com objetivo normal
 }
-function resolveCardioEmphasis(goalCategory) {
-  const row = cardioRules.cardioEmphasisTable.rows.find((r) => r.goalCategory === goalCategory);
-  return row ? row.cardioEmphasis : null; // null = evento_especifico (sem regra geral) ou goalCategory não informado
+// evento_especifico NUNCA tem linha própria em cardioEmphasisTable, de propósito — ele sempre
+// reaproveita a linha de UM dos outros 4 focos (eventSubFocus, intake-flow-rules.json passo 2).
+function resolveCardioEmphasis(persona) {
+  const effectiveCategory =
+    persona.goalCategory === "evento_especifico" && persona.eventSubFocus ? persona.eventSubFocus : persona.goalCategory;
+  const row = cardioRules.cardioEmphasisTable.rows.find((r) => r.goalCategory === effectiveCategory);
+  return row ? row.cardioEmphasis : null; // null = goalCategory não informado, ou evento_especifico sem eventSubFocus respondido
 }
 // cardioPreference (texto livre) só escolhe a modalidade DENTRO da banda já decidida —
 // nunca muda frequência/duração. Heurística simples de palavra-chave com negação curta
@@ -320,11 +384,15 @@ function pickModality(band, cardioPreference) {
   const bandWithoutDisliked = band.filter((m) => !disliked.has(m));
   return (bandWithoutDisliked.length ? bandWithoutDisliked : band)[0]; // sem preferência utilizável → menor custo de recuperação, evitando o que foi explicitamente rejeitado
 }
-function buildCardioPlan(persona, goalKey) {
-  const recoverySlack = resolveRecoverySlack(goalKey, persona.level);
-  const cardioEmphasis = resolveCardioEmphasis(persona.goalCategory);
+function buildCardioPlan(persona, goalKey, engineLvl) {
+  const recoverySlack = resolveRecoverySlack(goalKey, engineLvl);
+  const cardioEmphasis = resolveCardioEmphasis(persona);
   if (!cardioEmphasis) {
-    return { skipped: true, reason: `goalCategory="${persona.goalCategory || "não informado"}" ainda sem regra de cardioEmphasis (ver openQuestions em cardio-rules.json)` };
+    const reason =
+      persona.goalCategory === "evento_especifico"
+        ? "evento_especifico sem eventSubFocus respondido — sem foco pra reaproveitar (ver cardio-rules.json)"
+        : `goalCategory="${persona.goalCategory || "não informado"}" ainda sem regra de cardioEmphasis (ver openQuestions em cardio-rules.json)`;
+    return { skipped: true, reason };
   }
   const row = cardioRules.decisionMatrix.rows.find((r) => r.cardioEmphasis === cardioEmphasis && r.recoverySlack === recoverySlack);
   if (!row) return { skipped: true, reason: `combinação ${cardioEmphasis}×${recoverySlack} sem linha na decisionMatrix` };
@@ -342,9 +410,15 @@ function buildCardioPlan(persona, goalKey) {
 
 // --- 6. Monta o protocolo completo de uma persona ---
 function buildProtocol(persona) {
-  const objective = resolveActivityObjective(persona);
+  // Cruzamento de nível (training-volume-landmarks.json/levelClassification) — levelFinal
+  // só pode puxar o autodeclarado pra baixo. engineLvl colapsa highly_advanced→advanced pros
+  // lookups que ainda só têm 3 faixas (landmarks, split, cardio/recoverySlack, mesocycle).
+  const { derived: levelDerived, final: levelFinalValue } = resolveLevelFinal(persona.level, persona.trainingTimeYears);
+  const engineLvl = engineLevel(levelFinalValue);
+
+  const objective = resolveActivityObjective(persona, levelFinalValue);
   const isRank1ForSplit = objective.isRank1 || !objective.musc;
-  const splitPick = pickSplitStyle(persona.daysAvailable, persona.level, isRank1ForSplit);
+  const splitPick = pickSplitStyle(persona.daysAvailable, engineLvl, isRank1ForSplit);
   const split = { name: splitPick.style.label, days: splitPick.days, alternatives: splitPick.alternatives };
   const groupsHit = new Set();
   split.days.forEach((d) => dayMuscleMap[dayType(d)].forEach((g) => groupsHit.add(g)));
@@ -360,13 +434,18 @@ function buildProtocol(persona) {
   // maintenance_support agora tem 2 gatilhos independentes (ver resolveActivityObjective) —
   // o rankBased (musc existe e não é rank1) OU o goalBased (já calculado em objective).
   const isMaintenance = objective.goalBasedMaintenance || (!!objective.musc && !objective.isRank1);
+  // manualEscalation (activity-priority-rules.json): só o gatilho goalBased pode ser escalado.
+  const escalationActive = objective.goalBasedMaintenance && !!persona.userRequestedEscalation;
+  // "comprimido" (periodização) fica inerte quando o teto é maintenance_support flat — mas
+  // volta a valer se a escalada manual já levantou o teto pra MEV→MAV/MRV normal.
+  const periodizationIsMaintenance = isMaintenance && !escalationActive;
   const goalKey = isMaintenance ? "maintenance_support" : "hypertrophy";
   const preferLowRecovery = goalKey === "maintenance_support";
   const preferGuidedEquipment = persona.trainingConsistency === "esporadico";
 
   const groupInfo = {};
   groupsHit.forEach((g) => {
-    const wt = weeklyTargetSets(g, persona.level, objective);
+    const wt = weeklyTargetSets(g, engineLvl, objective, persona.userRequestedEscalation);
     const perDaySets = wt.sets / daysPerGroup[g];
     const exerciseCount =
       currentRoutine[g] != null ? currentRoutine[g] : Math.max(1, Math.round(perDaySets / 3));
@@ -482,9 +561,17 @@ function buildProtocol(persona) {
     return { dayLabel, items: kept, trimmedCount, usedMinutes: Math.round(used) };
   });
 
-  const periodization = planPeriodization(persona.goalDurationDays, persona.level, persona.eventBound);
+  const periodization = planPeriodization(persona.goalDurationDays, engineLvl, persona.eventBound, periodizationIsMaintenance);
+  // restDayModel (progression-rules.json, Opção B): estimativa de descansos por bloco de
+  // treino, derivada da cadência mínima pra daysAvailable — aviso não-bloqueante, nunca
+  // bloqueia o registro real de um treino (isso é lógica de check-in, fora deste simulador).
+  const restCadence = maxConsecutiveSessionsWithoutRest(persona.daysAvailable);
+  periodization.restCadence = restCadence;
+  periodization.blocks.forEach((b) => {
+    if (b.type === "treino") b.restDaysEstimate = estimateRestDays(b.lengthSessions, restCadence);
+  });
 
-  const cardioPlan = buildCardioPlan(persona, goalKey);
+  const cardioPlan = buildCardioPlan(persona, goalKey, engineLvl);
   // orderingAndSafety (cardio-rules.json): quando cardioEmphasis é mínima e existe uma
   // entrada "Cardio" caindo no mesmo dia da musculação, sinalizar — nunca recalcular nada.
   if (!cardioPlan.skipped && cardioPlan.cardioEmphasis === "minima") {
@@ -496,7 +583,20 @@ function buildProtocol(persona) {
     }
   }
 
-  return { objective, split, groupInfo, dayPlans, warnings, goalKey, budgetMinutes, sessionMinutes: persona.sessionMinutes, periodization, cardioPlan };
+  return {
+    objective,
+    split,
+    groupInfo,
+    dayPlans,
+    warnings,
+    goalKey,
+    budgetMinutes,
+    sessionMinutes: persona.sessionMinutes,
+    periodization,
+    cardioPlan,
+    levelInfo: { selfDeclared: persona.level, derived: levelDerived, final: levelFinalValue },
+    escalationActive,
+  };
 }
 
 // --- 7. Impressão ---
@@ -506,7 +606,7 @@ console.log("=".repeat(70));
 
 personas.forEach((p) => {
   console.log(`\n${"-".repeat(70)}\nPersona: ${p.id}`);
-  console.log(`Nível: ${p.level} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Sessão: ${p.sessionMinutes}min | Meta: ${p.goal} [goalCategory: ${p.goalCategory || "não informado"}]`);
+  console.log(`Nível autodeclarado: ${p.level} | trainingTimeYears: ${p.trainingTimeYears} | Idade: ${p.age} | Dias/semana: ${p.daysAvailable} | Sessão: ${p.sessionMinutes}min | Meta: ${p.goal} [goalCategory: ${p.goalCategory || "não informado"}]`);
   if (p.limitations.length) console.log(`Limitações: ${p.limitations.map((l) => `${l.description} [${l.tag}]`).join("; ")}`);
   console.log(`Equipamento disponível: ${(p.availableEquipment || []).join(", ")}`);
   if (p.trainingConsistency === "esporadico") {
@@ -514,13 +614,18 @@ personas.forEach((p) => {
   }
 
   const protocol = buildProtocol(p);
-  const { objective } = protocol;
+  const { objective, levelInfo } = protocol;
+  if (levelInfo.derived !== levelInfo.selfDeclared) {
+    console.log(
+      `Cruzamento de nível (training-volume-landmarks.json/levelClassification): autodeclarado=${levelInfo.selfDeclared}, derivado de ${p.trainingTimeYears}a de treino=${levelInfo.derived} → levelFinal=${levelInfo.final} ${levelInfo.final !== levelInfo.selfDeclared ? "(puxado pra baixo pelo tempo de treino)" : "(tempo de treino não puxou pra baixo — derivado é igual ou acima do autodeclarado)"}`
+    );
+  }
   if (objective.musc) {
     console.log(
       `Atividades: ${p.physicalActivities.map((a) => `${a.name} (rank ${a.rank}, ${a.frequencyPerWeek}x/sem)`).join(" | ")}`
     );
     const maintenanceOrigin = objective.goalBasedMaintenance
-      ? " — goalBased (rank 1, mas goalCategory=saude_geral_sem_meta_especifica + level!=beginner — teto direto no MEV, sem passar por weeklyLoadBudget)"
+      ? ` — goalBased (rank 1, mas goalCategory=saude_geral_sem_meta_especifica + levelFinal!=beginner — teto direto no MEV, sem passar por weeklyLoadBudget)${protocol.escalationActive ? " · ESCALADA MANUAL ATIVA (userRequestedEscalation): teto levantado pra MEV→MAV/MRV normal" : ""}`
       : !objective.isRank1
       ? ` — rankBased (${objective.tier ? objective.tier.label : "sem tier"})`
       : "";
@@ -541,19 +646,20 @@ personas.forEach((p) => {
   const per = protocol.periodization;
   const periodLabel =
     per.mode === "sem_periodo_informado"
-      ? `sem goalDurationDays informado → 1 mesociclo padrão de ${per.idealBlockDays}d (fallback)`
-      : `goalDurationDays=${p.goalDurationDays}d${p.eventBound ? " (eventBound: taper no bloco final)" : ""}`;
+      ? `sem goalDurationDays informado → 1 mesociclo padrão de ${per.idealBlockSessions} treinos (fallback)`
+      : `goalDurationDays=${p.goalDurationDays} (contado em TREINOS, não dias de calendário — ver progression-rules.json/periodizationByGoalDuration.unitChange_outOfOutubro2026)${p.eventBound ? " (eventBound: taper no bloco final)" : ""}`;
   console.log(`Periodização: ${periodLabel}`);
+  console.log(`  Cadência mínima de descanso (restDayModel, Opção B — aviso não-bloqueante): até ${per.restCadence} treinos seguidos antes de recomendar descanso (daysAvailable=${p.daysAvailable})`);
   per.blocks.forEach((b, i) => {
     if (b.type === "deload") {
-      console.log(`  Bloco ${i + 1}: DELOAD — ${b.lengthDays}d (${progression.deloadProtocol.volumeReduction} volume, RIR ${progression.deloadProtocol.intensityTargetRIR.join("-")})`);
+      console.log(`  Bloco ${i + 1}: DELOAD — ${b.lengthDays}d de calendário, fora do orçamento de sessões (${progression.deloadProtocol.volumeReduction} volume, RIR ${progression.deloadProtocol.intensityTargetRIR.join("-")})`);
     } else {
       const flags = [
         b.compressed ? "comprimido: rampa de volume acelerada rumo ao MAV" : null,
         b.exerciseRefresh ? "exercício reconsiderado no início deste bloco" : i === 0 ? "exercícios escolhidos para este protocolo" : "mesmos exercícios do bloco anterior",
-        b.taper ? "taper nos dias finais (eventBound)" : null,
+        b.taper ? "taper nos treinos finais (eventBound)" : null,
       ].filter(Boolean);
-      console.log(`  Bloco ${i + 1}: TREINO — ${b.lengthDays}d (${flags.join("; ")})`);
+      console.log(`  Bloco ${i + 1}: TREINO — ${b.lengthSessions} treinos (~${b.restDaysEstimate} descanso(s) estimado(s) ao longo do caminho) (${flags.join("; ")})`);
     }
   });
   if (per.blocks.length > 1 || per.mode !== "sem_periodo_informado") {
