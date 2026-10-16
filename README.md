@@ -21,10 +21,12 @@ data/
   intake-flow-rules.json           # Ordem e ramificação das perguntas do cadastro — o que é sempre perguntado vs. o que só abre quando se aplica ao perfil
   cardio-rules.json                # Cardio decidido por recoverySlack (folga de recuperação da musculação) × cardioEmphasis (objetivo do usuário) — modalidade, frequência, duração
 test/
-  test-personas.json               # 7 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
+  test-personas.json               # 9 perfis de teste para validar a lógica do motor (limitações como tags fechadas, não texto livre)
   simulate-engine.js                # Simulador: roda as personas contra as regras e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
+legal/
+  termo-de-uso.md                   # Termo de uso e aviso de responsabilidade (rascunho — precisa de revisão jurídica antes de publicar)
 ```
 
 ## Rodar a simulação
@@ -38,6 +40,8 @@ node test/simulate-engine.js
 Motor rodando de ponta a ponta: `node test/simulate-engine.js` gera o protocolo completo (split, plano de periodização em treinos, exercício, séries, reps por dia, e cardio) pras 9 personas de teste, já aplicando cruzamento de nível, ranking de atividade, teto de tempo por sessão e banco de exercícios.
 
 Decisão de produto: o app será mobile pra iOS e Android (abordagem técnica — ex: React Native/Expo — delegada ao fundador, ainda não iniciada; o site é só uma página explicativa, sem o motor).
+
+Rascunho do termo de uso e aviso de responsabilidade (decisão #8) em `legal/termo-de-uso.md` — cobre a natureza do serviço (não substitui profissional/médico), responsabilidades do usuário, riscos do exercício e limitação de responsabilidade. **Precisa de revisão jurídica antes de publicar pra qualquer usuário**, mesmo beta fechado.
 
 O split não é mais um único estilo fixo por quantidade de dias: o motor conhece 7 estilos (Full Body, FBEOD, Upper/Lower, PPL, ABC, ABCD, ABCDE/Bro Split, híbrido U/L+PPL — ver `data/split-style-rules.json`), sugere um default pela combinação dias/nível/objetivo, e sempre mostra as outras opções viáveis pro mesmo perfil junto, sem fechar numa resposta única. PPL e ABC são dois estilos de 3 dias DIFERENTES, não o mesmo nome em dois idiomas: PPL agrupa por função do movimento (empurrar/puxar/pernas), ABC agrupa por músculo principal + sinergista (peito+tríceps / costas+bíceps / pernas+ombro+abdômen).
 
