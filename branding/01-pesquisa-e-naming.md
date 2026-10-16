@@ -1,6 +1,6 @@
 # Branding — Etapa 1: entendimento do produto, pesquisa de mercado e naming
 
-**Status: em andamento.** Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais uma seção 6 com uma rodada extra de exploração internacional de nomes, pedida depois da primeira leitura. Pelo próprio desenho do processo, ele **para aqui**: as etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) dependem do nome escolhido — não faz sentido desenhar um logotipo antes de saber quais letras ele precisa formar.
+**Status: em andamento.** Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais duas rodadas extras pedidas depois da primeira leitura: seção 6 (exploração internacional de nomes) e seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz). Pelo próprio desenho do processo, ele **para aqui**: as etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) dependem do nome escolhido — não faz sentido desenhar um logotipo antes de saber quais letras ele precisa formar.
 
 _out/2026._
 
@@ -222,9 +222,46 @@ O padrão que apareceu: **quase toda palavra forte e "óbvia" em inglês relacio
 
 ---
 
-### Perguntas em aberto — preciso da sua resposta antes de seguir pra identidade visual
+## 7. Exploração: nomes a partir de frases/gírias ditas na hora do treino
 
-1. A hipótese de personalidade (reformulada acima: "protocolo recalculado — nível reclassificado" vs. "VAMOS DESTRUIR ESSE TREINO 🔥💪") — qual dos dois tons é mais parecido com o que você imagina, ou é outra coisa?
+Você pediu pra olhar frases faladas de verdade durante a musculação ("1 more rep"/"1MR", "até a falha"...) como fonte de nome, em vez de uma palavra-conceito isolada. Fui atrás de referências reais (não inventei vocabulário) em três fontes: um glossário de gíria de treino em inglês, uma matéria brasileira sobre "academês", e um dicionário fitness em português.
+
+### O vocabulário real que encontrei
+
+**Esforço/repetição/série (inglês, [Garage Gym Reviews](https://garagegymreviews.com/gym-lingo))**: AMRAP, rep, set, drop set, superset, TUT (time under tension), half rep, ROM, cheating (usar embalo), concêntrico/excêntrico, ATG ("ass to grass" — descer até o fim), all you (incentivo pra terminar sem ajuda), brace (travar o core antes de uma carga pesada), spot, pump, DOMS, RPE/RIR, deload, plateau, gains, PR/PB.
+
+**Esforço/repetição/série (português, [matéria sobre "academês"](https://www.gazetasp.com.br/gazeta-mais/as-academias-tem-idioma-proprio-voce-fala-academes/) e [dicionário fitness](https://www.drogaraia.com.br/blog/atividade-fisica/musculacao/dicionario-fitness))**: carga, reps, série, falha ("segura na falha"), progressão, "3×12", "RPE 7", 1RM, PR. Frases/sinais de comunicação entre quem treina: "quantas faltam?", "dá uma ajuda na última?", aceno discreto pra revezar, polegar pra cima. A matéria brasileira explicitamente **não cobriu gritos de incentivo** ("vai!", "mais uma!", "solta!") — não achei uma fonte confiável catalogando isso especificamente, então não vou tratar essas frases de incentivo como testadas, só como vocabulário do dia a dia que todo mundo reconhece.
+
+### O que descobri testando os candidatos específicos que você deu
+
+- **"1 more rep"**: **já é nome de app, várias vezes.** Existe literalmente um app chamado "[One More Rep](https://apps.apple.com/ca/app/one-more-rep/id6480523240)", e outro "OneMoreRep" com várias variantes — incluindo uma versão já localizada em espanhol ("OneMoreRep: Entrenamiento AI"). Não sobra espaço pra usar essa frase como nome.
+- **"1MR"**: o problema aqui não é concorrência — é confusão. **"1RM" já é um termo técnico universal e diferente** (carga máxima pra 1 repetição, não "falta 1 repetição") — confirmado nos dois glossários que li, inglês e português, e há apps literalmente chamados "[1RM Max Calculator](https://apps.apple.com/app/id1110502852)"/"One Rep Max". "1MR" fica visualmente a uma letra de distância de "1RM" — pro público-alvo (gente que já treina e já conhece "1RM" de cor), isso tem boa chance de ler como erro de digitação do termo errado, não como uma sigla nova e espirituosa.
+- **"Até a falha" / "to failure"**: a frase em si parece livre como nome — não achei nenhum app chamado assim. Mas o **conceito** (o app saber quando você chegou na falha muscular de verdade) já é o produto inteiro de um app chamado "[Riven](https://www.producthunt.com/products/riven-reach-muscle-failure/launches/riven-3)" (usa o Apple Watch pra detectar falha). Não é um bloqueio de nome, mas vale saber que a ideia-conceito já tem uma bandeira fincada, mesmo com nome diferente.
+- **Testei também "Deload" e "Rack"** (ambos vocabulário real e menos óbvio que "1 more rep"): os dois também já são nome de app — "[Deload](https://apps.apple.com/ca/app/deload/id6760390668)" existe como app standalone, e "Rack" aparece em pelo menos quatro apps diferentes ("RackCoach", "Rackd Life", "Rack Strength", "Fit Rack").
+
+### Padrão que se repete (terceira vez que isso acontece nesta pesquisa)
+
+Toda palavra ou frase de treino curta, autêntica e "óbvia" que testei — em qualquer idioma, seja conceito abstrato (Forge, Vector, Axis) ou gíria real de academia (One More Rep, Deload, Rack) — **já está em uso por algum app**. Isso não é falta de sorte: é o motivo pelo qual essas palavras parecem boas pra todo mundo que monta um app de treino. O espaço de "palavra-nome única e óbvia" no nicho de fitness já está bem ocupado.
+
+**Minha leitura**: esse vocabulário de treino que você trouxe é ótimo — só acho que ele tem mais valor como **tom de voz/copy do app** (como o app fala com você: "até a falha", "mais uma", "PR!") do que como nome da marca em si. Isso também conecta com sua resposta da pergunta 1 abaixo: dá pra manter Lastro (ou Fucina) como nome, e usar justamente essas frases reais de treino no microcopy — notificação, tela de resultado, botão — pra garantir que o app "fale a língua" de quem já treina, sem precisar que o NOME sozinho carregue essa autenticidade (e sem brigar com apps que já usaram a frase como nome).
+
+Se quiser insistir em achar uma frase-nome específica ainda não usada, posso ir mais a fundo em termos menos óbvios do glossário que não testei ainda (Brace, All You, TUT, ATG, RIR) — mas o padrão acima é forte o suficiente pra eu recomendar não apostar nessa linha como nome principal.
+
+### Tom de voz — calibrando com sua resposta
+
+Você confirmou: tom de "protocolo recalculado", mas menos formal. Pra garantir que entendi o ajuste certo, três exemplos de como isso ficaria na prática, incorporando o vocabulário de treino desta seção:
+
+- Formal demais (não é isso): *"Seu protocolo foi recalculado. O nível foi reclassificado para avançado com base no histórico informado."*
+- Calibrado (o que acho que você quer): *"Recalculamos seu protocolo — pelo seu histórico, você já é avançado."* / *"Bateu PR? Hora de ajustar a carga."* / *"Chegou na falha antes do esperado — vamos revisar o volume."*
+- Informal demais (provavelmente não é isso): *"Mano, você tá voando! 🔥 Partiu subir de nível!"*
+
+Se o meio bate, sigo com esse registro pra qualquer copy futura (telas, notificações, nomes de estado do protocolo).
+
+---
+
+### Perguntas em aberto
+
+1. ~~Tom de voz~~ — calibrado acima; confirma se os exemplos do meio batem ou se eu ainda preciso ajustar pra mais ou menos informal.
 2. ~~Modelo de negócio~~ — respondido (pago).
 
-E a decisão principal: **Lastro, Fucina, ou quer que eu pesquise Têmpera/Robur/Metron/Ferrum mais a fundo antes de decidir?** A partir da escolha, as etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) entram em ação.
+Decisão principal: **Lastro, Fucina, ou aprofundar mais em algum termo específico** (seja da rodada internacional — Têmpera/Robur/Metron/Ferrum — seja do vocabulário de treino desta seção — Brace/All You/TUT/ATG/RIR)? A partir da escolha do nome, as etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) entram em ação.
