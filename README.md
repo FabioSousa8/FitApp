@@ -41,6 +41,7 @@ test/
   simulate-engine.js                # Simulador: roda as personas contra engine/ e mostra o plano gerado
 docs/
   engine-flow.md                    # Como as peças do motor se conectam (intake → split → volume → progressão)
+  beta-fechado.md                    # Plano de logística do primeiro grupo de teste: pré-requisitos, tamanho/perfil, distribuição, feedback
 legal/
   termo-de-uso.md                   # Termo de uso e aviso de responsabilidade (rascunho — precisa de revisão jurídica antes de publicar)
   politica-de-privacidade.md        # Política de privacidade LGPD (rascunho — mesma pendência de revisão jurídica)
@@ -106,3 +107,4 @@ Pendências conhecidas (ver `docs/engine-flow.md`):
 - **Extração de `currentRoutineRaw` pra `exerciseCountByGroup`**: o wizard já coleta o texto (passo 7), mas a extração em si — texto livre/foto da ficha → quantidade de exercícios por grupo — ainda não tem regra nem no motor, nem no app.
 - **Reordenar atividades físicas no wizard** usa botões ▲▼ em vez de arrastar — funciona, mas não é o gesto de arrastar que `activity-priority-rules.json/intakeSchema` menciona.
 - **Geração de protocolo roda embarcada no app** (sem backend) — rápido pra validar o fluxo hoje, mas significa que mudar uma regra do motor exige publicar uma nova versão do app. Mover isso pra um backend/Edge Function é uma opção a revisitar quando isso incomodar (ver `app/README.md`).
+- **Logística do beta fechado** planejada em `docs/beta-fechado.md` (tamanho/perfil do grupo, Expo Go como via de distribuição, mecanismo de feedback) — mas convidar o primeiro usuário real ainda depende de dois bloqueadores: projeto Supabase real configurado, e um e-mail de contato real (ver pendências dos documentos legais acima).
