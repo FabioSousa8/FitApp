@@ -1,6 +1,6 @@
 # Branding — Etapa 1: entendimento do produto, pesquisa de mercado e naming
 
-**Status: NOME REABERTO (out/2026).** Tom de voz continua aprovado (seção 7). O nome havia sido fechado em **Lastro**, mas o Fabio reabriu a decisão depois de alguns dias de observação — ver seção 8. Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais três rodadas extras: seção 6 (exploração internacional de nomes), seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz) e seção 8 (reabertura: avaliação de 5 novos candidatos). As etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) continuam em `branding/02-identidade-visual.md` — **as 5 propostas de logotipo já publicadas lá são todas construídas em torno da palavra "LASTRO"**, então ficam provisoriamente órfãs até o nome ser re-travado; não é retrabalho perdido se Lastro voltar a ser a escolha, mas precisam ser refeitas se outro nome vencer.
+**Status: NOME REABERTO (out/2026).** Tom de voz continua aprovado (seção 7). O nome havia sido fechado em **Lastro**, mas o Fabio reabriu a decisão depois de alguns dias de observação — ver seção 8. Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais quatro rodadas extras: seção 6 (exploração internacional de nomes), seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz), seção 8 (reabertura: avaliação de 5 novos candidatos) e seção 9 (nomes inventados/portmanteau multilíngue, estilo "HYROX"). As etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) continuam em `branding/02-identidade-visual.md` — **as 5 propostas de logotipo já publicadas lá são todas construídas em torno da palavra "LASTRO"**, então ficam provisoriamente órfãs até o nome ser re-travado; não é retrabalho perdido se Lastro voltar a ser a escolha, mas precisam ser refeitas se outro nome vencer.
 
 _out/2026._
 
@@ -300,6 +300,37 @@ Dois caminhos práticos a partir daqui (sua escolha, não vou decidir por conta 
 
 1. **Abrir uma 4ª rodada dedicada** especificamente ao campo semântico de evolução/trajetória/crescimento (ascensão, momentum, composição, salto, trajeto) — com a mesma pesquisa de conflito de verdade antes de qualquer recomendação, do jeito que fizemos pras rodadas anteriores.
 2. **Reconsiderar o peso dos critérios**: se "sensação de evolução" for mais importante pra você do que risco de conflito baixo, Forge com uma variação gráfica/ortográfica mais distinta que FORG3 ainda pode valer uma rodada de pesquisa mais profunda (domínio, @handle, INPI) antes de descartar — só não recomendo isso sem essa verificação, dado o volume de concorrência direta já encontrado.
+
+## 9. Nomes inventados/portmanteau multilíngue (out/2026)
+
+Novo pedido do Fabio: em vez de palavras reais de um idioma (o que gerou o problema repetido nas seções 3, 6 e 8 — toda palavra real óbvia já está em uso), construir **nomes inventados por fusão de duas palavras/raízes** — o exemplo dado foi "HYROX" (híbrido + rockstar, na leitura do Fabio). A lógica é sólida: uma palavra inventada não compete por busca com nenhuma palavra de dicionário, então a chance de colisão cai estruturalmente — é a mesma razão pela qual "Strava", "Oura" e "Fitbod" funcionam bem.
+
+Testei 8 candidatos combinando raízes de grego, italiano, latim, espanhol e árabe (nos pedidos do Fabio) com sonoridade curta e moderna, cada um já passado por busca de conflito real antes de entrar na lista final — não é só brainstorm.
+
+### Limpos (nenhum conflito direto encontrado)
+
+- **Auxora** — grego *auxein* (crescer; é a raiz de "auxina", o hormônio vegetal de crescimento) + terminação "-ora" (ressoa com "aurora", novo começo). Crescimento + recomeço — bate bem com a ideia de evolução contínua.
+- **Slanzo** — italiano *slancio* (impulso, arremesso, o "ímpeto" de avançar). É literalmente a palavra de "momentum" em italiano, só com grafia levemente adaptada. É o mais direto dos 4 em termos de "soa a evolução".
+- **Trajex** — latim *trajetória* + terminação "-ex" (moderna, forte). Comunica "percurso/arco de progresso" — bate com a lógica real do motor (periodização em blocos = trajetória calculada). Ressalva que não é de conflito: "-ex" é um padrão de nome de startup/SaaS genérico (Apex, Nexus, Vertex...) — pode soar menos "fitness" e mais "softwarezinho corporativo".
+- **Numora** — tentativa com raiz árabe: *numuw* (نمو, crescimento) + "-ora". **Preciso avisar**: não tenho como confirmar a transliteração/conotação com certeza sem um falante nativo de árabe — é a mesma ressalva que fiz pra "lastre" em espanhol na seção 6. Se este te interessar, vale confirmar antes de levar a sério.
+
+### Com ressalva (achei algo próximo, não é bloqueio claro)
+
+- **Impulsa** — espanhol/italiano *impulso* (impulso, empurrão pra frente). Não achei "Impulsa" diretamente, mas existem marcas registradas de fitness bem próximas na escrita: "[IMPULSE FITNESS CENTERS](https://trademark.justia.com/737/03/impulse-fitness-centers-73703520.html)" e "[IMPULSE (QINGDAO) HEALTH TECH](https://trademarks.justia.com/owners/impulse-qingdao-health-tech-ltd-2366790)" — uma letra de distância, mesma categoria.
+- **Vertyx** — latim *vertere* (virar/mudar, raiz de "vértice"/"virada") + "-yx". Não achei conflito de escrita, mas "Vertyx" falado é quase idêntico a **Vertex** — empresa de software fiscal de capital aberto (ticker VERX) — colisão fonética real, mesmo sem colisão de grafia.
+
+### Descartados
+
+- **Kinetra** — grego *kinesis* (movimento) + "-tra". Existe uma **marca registrada nos EUA, pendente desde dez/2024**, chamada exatamente "[KINETRA](https://trademarks.justia.com/989/11/kinetra-98911130.html)" — Classe 028 (artigos de ginástica/esporte), cobrindo halteres, kettlebell, banco, esteira, remo — ou seja, equipamento de fitness, categoria adjacente direta. Bloqueio real, não especulativo.
+- **Saltra** — latim *saltare* (saltar, progredir em saltos — ligação boa com a lógica de bloco/nível do motor). Existe uma marca japonesa de salgadinho chamada exatamente "SALTRA" — categoria completamente diferente (alimentos), risco de confusão baixo, mas a string exata já está em uso globalmente.
+
+### Minha leitura
+
+A estratégia de inventar o nome (em vez de usar palavra real) é, estruturalmente, a correção certa pro problema que se repetiu nas três rodadas anteriores — **Auxora**, **Slanzo** e **Trajex** saíram limpos numa busca real, o que não aconteceu com quase nenhum candidato de palavra-real testado até aqui (só Lastro e Sinapse tiveram esse resultado, nas rodadas 1 e 2). Dos três, **Slanzo** é o que mais entrega a sensação de evolução/momentum que motivou a reabertura — é literalmente a palavra italiana pra isso. **Auxora** tem a camada extra do crescimento biológico (auxina) escondida, legível só pra quem for pesquisar, o que pode ser um ponto a favor (profundidade) ou contra (ninguém vai pescar isso sem explicação).
+
+Nenhuma dessas 3 passou por busca formal de marca (INPI/USPTO) nem verificação de domínio/@handle — mesma ressalva de sempre, mas o sinal preliminar é o melhor de toda a pesquisa até agora.
+
+Posso abrir mais uma rodada de combinações (grego+latim, árabe+inglês, etc.) se quiser mais opções antes de decidir, ou já seguimos com os 3 limpos pra uma verificação mais profunda (domínio, @handle, INPI) antes de escolher.
 
 ### Decisões fechadas (out/2026)
 
