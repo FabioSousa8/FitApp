@@ -1,6 +1,6 @@
 # Branding — Etapa 1: entendimento do produto, pesquisa de mercado e naming
 
-**Status: CONCLUÍDO.** Nome final: **Lastro.** Tom de voz aprovado. Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais duas rodadas extras: seção 6 (exploração internacional de nomes) e seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz) — até a decisão final na seção "Decisões fechadas". As etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) continuam em `branding/02-identidade-visual.md`.
+**Status: NOME REABERTO (out/2026).** Tom de voz continua aprovado (seção 7). O nome havia sido fechado em **Lastro**, mas o Fabio reabriu a decisão depois de alguns dias de observação — ver seção 8. Este documento cobre as etapas 1-5 do processo de branding (entendimento do produto → pesquisa de concorrência → candidatos a nome → investigação específica do nome "FitApp" → comparação e recomendação), mais três rodadas extras: seção 6 (exploração internacional de nomes), seção 7 (nomes a partir de frases/gírias de treino + calibração de tom de voz) e seção 8 (reabertura: avaliação de 5 novos candidatos). As etapas seguintes (direção criativa, logotipos, paletas, ícone, sistema visual, manual) continuam em `branding/02-identidade-visual.md` — **as 5 propostas de logotipo já publicadas lá são todas construídas em torno da palavra "LASTRO"**, então ficam provisoriamente órfãs até o nome ser re-travado; não é retrabalho perdido se Lastro voltar a ser a escolha, mas precisam ser refeitas se outro nome vencer.
 
 _out/2026._
 
@@ -259,12 +259,54 @@ Se o meio bate, sigo com esse registro pra qualquer copy futura (telas, notifica
 
 ---
 
+## 8. Reabertura da decisão de nome (out/2026)
+
+Depois de alguns dias observando a decisão, o Fabio voltou com uma objeção de fundo, não um capricho estético: **Lastro soa pesado e estático — não comunica evolução/crescimento**, que é algo que ele acha que o app deveria transmitir. É uma crítica válida e vale agir sobre ela — "lastro"/"sinapse" e os outros quatro candidatos do round 1 realmente foram todos escolhidos buscando *sobriedade/critério*, não *trajetória/progresso*. Ele trouxe 5 candidatos novos: **Apex, Forge (ou FORG3), E.X, HyperFit, Fine-Tune**. Testei os 5 com o mesmo rigor das rodadas anteriores (busca de conflito real, não suposição) antes de dar minha opinião.
+
+### O que a pesquisa encontrou
+
+**Apex** — risco de conflito **altíssimo**, o pior já encontrado até aqui, e não só no fitness: existem múltiplas marcas registradas nos EUA especificamente de academia/fitness usando "Apex" ([APEX FITNESS GROUP VIRTUAL GYM](https://trademark.justia.com/760/91/apex-fitness-group-virtual-gym-76091504.html), [APEX FIT](https://trademarks.justia.com/977/36/apex-97736617.html), [APEX FITNESS INC](https://trademarks.justia.com/owners/apex-fitness-inc-583808), [Apex Predator Fitness LLC](https://trademark.justia.com/owners/apex-predator-fitness-llc-2586159), [JB APEX FITNESS](https://trademarks.justia.com/902/47/jb-apex-90247859.html), [ATHLETIC APEX](https://trademarks.justia.com/850/93/athletic-apex-85093200.html)), além de um app já publicado chamado **[APEX AI TRAINING](https://apps.apple.com/us/app/-/id6761805344)**. Fora do fitness, "Apex" é literalmente o nome da linguagem de programação proprietária da Salesforce — uma colisão de busca relevante justamente no público tech/dev que você também frequenta. E há uma tensão conceitual: "ápice" é um ponto único, o topo — é mais sobre **chegar**, não sobre o processo de **subir**. Pra quem quer "evolução", é uma palavra que descreve o destino, não a jornada.
+
+**Forge / FORG3** — confirma e piora o que já tínhamos achado na seção 6: além dos apps já listados lá, encontrei agora também **[Forge Fitness and Nutrition](https://apps.apple.com/us/app/id1594672878)**, **[Forge Strength Trainer](https://apps.apple.com/app/id6765519720)**, **[Forge Programming](https://apps.apple.com/dk/app/forge-programming/id6742332388)**, **[Forge - Social Gym Tracker](https://apps.apple.com/us/app/-/id6745174764)**, **[FORGE - Zero Decision Training](https://apps.apple.com/us/app/forge-zero-decision-training/id6758532263)**, **ForgeFit**, **Forge: Strength Coach** e **[Forge AI Workout Trainer](https://apps.apple.com/app/id6759990122)** — é, de longe, o nome mais saturado de todo o processo até agora. "FORG3" (com o 3 no lugar do E) resolve o problema de string exata pra domínio/@handle, mas não resolve a colisão falada/de busca (quem procura "forge workout app" cai no meio de uma dúzia de concorrentes) nem muda a leitura como "mais um app de treino chamado Forge". Dito isso — conceitualmente, é o único dos 5 que entrega de verdade a ideia de transformação/evolução pela repetição estruturada que bate com a lógica de bloco do motor.
+
+**E.X** — aqui o problema não é só conflito (não achei nenhum app chamado assim de forma confiável), é a mecânica do nome em si: "E.X" falado é ambíguo (letra por letra? "eks"?), o ponto no meio provavelmente é descartado por qualquer @handle/domínio (viraria só "EX", que é uma string de duas letras — um dos espaços mais disputados que existe, justamente por ser curto demais pra ser distintivo). E em inglês, "ex-" como prefixo isolado lê como "ex-namorado", "ex-funcionário" — **o oposto exato** do que você está buscando (é sobre algo que acabou, não sobre crescimento).
+
+**HyperFit** — risco de conflito confirmado e direto: existe **marca registrada nos EUA** chamada **[HYPERFIT](https://trademarks.justia.com/869/23/hyperfit-86923754.html)**, além de apps publicados como **[HyperFitness Club / HyperFitness by Hyperhuman](https://apps.apple.com/app/id6477295982)** e referências a academias usando o nome. Tem também um problema de adequação ao produto: "hiper" + "fit" puxa a marca pra estética/alta intensidade especificamente — mas o motor atende 4 categorias de objetivo igualmente (hipertrofia, força, emagrecimento/recomposição, saúde geral sem meta estética). Um nome assim sub-representa 3 dos 4 públicos reais do app — é exatamente o padrão "nome descritivo da categoria" que a própria seção 3 (rodada 1) já tinha decidido evitar.
+
+**Fine-Tune** — o único dos 5 sem conflito de fitness encontrado na busca (mesma ressalva de sempre: busca geral, não é registro formal no INPI/USPTO). Adequação ao produto é forte, de verdade: bate exatamente com o público real (gente que já treina, não precisa aprender a fazer agachamento, precisa de ajuste fino de volume/intensidade/periodização — é literalmente o que o motor faz nas fronteiras de bloco). Mas tem duas ressalvas importantes: (1) **"fine-tuning" é um termo hoje muito associado a IA/ML** (ajuste fino de modelo) — pro seu público mais tech-aware isso pode ler como "ferramenta de IA", não "lógica de personal trainer"; (2) e o ponto mais relevante pra essa reabertura — **"ajuste fino" também não é "evolução/crescimento"**. É uma palavra de precisão, não de trajetória — na prática, troca a "sobriedade estática" do Lastro por uma "sobriedade estática" diferente, só que menos abstrata.
+
+### Comparação com a mesma régua da seção 5
+
+| Critério | Apex | Forge/FORG3 | E.X | HyperFit | Fine-Tune |
+|---|---|---|---|---|---|
+| Adequação ao produto | 5 | 8 | 4 | 3 | 9 |
+| Originalidade | 2 | 3 | 4 | 2 | 6 |
+| Memorabilidade | 8 | 7 | 4 | 6 | 5 |
+| Facilidade de pronúncia/escrita | 9 | 7 | 3 | 8 | 6 |
+| Potencial de construção de marca | 5 | 7 | 4 | 4 | 6 |
+| Diferenciação competitiva | 2 | 1 | 5 | 2 | 7 |
+| Adequação internacional | 6 | 6 | 3 | 5 | 6 |
+| Risco preliminar de conflito (10 = baixo risco) | 2 | 1 | 5 | 2 | 7 |
+| Potencial pra identidade visual | 5 | 7 | 6 | 5 | 5 |
+| **Total (/90)** | **44** | **47** | **38** | **37** | **57** |
+
+Pra referência: Lastro tinha **69/90** e até Forja (a pior opção do round 1, descartada por risco) tinha **61/90**. **Nenhum dos 5 novos candidatos bate a régua usada até aqui** — 3 deles (Apex, Forge, HyperFit) têm o pior risco de conflito documentado em todo o processo, E.X tem problema estrutural de mecânica de nome (não é só conflito), e o melhor do grupo (Fine-Tune, 57/90) é mais limpo mas não resolve o motivo real da reabertura: ele troca uma sobriedade por outra, não entrega a sensação de evolução/crescimento que você está buscando.
+
+### Minha leitura honesta
+
+Sua crítica ao Lastro é legítima e acho que vale agir sobre ela — mas, testados a sério, nenhum destes 5 é a resposta certa: os dois que **realmente** carregam a ideia de evolução (Apex, Forge) são justamente os dois com pior risco de conflito já visto neste processo inteiro — pela quarta vez, a palavra óbvia pro conceito óbvio já está ocupada. E.X tem problema de mecânica mesmo sem conflito. HyperFit estreita o público. Fine-Tune é o único estruturalmente são, mas é precisão, não trajetória — não é por aí que a sua objeção original aponta.
+
+Dois caminhos práticos a partir daqui (sua escolha, não vou decidir por conta própria):
+
+1. **Abrir uma 4ª rodada dedicada** especificamente ao campo semântico de evolução/trajetória/crescimento (ascensão, momentum, composição, salto, trajeto) — com a mesma pesquisa de conflito de verdade antes de qualquer recomendação, do jeito que fizemos pras rodadas anteriores.
+2. **Reconsiderar o peso dos critérios**: se "sensação de evolução" for mais importante pra você do que risco de conflito baixo, Forge com uma variação gráfica/ortográfica mais distinta que FORG3 ainda pode valer uma rodada de pesquisa mais profunda (domínio, @handle, INPI) antes de descartar — só não recomendo isso sem essa verificação, dado o volume de concorrência direta já encontrado.
+
 ### Decisões fechadas (out/2026)
 
 1. **Tom de voz**: aprovado o registro do meio ("Recalculamos seu protocolo — pelo seu histórico, você já é avançado." / "Bateu PR? Hora de ajustar a carga.") — nem o formal ("protocolo foi recalculado... reclassificado"), nem o informal-hype ("Mano, você tá voando! 🔥"). Esse é o registro de copy pra qualquer tela, notificação ou nome de estado a partir de agora.
 2. **Modelo de negócio**: pago.
-3. **Nome**: **Lastro.** Decisão fechada pelo Fabio em out/2026, depois de duas rodadas de exploração (internacional e vocabulário de treino) que só reforçaram essa escolha — nenhum concorrente encontrado, personalidade certa, baixo risco aparente de conflito.
+3. **Nome**: **REABERTO (out/2026)** — "Lastro" tinha sido fechado, mas foi reconsiderado pelo Fabio por não transmitir evolução/crescimento. Cinco novos candidatos (Apex, Forge/FORG3, E.X, HyperFit, Fine-Tune) avaliados na seção 8 — nenhum supera a régua de Lastro nos critérios já usados; decisão de como seguir (4ª rodada dedicada a evolução/trajetória, ou outro caminho) em aberto com o Fabio.
 
-As etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) continuam em `branding/02-identidade-visual.md`.
+As etapas 6-16 (direção criativa, logotipos, paletas, matriz, ícone, sistema visual, manual e arquivos finais) continuam em `branding/02-identidade-visual.md` — **pausadas**: as 5 propostas de logotipo já publicadas são específicas pra palavra "LASTRO" e não devem ser levadas adiante (cor, ícone, etc.) até o nome ser re-travado.
 
 **Pendência que não bloqueia o trabalho visual, mas precisa de decisão do Fabio em algum momento**: o repositório, os pacotes (`app/package.json`, `app.json`) e todos os documentos (README, legal/, docs/) ainda dizem "FitApp" — isso é só o nome de trabalho até aqui. Trocar tudo pra "Lastro" é uma tarefa mecânica que posso fazer quando o Fabio quiser (inclusive o nome do repositório no GitHub, se ele topar) — não fiz ainda porque não foi pedido e prefiro não misturar um rename grande no meio do trabalho de identidade visual sem confirmar.
