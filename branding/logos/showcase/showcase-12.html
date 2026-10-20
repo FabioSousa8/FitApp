@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo — iteration-12 showcase</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1600px;
+    height: 1600px;
+  }
+  body {
+    position: relative;
+    background:
+      radial-gradient(circle at 50% 34%, #201f18 0%, #0d0c09 55%, #050504 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+  }
+  /* athletic diamond-mesh texture, subtle, reminiscent of performance fabric */
+  .mesh {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(245,243,238,0.05) 0px, rgba(245,243,238,0.05) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(-45deg, rgba(245,243,238,0.05) 0px, rgba(245,243,238,0.05) 1px, transparent 1px, transparent 34px);
+    mask-image: radial-gradient(circle at 50% 38%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 38%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 78%);
+  }
+  /* faint top-down studio light sweep for depth */
+  .sweep {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 30%);
+  }
+  .vignette {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 260px 90px rgba(0,0,0,0.65);
+  }
+  .mark {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.6rem;
+  }
+  .icon-wrap {
+    width: 320px;
+    filter: drop-shadow(0 26px 46px rgba(0,0,0,0.55));
+  }
+  .icon-wrap svg { width: 100%; display: block; }
+  .wordmark {
+    font-size: 4.6rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #F5F3EE;
+  }
+  .tagline {
+    font-size: 1.05rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: #8E8876;
+    margin-top: -2.4rem;
+  }
+</style>
+</head>
+<body>
+  <div class="mesh"></div>
+  <div class="sweep"></div>
+  <div class="vignette"></div>
+  <div class="mark">
+    <div class="icon-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.20 50.80 410.40 410.40">
+        <path fill="#F5F3EE" d="M 69.88,144.87 L 65.22,168.80 Q 62.55,182.54 59.88,196.29 L 55.94,216.55 Q 53.27,230.29 50.60,244.03 L 45.95,267.97 Q 43.28,281.71 40.60,295.45 L 26.67,367.13 Q 24.00,380.88 38.00,380.88 L 61.42,380.88 Q 75.42,380.88 78.09,367.13 L 92.02,295.45 Q 94.70,281.71 108.70,281.71 L 171.78,281.71 Q 185.78,281.71 188.45,267.97 L 193.10,244.03 Q 195.78,230.29 181.78,230.29 L 118.69,230.29 Q 104.69,230.29 107.36,216.55 L 111.30,196.29 Q 113.97,182.54 127.97,182.54 L 198.40,182.54 Q 212.40,182.54 209.73,196.29 L 205.79,216.55 Q 203.12,230.29 200.45,244.03 L 195.80,267.97 Q 193.13,281.71 190.45,295.45 L 186.52,315.71 Q 183.85,329.46 181.17,343.20 L 176.52,367.13 Q 173.85,380.88 187.85,380.88 L 211.27,380.88 Q 225.27,380.88 239.27,380.88 L 321.45,380.88 Q 335.45,380.88 338.12,367.13 L 342.78,343.20 Q 345.45,329.46 331.45,329.46 L 249.26,329.46 Q 235.26,329.46 237.94,315.71 L 241.87,295.45 Q 244.55,281.71 258.55,281.71 L 317.22,281.71 Q 331.22,281.71 333.89,267.97 L 338.55,244.03 Q 341.22,230.29 327.22,230.29 L 268.54,230.29 Q 254.54,230.29 257.21,216.55 L 261.15,196.29 Q 263.82,182.54 277.82,182.54 L 360.01,182.54 Q 374.01,182.54 376.68,168.80 L 381.33,144.87 Q 384.00,131.12 370.00,131.12 L 287.82,131.12 Q 273.82,131.12 259.82,131.12 L 239.44,131.12 Q 234.15,131.12 228.86,131.12 L 227.69,131.12 Q 222.40,131.12 217.11,131.12 L 137.97,131.12 Q 123.97,131.12 109.97,131.12 L 86.55,131.12 Q 72.55,131.12 69.88,144.87 Z"/>
+      </svg>
+    </div>
+    <div class="wordmark">FortEvo</div>
+    <div class="tagline">Protocolo. Não achismo.</div>
+  </div>
+</body>
+</html>

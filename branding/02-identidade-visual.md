@@ -89,9 +89,27 @@ O Fabio escolheu a **iteration-8** (F·E inclinado) e pediu um desenvolvimento m
 - Testei em 64/32/16px: essa versão segura **melhor** que a v8 original em tamanho pequeno — a separação limpa lê mais nítido que a sobreposição confusa.
 - Também montei um mockup de apresentação em fundo escuro (`branding/logos/showcase/showcase-11.html`, linkado no preview) pra visualizar a marca como teria no splash screen do app — contexto de "app fitness premium" de verdade, não só a marca isolada em fundo branco de teste.
 
+## Etapa 7 (refino 4) — Reconstrução pra craft de alto padrão (out/2026)
+
+O Fabio deu um feedback direto, com 7 imagens de referência (monogramas "FE"/geométricos, maioria branco-sobre-preto, cantos arredondados e refinados, uma delas com textura tipo malha/diamante atlética de fundo): *"Você ta criando algo extremamente básico, preciso que vc crie algo de alta qualidade."* Isso não era sobre o conceito (F+E inclinado já estava aprovado) — era sobre o acabamento. Comparando com as referências, o que faltava na iteration-11:
+
+- **Terminações cruas**: cantos retos/chanfrados em vez de arredondamento genuíno e proporcional.
+- **Fusão pouco sofisticada**: a v11 resolveu o problema da v8 trocando a sobreposição acidental por um corte/gap limpo — uma solução segura, mas um gap ainda lê como "duas peças encostadas", não como um monograma de verdade fundido numa peça só (que é o que as referências mostram, especialmente a imagem 5).
+- **Apresentação rasa**: mockup em fundo escuro liso, sem a textura/profundidade que dá a sensação "produto premium".
+
+**O que mudou na `iteration-12.svg`** (`branding/logos/iterations/iteration-12.svg` + `icon-12.svg`):
+
+- Reconstruí o F e o E do zero com uma **fusão controlada**: em vez de manter um espaço entre as duas letras, deixei o braço superior do F e a haste do E se sobreporem de propósito numa única zona bem definida (verifiquei à mão que só existe essa UMA zona de sobreposição, nada acidental) e usei união booleana de polígonos (biblioteca `shapely`) pra fundir as duas formas numa silhueta só, topologicamente limpa — sem furos, sem auto-interseção. É a diferença entre "duas letras coladas" e "um monograma desenhado como peça única".
+- Apliquei um **algoritmo próprio de arredondamento de cantos** (não é um `rx`/`ry` genérico de SVG — calculei, pra cada vértice do contorno final, um ponto de entrada e saída recuados pelo raio desejado, com curva de Bézier quadrática entre eles, e o raio é limitado por vértice pra nunca estourar em arestas curtas). Isso dá cantos e reentrâncias arredondados de verdade, incluindo nos ângulos internos da fusão — é o nível de polimento que as referências do Fabio têm e que as versões anteriores não tinham.
+- Traço mais robusto (mais grosso que a v11) e inclinação um pouco mais suave (11° em vez de 12°) — menos "cortante", mais "sólido".
+- Testado em 64/32/16px: segura muito bem, inclusive melhor que a v11 — o traço mais grosso e os cantos arredondados ajudam a silhueta a não "sujar" em tamanho pequeno.
+- Novo mockup de apresentação (`branding/logos/showcase/showcase-12.html`) com fundo escuro texturizado — malha diagonal sutil em diamante (inspirada na referência 5 do Fabio, tecido técnico/performance), vinheta e sombra suave sob o ícone pra dar sensação de profundidade/produto, não só a marca plana num fundo liso.
+
+**Avaliação honesta**: essa é, na minha visão, a primeira versão que realmente fecha o gap que o Fabio apontou — o "FE" agora lê como uma peça de design única e deliberada, não como duas letras geométricas encostadas. Se ainda não bater o nível das referências, o próximo ajuste provável é no raio de arredondamento (mais generoso) ou na proporção/peso do traço, não um retrabalho conceitual.
+
 ## Como decidir a partir daqui
 
-- A iteration-11 resolve a energia "elite" que você estava buscando, ou ainda falta alguma coisa?
+- A iteration-12 resolve o gap de qualidade/acabamento que você apontou, ou ainda falta alguma coisa específica (raio dos cantos, peso do traço, a fusão em si)?
 - Quer ver essa mesma marca testada em cor (mesmo que ainda provisória) antes de decidir, ou prefere fechar o ícone 100% em preto-e-branco primeiro e só depois ir pra paleta (etapa 8)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
