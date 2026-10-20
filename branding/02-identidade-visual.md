@@ -78,11 +78,21 @@ Arquivos: `branding/logos/iterations/iteration-7.svg` a `iteration-10.svg` (+ `i
 
 **Minha leitura**: 7 e 8 são claramente as que resolveram o problema que você apontou — ficaram com peso, ângulo e tensão de verdade, sem perder a letra nem virar clichê de ícone de academia. A 10 é a mais ousada/distinta, boa se você quiser algo com mais drama visual. A 9 eu deixaria de lado — ela tenta a coisa certa (crescimento na própria letra) mas a execução não ficou à altura das outras três.
 
+## Etapa 7 (refino 3) — iteration-8 desenvolvida pra energia de elite (out/2026)
+
+O Fabio escolheu a **iteration-8** (F·E inclinado) e pediu um desenvolvimento mais a fundo pra passar energia de aplicativo fitness de elite. O problema concreto na versão 8: F e E se sobrepunham de um jeito meio acidental no meio (um entalhe estreito e um pouco confuso onde a ponta do F encontrava o E), o que tirava um pouco da sensação de "desenhado com precisão".
+
+**O que mudou na `iteration-11.svg`** (`branding/logos/iterations/iteration-11.svg` + `icon-11.svg`):
+
+- F e E agora têm um **corte diagonal limpo e constante entre eles** (não mais sobreposição) — construído matematicamente: desenhei as duas letras num grid reto, com um espaço vertical fixo entre elas, e só depois apliquei a inclinação (12°, um pouco mais acentuada que os 9° da v8) em cima de tudo. Como a inclinação desloca igualmente as duas bordas do espaço, o resultado é um corte diagonal perfeitamente paralelo ao ângulo das próprias letras — em vez de um encontro acidental, vira um gesto único e intencional cortando a marca inteira, tipo "velocidade/precisão", bem mais parecido com o que marcas esportivas de ponta fazem (Jordan, Under Armour, roupas de performance).
+- Kerning do wordmark "FortEvo" mais fechado (`letter-spacing: -3` em vez de `-1`) — mais "travado"/confiante, menos solto.
+- Testei em 64/32/16px: essa versão segura **melhor** que a v8 original em tamanho pequeno — a separação limpa lê mais nítido que a sobreposição confusa.
+- Também montei um mockup de apresentação em fundo escuro (`branding/logos/showcase/showcase-11.html`, linkado no preview) pra visualizar a marca como teria no splash screen do app — contexto de "app fitness premium" de verdade, não só a marca isolada em fundo branco de teste.
+
 ## Como decidir a partir daqui
 
-- Entre 7 (chanfrado), 8 (inclinado) e 10 (comprimido+cunha), qual capta melhor o "fit" que você estava procurando?
-- Alguma dessas três é candidata a virar o ícone final, ou ainda quer testar mais uma direção antes de fechar?
-- Depois de fechar o ícone, seguimos pra paleta de cores (etapa 8) ou quer mais uma rodada de refino no mesmo ícone antes disso?
+- A iteration-11 resolve a energia "elite" que você estava buscando, ou ainda falta alguma coisa?
+- Quer ver essa mesma marca testada em cor (mesmo que ainda provisória) antes de decidir, ou prefere fechar o ícone 100% em preto-e-branco primeiro e só depois ir pra paleta (etapa 8)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
 
