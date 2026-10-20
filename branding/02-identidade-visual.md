@@ -107,9 +107,21 @@ O Fabio deu um feedback direto, com 7 imagens de referência (monogramas "FE"/ge
 
 **Avaliação honesta**: essa é, na minha visão, a primeira versão que realmente fecha o gap que o Fabio apontou — o "FE" agora lê como uma peça de design única e deliberada, não como duas letras geométricas encostadas. Se ainda não bater o nível das referências, o próximo ajuste provável é no raio de arredondamento (mais generoso) ou na proporção/peso do traço, não um retrabalho conceitual.
 
+## Etapa 7 (refino 5) — Escada ascendente no E, sem ícone literal (out/2026)
+
+O Fabio pediu pra encaixar a silhueta de um haltere/kettlebell dentro do F+E, pra reforçar a leitura "fit". Isso contrariava uma decisão já documentada desde a fase "Lastro" (etapa 6: "sem halteres, siluetas musculosas, chamas, raios, escudos — o vocabulário visual padrão de app de treino"). Expliquei o porquê — ícone literal de academia é clichê, compete com a legibilidade do monograma recém-limpo, e vai contra o pilar de que o FortEvo carrega o conceito fitness pela própria tipografia, não por ícone emprestado — e propus resolver via geometria pura. O Fabio concordou em manter a proibição.
+
+**O que mudou na `iteration-13.svg`** (`branding/logos/iterations/iteration-13.svg` + `icon-13.svg`):
+
+- As três hastes horizontais do E (que antes eram quase do mesmo tamanho, com a do meio um pouco menor por convenção tipográfica) agora **crescem de cima pra baixo**: a de cima é a mais curta, a do meio intermediária, a de baixo a mais longa. O efeito é uma "escada" ascendente só pela proporção das próprias hastes — sem nenhuma forma nova adicionada à marca. Lê como progressão/evolução (a letra "ganhando" largura conforme desce, uma base mais larga sustentando o que vem acima) e reforça "Fort" (base sólida) + "Evo" (crescimento), continuando a resolver a pegada fitness só por tipografia/geometria, dentro do que já estava decidido pro projeto.
+- Testei 3 variações (hastes crescendo cima→baixo, assimetria sutil, e o inverso — longa→curta) antes de escolher: a escada "curto→longo" foi a mais clara e intencional; a versão sutil demais passava despercebida; a invertida (base mais estreita) lia como instável/"tombando", não como força.
+- Mantive toda a construção da iteration-12 (fusão booleana F+E, cantos arredondados via algoritmo próprio, inclinação de 11°) — essa rodada mexeu só nas proporções do E, não refez a base.
+- Testado em 64/32/16px: continua lendo "FE" com clareza, a escada ainda é perceptível mesmo em 32px.
+- Showcase atualizado (`branding/logos/showcase/showcase-13.html`) com o mesmo tratamento de fundo escuro + textura da rodada anterior.
+
 ## Como decidir a partir daqui
 
-- A iteration-12 resolve o gap de qualidade/acabamento que você apontou, ou ainda falta alguma coisa específica (raio dos cantos, peso do traço, a fusão em si)?
+- A escada ascendente no E resolve o "cara de fit" que você queria, dentro da proibição de ícone literal — ou prefere que eu explore outro gesto geométrico (não necessariamente esse)?
 - Quer ver essa mesma marca testada em cor (mesmo que ainda provisória) antes de decidir, ou prefere fechar o ícone 100% em preto-e-branco primeiro e só depois ir pra paleta (etapa 8)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
