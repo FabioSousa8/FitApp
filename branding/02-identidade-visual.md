@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está decidida: **iteration-14** (monograma achatado, lockup empilhado) é a direção escolhida. A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Próximo: decidir entre refinar mais a iteration-14 ou seguir pra paleta de cores (etapa 8).
+**Status: em andamento.** Etapa 7 está decidida: **iteration-14** (monograma achatado, lockup empilhado) é a direção escolhida e passou por uma rodada de polimento (ver "refino final" abaixo). A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Próximo: decidir se o preto-e-branco está fechado ou segue pra paleta de cores (etapa 8).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -138,10 +138,22 @@ Essa é uma direção **estruturalmente diferente** das iterations 11-13 (achata
 
 O Fabio escolheu a **iteration-14** como direção definitiva pra seguir. A linha inclinada/dinâmica (iterations 7-13) para de ser desenvolvida a partir daqui — fica só como histórico documentado acima. Fonte do wordmark (Arial/Helvetica Bold) confirmada, sem necessidade de testar alternativa mais redonda.
 
+## Etapa 7 (refino final) — Polimento da iteration-14 + teste em contexto real (out/2026)
+
+O Fabio pediu uma última rodada de refino na iteration-14 antes de considerar o preto-e-branco 100% fechado. Três ajustes de precisão, nenhum deles muda a leitura da marca:
+
+- **Vão F→E mais largo**: o espaço entre a barra do meio do F e os traços do E era de 20 unidades; aumentei pra 28 (encurtei a barra do F de 100 pra 96, e empurrei o início dos traços do E de 120 pra 124). Com isso a separação entre as duas letras fica mais clara, menos "colado".
+- **Cantos um pouco mais macios**: raio de arredondamento de 6 pra 8 (ainda bem longe de virar "pílula" — é só tirar a aresta 100% de esquadro).
+- **Ícone de app com preenchimento mais confiante**: a margem interna do `appicon-14.svg` era generosa demais (136 de 512, ~27%) e deixava a marca pequena dentro do quadrado; reduzi pra 118 (~23%), mais alinhado com o padrão de ícone de app (iOS/Android costumam preencher mais o quadrado).
+
+**Teste em contexto real** (não só a marca isolada): montei um mockup com (1) a marca como favicon de verdade dentro de abas de navegador + barra de endereço, e (2) o ícone de app dentro de uma home screen simulada ao lado de outros ícones coloridos genéricos, pra ver se ele se sustenta visualmente numa tela cheia de ícones e não "some". Nos dois casos a marca segurou bem — no favicon ela lê "FE" nítido mesmo na aba pequena, e na home screen o preto sólido contrasta bem contra os ícones coloridos ao redor sem parecer destoante.
+
+Considero o preto-e-branco da iteration-14 fechado depois desse refino, salvo o Fabio apontar algo específico.
+
 ## Como decidir a partir daqui
 
-- Quer mais uma rodada de polimento em cima da iteration-14 (ajuste fino de proporção, testar o ícone em mais contextos — ex: favicon de verdade num browser, ícone de app numa home screen simulada) antes de fechar, ou já considera o preto-e-branco fechado?
-- Se já considera fechado: seguimos pra etapa 8 (estudo de cor — 5 paletas aplicadas em cima da iteration-14)?
+- O refino bateu o "100%" que você queria, ou ainda tem algum ponto específico pra ajustar?
+- Se está fechado: seguimos pra etapa 8 (estudo de cor — 5 paletas aplicadas em cima da iteration-14)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
 
