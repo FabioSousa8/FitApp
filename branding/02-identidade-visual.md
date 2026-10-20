@@ -65,10 +65,23 @@ Arquivos: preview atualizado (`branding/logos/preview.html`, agora mostrando as 
 
 **Minha recomendação, se quiser um atalho**: 4, 5 e 6 (as três do Selo) saíram consistentemente melhores que as três da Emenda nessa rodada — a geometria do selo dá mais espaço pra esconder uma letra limpa dentro sem perder a silhueta externa. Se a letra dentro do ícone for algo que você quer de verdade, a Selo é o caminho que está funcionando; se preferir manter a Emenda como estava, a iteration-3 é a forma de fazer isso sem abrir mão da letra.
 
+## Etapa 7 (refino 2) — Mais "fit": força, evolução e fitness na geometria (out/2026)
+
+Feedback do Fabio sobre a rodada anterior: gostou do F e do E, mas a marca não estava lendo como fitness de jeito nenhum — pediu pra juntar as estéticas de fitness, evolução e força. O problema não era falta de ícone (continuamos sem halteres/chamas/raios/escudos — isso não muda), era que a linguagem geométrica em si (cantos todos arredondados tipo "squircle" de app) lia como SaaS corporativo, não como atlético. Gerei 4 direções novas mexendo só nisso — ângulo, peso, tensão — mantendo F e E:
+
+Arquivos: `branding/logos/iterations/iteration-7.svg` a `iteration-10.svg` (+ `icon-7.svg` a `icon-10.svg`).
+
+- **iteration-7 — Chanfrado**: o selo F+E com cantos cortados em 45° em vez de arredondados, F dominante e grande, E menor aninhado embaixo. Lê como chapa forjada/selo cortado, não como ícone de app. **Segura muito bem até 16px.**
+- **iteration-8 — F·E inclinado**: as letras com 9° de inclinação pra frente e pontas cortadas em ângulo (não é itálico, é um cisalhamento real computado letra por letra), fundidas numa marca só. É a que carrega mais sensação de movimento/impulso. **Também segura muito bem até 16px.**
+- **iteration-9 — E com barras crescentes num selo F**: o E ganha três barras de tamanho crescente (60%→80%→100%) dentro de um selo-F arredondado. Conceito interessante (evolução codificada na própria letra), mas a execução recaiu no mesmo selo arredondado que você já apontou como "não fit", e em 16px o E vira um corte ambíguo (parece um "3" espelhado, não um E). Essa não ficou boa — não recomendo.
+- **iteration-10 — F comprimido + E com cunha diagonal**: F curto e denso (força comprimida), E com a barra do meio virando uma cunha diagonal que "explode" pra fora (impulso/evolução). Visual mais ousado e com tensão real. Segura bem até 32px; em 16px fica mais compacto/denso mas ainda reconhecível.
+
+**Minha leitura**: 7 e 8 são claramente as que resolveram o problema que você apontou — ficaram com peso, ângulo e tensão de verdade, sem perder a letra nem virar clichê de ícone de academia. A 10 é a mais ousada/distinta, boa se você quiser algo com mais drama visual. A 9 eu deixaria de lado — ela tenta a coisa certa (crescimento na própria letra) mas a execução não ficou à altura das outras três.
+
 ## Como decidir a partir daqui
 
-- Entre as variações do Selo (4, 5, 6), qual direção prefere — E sozinho, F sozinho, ou o F-container-com-E-dentro (6, a mais trabalhada)?
-- Quer descartar de vez a linha da Emenda+letra literal (1 e 2), ou vale mais uma rodada nela antes de desistir?
+- Entre 7 (chanfrado), 8 (inclinado) e 10 (comprimido+cunha), qual capta melhor o "fit" que você estava procurando?
+- Alguma dessas três é candidata a virar o ícone final, ou ainda quer testar mais uma direção antes de fechar?
 - Depois de fechar o ícone, seguimos pra paleta de cores (etapa 8) ou quer mais uma rodada de refino no mesmo ícone antes disso?
 
 ## Próximos passos (etapas 8-16, não iniciados)

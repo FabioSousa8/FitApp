@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+  <g id="icon">
+    <path fill="#15140F" fill-rule="evenodd" d="M82,76 L378,76 A32,32 0 0 1 410,108 L410,166 L210,166 L210,226 L350,226 L350,306 L210,306 L210,436 L82,436 A32,32 0 0 1 50,404 L50,108 A32,32 0 0 1 82,76 Z M68,114 L192,114 L192,164 L104,164 L104,245 L174,245 L174,285 L104,285 L104,366 L157,366 L157,398 L68,398 Z"/>
+  </g>
+  <g id="wordmark">
+    <text x="472" y="301" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="128" letter-spacing="-1" fill="#15140F">FortEvo</text>
+  </g>
+</svg>
