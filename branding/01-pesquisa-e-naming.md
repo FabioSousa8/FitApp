@@ -332,6 +332,34 @@ Nenhuma dessas 3 passou por busca formal de marca (INPI/USPTO) nem verificação
 
 Posso abrir mais uma rodada de combinações (grego+latim, árabe+inglês, etc.) se quiser mais opções antes de decidir, ou já seguimos com os 3 limpos pra uma verificação mais profunda (domínio, @handle, INPI) antes de escolher.
 
+### Auxora/Numora soam a wellness, não a treino — ajuste de som (out/2026)
+
+Feedback do Fabio: Auxora não soa "fit". Faz sentido — "-ora" é a terminação típica de marca de skincare/farmacêutico/wellness (é por isso que "Oura", um anel de sono, funciona bem com esse som: é sonoramente calmo, não é esforço/intensidade). **Numora tem o mesmo problema por construção** (mesma terminação). Dos 4 candidatos limpos desta seção, só **Slanzo** e **Trajex** já tinham terminação mais dura/esportiva.
+
+Testei 3 novos candidatos com som mais duro, desta vez embutindo literalmente "evo" (evolução) na palavra, do jeito que o HYROX embute "híbrido":
+
+- **Fortevo** — latim *fortis* (força) + "evo" (evolução) = "força em evolução", literalmente. Sem conflito de string encontrado.
+- ~~Kinevo~~ — **descartado**: colide com produto real, "[ZEISS KINEVO](https://apps.apple.com/us/app/id1305711847)" (linha de microscópio cirúrgico da Zeiss).
+- ~~Impulze~~ — **descartado**: já existe como ferramenta de marketing/IA, "[Impulze.ai](https://www.g2.com/sellers/impulze-ai)".
+
+### Variações de Fortevo — Fortis e Evo (out/2026)
+
+Fabio gostou de Fortevo e pediu mais variações na mesma linha (derivadas de "Fortis" ou de "Evo"). Testei 8:
+
+**Sem conflito de string encontrado:**
+- **Fortyx** — fortis + terminação dura "-yx" (família sonora de Apex/Onyx/Styx). Curto, forte.
+- **Fortaro** — fortis + "-aro". Ressalva leve: existe "Fortaco Group" (grupo industrial europeu) foneticamente próximo, categoria não relacionada.
+- **Fortik** — fortis + "-ik", curto e duro.
+- **Fortiva** — fortis + "-iva".
+- **Evoryx** — evo + "-oryx" (terminação dura, eco de "oryx"/antílope sem ler como literal). Ressalva leve: existe "Aevryx" (biotech) foneticamente próximo.
+- **Evortis** — evo + fortis fundidos mais apertado. Ressalva leve: cluster de nomes parecidos de agências de software (Evoltis, Evollis), nenhum idêntico.
+
+**Com ressalva mais forte:**
+- **Evoka** — evo + "-ka" (eco de "evoke"). Não achei a string exata, mas "evo" já é prefixo ativo de marca **dentro do próprio nicho fitness**: existe a rede alemã "[EVOFITNESS](https://trademark.justia.com/865/27/evofitness-86527564.html)" com um app chamado "EvoMove". Não é a mesma palavra, mas é o mesmo território.
+- **Evofort** — evo + fort(e), ordem invertida de Fortevo. Existe "Evoort Solutions" (empresa de software) com um app "eFort" — próximo demais pra ignorar.
+
+**Achado importante que afeta o próprio Fortevo**: o prefixo **"Fort-" já é uma família bem povoada dentro do fitness** — encontrei marcas registradas reais "[FORTIS FITNESS](https://trademarks.justia.com/771/49/fortis-77149149.html)", "[FORT FITNESS](https://trademark.justia.com/900/80/fort-90080820.html)", "[FORTË](https://trademark.justia.com/867/86/forte-86786394.html)", além dos apps "Fortify Fitness Online" e "Fortis Fitness", e o produto "FitFort". Nenhum colide com a string exata "Fortevo" — mas significa que Fortevo (e qualquer "Fort-" desta lista) nasce numa vizinhança bem mais concorrida do que Slanzo ou Trajex, que não encontraram nenhum parente próximo no nicho fitness. Não é motivo pra descartar — é motivo pra saber disso antes de se apegar.
+
 ### Decisões fechadas (out/2026)
 
 1. **Tom de voz**: aprovado o registro do meio ("Recalculamos seu protocolo — pelo seu histórico, você já é avançado." / "Bateu PR? Hora de ajustar a carga.") — nem o formal ("protocolo foi recalculado... reclassificado"), nem o informal-hype ("Mano, você tá voando! 🔥"). Esse é o registro de copy pra qualquer tela, notificação ou nome de estado a partir de agora.
