@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 432">
+  <g id="icon">
+    <path fill-rule="evenodd" fill="#15140F" d="M40,184 L308,184 A16,16 0 0 1 324,200 L324,392 A16,16 0 0 1 308,408 L40,408 A16,16 0 0 1 24,392 L24,200 A16,16 0 0 1 40,184 Z M72,232 L276,232 L276,280 L222,280 L222,328 L136,328 L136,376 L72,376 Z"/>
+    <rect x="184" y="24" width="224" height="200" rx="16" fill="#15140F"/>
+  </g>
+</svg>

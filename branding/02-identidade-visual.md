@@ -48,11 +48,28 @@ Resumo de cada conceito:
 
 **Teste de legibilidade a favicon (64/32/16px)**: rodei os 5 ícones nesses três tamanhos pra checar o que sobrevive pequeno. Conceito 1 (Emenda) e conceito 4 (Selo) seguram a forma com clareza até 16px — são os mais robustos pra virar ícone de app. Conceito 2 (Ascensão) perde os entalhes finos a 16px mas ainda lê como uma cunha subindo. Conceito 3 (F negativo) e conceito 5 (Monograma) continuam reconhecíveis a 32px, mas a 16px o detalhe fino (a seta do 3, a separação das letras do 5) começa a embaçar — não são inutilizáveis, mas precisariam de um ajuste de espessura na etapa de refino (Fase 3 da skill) se um desses virar o escolhido pra ícone do app.
 
+## Etapa 7 (refino) — Variações de Emenda e Selo com as letras F/E (out/2026)
+
+O Fabio escolheu as direções **1 (Emenda)** e **4 (Selo de crescimento)** como favoritas e pediu variações tentando incluir as letras F e E diretamente na marca. Gerei 6 variações em paralelo (3 por direção), mantendo a silhueta já aprovada como base e mexendo só no que cada variação se propõe a mudar.
+
+Arquivos: preview atualizado (`branding/logos/preview.html`, agora mostrando as iterações + checagem de favicon 64/32/16px) e os SVGs em `branding/logos/iterations/iteration-1.svg` a `iteration-6.svg` (+ `icon-1.svg` a `icon-6.svg`, versões isoladas do ícone recortadas em viewBox quadrado, pra teste de favicon).
+
+**Avaliação honesta depois de renderizar e checar tamanho pequeno** — nem todas funcionaram igualmente bem:
+
+- **iteration-1** (F recortado em negativo no bloco maior da Emenda) — o recorte não ficou legível como "F"; lê mais como um entalhe/degrau abstrato do que como a letra. Não recomendo essa.
+- **iteration-2** (os dois blocos da Emenda redesenhados como F e E literais, interligados) — dá pra reconhecer as duas letras se você procurar, mas o resultado ficou visualmente carregado/confuso, perde a limpeza que fazia a Emenda original funcionar. Também não recomendo.
+- **iteration-3** (Emenda original quase intocada, com um "F·E" minúsculo escondido na emenda) — a silhueta forte que você já gostou fica 100% preservada; o detalhe "F·E" só aparece de perto (em 32-16px ele some, o que é esperado e intencional — é um "achado" pra quem olha de novo, não uma leitura funcional em tamanho de ícone). Opção segura se você quiser manter a Emenda como está hoje com só um toque extra.
+- **iteration-4** (Selo com a janela interna em formato de E) — ficou muito boa: o selo externo continua idêntico ao que você já curtiu, e o E interno lê limpo e claro até 16px.
+- **iteration-5** (Selo com a janela interna em formato de F) — mesma qualidade da 4, par natural dela (F em vez de E).
+- **iteration-6** (o selo externo inteiro vira um F, com o E encaixado dentro) — a mais ambiciosa das 6, e a que ficou mais "de marca": lê como F com clareza em qualquer tamanho, o E interno some um pouco em 16px mas o F sozinho já comunica. É a que mais parece um ícone de app de verdade, pronta pra ser usada sozinha.
+
+**Minha recomendação, se quiser um atalho**: 4, 5 e 6 (as três do Selo) saíram consistentemente melhores que as três da Emenda nessa rodada — a geometria do selo dá mais espaço pra esconder uma letra limpa dentro sem perder a silhueta externa. Se a letra dentro do ícone for algo que você quer de verdade, a Selo é o caminho que está funcionando; se preferir manter a Emenda como estava, a iteration-3 é a forma de fazer isso sem abrir mão da letra.
+
 ## Como decidir a partir daqui
 
-- Qual dos 5 conceitos SVG parece mais "FortEvo" — ou dá pra combinar peças de mais de um (ex: o ícone do 5 como app icon, com o 1 ou 3 como wordmark principal)?
-- O conceito 3 (F negativo) é o mais "achado"/trabalhado, mas também o que mais perde detalhe em tamanho pequeno — vale esse troca, ou prefere um dos mais robustos (1 ou 4)?
-- Alguma direção da etapa 6 (revelar a emenda Fort/Evo em vez de símbolo externo) que você queira revisitar antes da paleta de cores?
+- Entre as variações do Selo (4, 5, 6), qual direção prefere — E sozinho, F sozinho, ou o F-container-com-E-dentro (6, a mais trabalhada)?
+- Quer descartar de vez a linha da Emenda+letra literal (1 e 2), ou vale mais uma rodada nela antes de desistir?
+- Depois de fechar o ícone, seguimos pra paleta de cores (etapa 8) ou quer mais uma rodada de refino no mesmo ícone antes disso?
 
 ## Próximos passos (etapas 8-16, não iniciados)
 

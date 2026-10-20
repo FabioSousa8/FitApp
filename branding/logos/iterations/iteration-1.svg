@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+  <g id="icon">
+    <path fill-rule="evenodd" fill="#15140F" d="M80,224 L348,224 A16,16 0 0 1 364,240 L364,432 A16,16 0 0 1 348,448 L80,448 A16,16 0 0 1 64,432 L64,240 A16,16 0 0 1 80,224 Z M112,272 L316,272 L316,320 L262,320 L262,368 L176,368 L176,416 L112,416 Z"/>
+    <rect x="224" y="64" width="224" height="200" rx="16" fill="#15140F"/>
+  </g>
+  <g id="wordmark">
+    <text x="500" y="304" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="128" letter-spacing="-2" fill="#15140F">FortEvo</text>
+  </g>
+</svg>
