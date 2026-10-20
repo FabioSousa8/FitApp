@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 passou por uma segunda rodada (SVG profissional, ver abaixo) e aguarda reação do Fabio antes de seguir pra paleta de cores (etapa 8).
+**Status: em andamento.** Etapa 7 está decidida: **iteration-14** (monograma achatado, lockup empilhado) é a direção escolhida. A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Próximo: decidir entre refinar mais a iteration-14 ou seguir pra paleta de cores (etapa 8).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -134,12 +134,14 @@ O Fabio trouxe uma imagem de referência externa (não gerada por mim) de um mon
 
 Essa é uma direção **estruturalmente diferente** das iterations 11-13 (achatada vs. inclinada/dinâmica) — não é um refino incremental, é uma rota alternativa. Vale decidir qual das duas direções (a "em movimento" das iterations 11-13, ou essa "achatada/modular") é o caminho antes de continuar refinando.
 
+## Decisão (out/2026)
+
+O Fabio escolheu a **iteration-14** como direção definitiva pra seguir. A linha inclinada/dinâmica (iterations 7-13) para de ser desenvolvida a partir daqui — fica só como histórico documentado acima. Fonte do wordmark (Arial/Helvetica Bold) confirmada, sem necessidade de testar alternativa mais redonda.
+
 ## Como decidir a partir daqui
 
-- Essa direção achatada (iteration-14) bate com o que você tinha em mente pela referência, ou precisa ajustar proporção/traço antes de fechar?
-- Entre as duas rotas que o projeto tem agora — a inclinada/dinâmica (iteration-13) e essa achatada/modular (iteration-14) — qual você quer levar adiante? (Dá pra manter as duas em aberto mais uma rodada se preferir comparar lado a lado antes de decidir.)
-- Quer que eu já experimente o wordmark numa fonte mais redonda/geométrica pra bater mais com a referência, ou isso fica pra depois?
-- Quer ver essa mesma marca testada em cor (mesmo que ainda provisória) antes de decidir, ou prefere fechar o ícone 100% em preto-e-branco primeiro e só depois ir pra paleta (etapa 8)?
+- Quer mais uma rodada de polimento em cima da iteration-14 (ajuste fino de proporção, testar o ícone em mais contextos — ex: favicon de verdade num browser, ícone de app numa home screen simulada) antes de fechar, ou já considera o preto-e-branco fechado?
+- Se já considera fechado: seguimos pra etapa 8 (estudo de cor — 5 paletas aplicadas em cima da iteration-14)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
 
