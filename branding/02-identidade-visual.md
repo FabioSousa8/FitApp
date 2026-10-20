@@ -119,9 +119,26 @@ O Fabio pediu pra encaixar a silhueta de um haltere/kettlebell dentro do F+E, pr
 - Testado em 64/32/16px: continua lendo "FE" com clareza, a escada ainda é perceptível mesmo em 32px.
 - Showcase atualizado (`branding/logos/showcase/showcase-13.html`) com o mesmo tratamento de fundo escuro + textura da rodada anterior.
 
+## Etapa 7 (direção nova) — Monograma achatado, referência externa do Fabio (out/2026)
+
+O Fabio trouxe uma imagem de referência externa (não gerada por mim) de um monograma "FE" — achatado, sem inclinação, traço superior do F e do E unificado numa única barra, E reduzido a dois traços sem haste própria, apresentado tanto como lockup empilhado (ícone em cima, nome embaixo) quanto como ícone de app num quadrado de cantos bem arredondados em fundo escuro — e pediu pra desenvolver algo nessa linha. Isso é uma ruptura de direção em relação às iterations 7-13 (que eram todas inclinadas/"em movimento"): aqui a estética é estática, modular, minimalista.
+
+**O que é a `iteration-14.svg`** (`branding/logos/iterations/iteration-14.svg` + `icon-14.svg` + `appicon-14.svg`):
+
+- Construção totalmente ortogonal (sem inclinação/shear) — F padrão (haste + barra superior + barra do meio) e E reduzido a **dois traços próprios** (meio e base), sem haste e sem barra superior dele mesmo — a barra superior do F se estende por toda a largura do ícone e faz esse papel pros dois, um "ligature" de traço compartilhado. O traço do meio do E fica alinhado na mesma altura da barra do meio do F (lê como uma faixa horizontal contínua cortada por um vão), e o traço de base fecha rente à linha de base do F.
+- Arredondamento de canto bem mais sutil que nas iterations 11-13 (raio pequeno, só pra tirar o aspecto 100% de esquadro, sem virar "pílula").
+- Precisei de 3 tentativas de proporção até o E parar de ler como "dois tracinhos soltos" (ponto/dois-pontos) e virar um E reconhecível — a chave foi dar aos traços do E a mesma largura generosa da metade direita da barra superior, em vez de espremê-los num canto.
+- Como o Fabio mandou a referência já no formato empilhado (ícone em cima, "FortEvo" embaixo) e também como app icon, gerei as duas apresentações: `iteration-14.svg` é o lockup empilhado; `appicon-14.svg` é a mesma marca dentro de um quadrado de cantos bem arredondados (fundo `#15140F`, marca em `#F5F3EE`) — é a primeira vez que a gente mostra essa visualização de "ícone de app de verdade" nesse projeto, não só a marca solta.
+- Testado em 64/32/16px: ainda lê "FE" em todos os tamanhos, inclusive 16px.
+- **Nota aberta sobre a tipografia**: na referência que o Fabio mandou, o wordmark parece usar uma fonte mais redonda/geométrica (tipo Poppins/Century Gothic) do que o Arial/Helvetica Bold que uso em todas as iterations por ser uma fonte de sistema segura (renderiza em qualquer navegador sem depender de fonte externa). Mantive Arial/Helvetica por enquanto — se o Fabio quiser mais fidelidade à referência nesse ponto, é um ajuste à parte (ou troco a fonte de sistema, ou desenho o wordmark em path, o que trava a marca de vez contra variação de fonte do dispositivo).
+
+Essa é uma direção **estruturalmente diferente** das iterations 11-13 (achatada vs. inclinada/dinâmica) — não é um refino incremental, é uma rota alternativa. Vale decidir qual das duas direções (a "em movimento" das iterations 11-13, ou essa "achatada/modular") é o caminho antes de continuar refinando.
+
 ## Como decidir a partir daqui
 
-- A escada ascendente no E resolve o "cara de fit" que você queria, dentro da proibição de ícone literal — ou prefere que eu explore outro gesto geométrico (não necessariamente esse)?
+- Essa direção achatada (iteration-14) bate com o que você tinha em mente pela referência, ou precisa ajustar proporção/traço antes de fechar?
+- Entre as duas rotas que o projeto tem agora — a inclinada/dinâmica (iteration-13) e essa achatada/modular (iteration-14) — qual você quer levar adiante? (Dá pra manter as duas em aberto mais uma rodada se preferir comparar lado a lado antes de decidir.)
+- Quer que eu já experimente o wordmark numa fonte mais redonda/geométrica pra bater mais com a referência, ou isso fica pra depois?
 - Quer ver essa mesma marca testada em cor (mesmo que ainda provisória) antes de decidir, ou prefere fechar o ícone 100% em preto-e-branco primeiro e só depois ir pra paleta (etapa 8)?
 
 ## Próximos passos (etapas 8-16, não iniciados)
