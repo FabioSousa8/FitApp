@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+  <g id="icon">
+    <rect x="64" y="96" width="320" height="320" rx="52" fill="#15140F"/>
+    <text x="224" y="258" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="200" letter-spacing="-6" text-anchor="middle" dominant-baseline="central" fill="#F5F3EE">FE</text>
+  </g>
+  <g id="wordmark">
+    <text x="460" y="258" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="140" letter-spacing="-2" dominant-baseline="central" fill="#15140F">FortEvo</text>
+  </g>
+</svg>
