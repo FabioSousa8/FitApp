@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FortEvo — Estudo de cor (etapa 8)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #ECEAE3;
+    color: #15140F;
+    padding: 2.5rem;
+  }
+  .page-header { margin-bottom: 2.5rem; max-width: 760px; }
+  .page-header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .page-header p { font-size: 0.95rem; opacity: 0.75; line-height: 1.5; }
+  .palettes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+  .palette-block {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .palette-meta {
+    padding: 1.25rem 1.5rem 1rem;
+  }
+  .palette-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .palette-rationale { font-size: 0.82rem; line-height: 1.45; opacity: 0.72; }
+  .swatches { display: flex; }
+  .swatch { flex: 1; height: 44px; }
+  .swatch-labels { display: flex; padding: 0.4rem 1.5rem 1rem; gap: 0; font-size: 0.68rem; opacity: 0.6; }
+  .swatch-labels span { flex: 1; }
+
+  /* ---- Product card mockup ---- */
+  .mock {
+    margin: 0 1.5rem 1.5rem;
+    border-radius: 14px;
+    background: #15140F;
+    padding: 1.4rem 1.3rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .mock-header { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 1.3rem; }
+  .mock-appicon { width: 28px; height: 28px; border-radius: 7px; background: #15140F; display: flex; align-items: center; justify-content: center; flex: none; }
+  .mock-appicon svg { width: 16px; height: 16px; }
+  .mock-wordmark { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; color: #F5F3EE; }
+  .mock-pr {
+    margin-left: auto;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.22rem 0.5rem;
+    border-radius: 20px;
+    color: #15140F;
+  }
+  .mock-stat-label { font-size: 0.72rem; color: #9A9484; margin-bottom: 0.4rem; }
+  .mock-stat-value { font-size: 1.5rem; font-weight: 700; color: #F5F3EE; margin-bottom: 0.7rem; }
+  .mock-bar-track { height: 7px; border-radius: 4px; background: rgba(245,243,238,0.14); overflow: hidden; margin-bottom: 1.1rem; }
+  .mock-bar-fill { height: 100%; border-radius: 4px; }
+  .mock-copy { font-size: 0.76rem; color: #B9B3A4; line-height: 1.4; margin-bottom: 1rem; }
+  .mock-cta {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.6rem 1.1rem;
+    border-radius: 9px;
+    color: #15140F;
+  }
+</style>
+</head>
+<body>
+  <div class="page-header">
+    <h1>FortEvo — Estudo de cor (etapa 8)</h1>
+    <p>Base neutra (tinta #15140F / papel #F5F3EE) já fechada — fica assim em qualquer paleta. O que varia aqui é só o acento: cada direção testada num cartão de produto real (progresso semanal + CTA + badge de PR), não só em chips de cor soltos, pra avaliar como cada uma se comporta no tom "protocolo recalculado" do app.</p>
+  </div>
+  <div class="palettes">
+
+    <div class="palette-block">
+      <div class="palette-meta">
+        <div class="palette-name">1 · Azul Protocolo</div>
+        <div class="palette-rationale">Cobalto saturado — a leitura mais direta de "rigor e raciocínio": precisão, dado, confiança. É a opção mais segura/esperada das cinco; funciona bem mas é a que menos surpreende.</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch" style="background:#15140F"></div>
+        <div class="swatch" style="background:#F5F3EE"></div>
+        <div class="swatch" style="background:#3A64FF"></div>
+      </div>
+      <div class="swatch-labels"><span>tinta</span><span>papel</span><span>acento</span></div>
+      <div class="mock">
+        <div class="mock-header">
+          <div class="mock-appicon"><svg viewBox="0 0 240 240"><path fill="#F5F3EE" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/></svg></div>
+          <div class="mock-wordmark">FortEvo</div>
+          <div class="mock-pr" style="background:#3A64FF;color:#F5F3EE">PR BATIDO</div>
+        </div>
+        <div class="mock-stat-label">VOLUME DA SEMANA</div>
+        <div class="mock-stat-value">8.420 kg</div>
+        <div class="mock-bar-track"><div class="mock-bar-fill" style="width:72%;background:#3A64FF"></div></div>
+        <div class="mock-copy">Recalculamos seu protocolo — pelo seu histórico, você já é avançado.</div>
+        <div class="mock-cta" style="background:#3A64FF;color:#F5F3EE">Começar treino</div>
+      </div>
+    </div>
+
+    <div class="palette-block">
+      <div class="palette-meta">
+        <div class="palette-name">2 · Verde Tático</div>
+        <div class="palette-rationale">Verde oliva escurecido — disciplina, controle, resistência; registro "tático/operacional" em vez de "wellness". Mais sóbrio que o azul, bate direto com "sistematizado, não hype".</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch" style="background:#15140F"></div>
+        <div class="swatch" style="background:#F5F3EE"></div>
+        <div class="swatch" style="background:#5C7A47"></div>
+      </div>
+      <div class="swatch-labels"><span>tinta</span><span>papel</span><span>acento</span></div>
+      <div class="mock">
+        <div class="mock-header">
+          <div class="mock-appicon"><svg viewBox="0 0 240 240"><path fill="#F5F3EE" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/></svg></div>
+          <div class="mock-wordmark">FortEvo</div>
+          <div class="mock-pr" style="background:#5C7A47;color:#F5F3EE">PR BATIDO</div>
+        </div>
+        <div class="mock-stat-label">VOLUME DA SEMANA</div>
+        <div class="mock-stat-value">8.420 kg</div>
+        <div class="mock-bar-track"><div class="mock-bar-fill" style="width:72%;background:#5C7A47"></div></div>
+        <div class="mock-copy">Recalculamos seu protocolo — pelo seu histórico, você já é avançado.</div>
+        <div class="mock-cta" style="background:#5C7A47;color:#F5F3EE">Começar treino</div>
+      </div>
+    </div>
+
+    <div class="palette-block">
+      <div class="palette-meta">
+        <div class="palette-name">3 · Bronze Forjado</div>
+        <div class="palette-rationale">Âmbar/bronze metálico, não o laranja-chapado de app de academia genérico — remete a "forja" (metal sob esforço), conquista, calor sem ser o clichê proibido.</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch" style="background:#15140F"></div>
+        <div class="swatch" style="background:#F5F3EE"></div>
+        <div class="swatch" style="background:#C1862E"></div>
+      </div>
+      <div class="swatch-labels"><span>tinta</span><span>papel</span><span>acento</span></div>
+      <div class="mock">
+        <div class="mock-header">
+          <div class="mock-appicon"><svg viewBox="0 0 240 240"><path fill="#F5F3EE" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/></svg></div>
+          <div class="mock-wordmark">FortEvo</div>
+          <div class="mock-pr" style="background:#C1862E">PR BATIDO</div>
+        </div>
+        <div class="mock-stat-label">VOLUME DA SEMANA</div>
+        <div class="mock-stat-value">8.420 kg</div>
+        <div class="mock-bar-track"><div class="mock-bar-fill" style="width:72%;background:#C1862E"></div></div>
+        <div class="mock-copy">Recalculamos seu protocolo — pelo seu histórico, você já é avançado.</div>
+        <div class="mock-cta" style="background:#C1862E">Começar treino</div>
+      </div>
+    </div>
+
+    <div class="palette-block">
+      <div class="palette-meta">
+        <div class="palette-name">4 · Lima Técnica</div>
+        <div class="palette-rationale">Verde-limão frio e saturado — leitura de "sinal vital"/painel de performance (tipo monitor de frequência cardíaca). A mais "tech/dado em tempo real" das cinco, maior contraste com a tinta escura.</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch" style="background:#15140F"></div>
+        <div class="swatch" style="background:#F5F3EE"></div>
+        <div class="swatch" style="background:#B6E23C"></div>
+      </div>
+      <div class="swatch-labels"><span>tinta</span><span>papel</span><span>acento</span></div>
+      <div class="mock">
+        <div class="mock-header">
+          <div class="mock-appicon"><svg viewBox="0 0 240 240"><path fill="#F5F3EE" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/></svg></div>
+          <div class="mock-wordmark">FortEvo</div>
+          <div class="mock-pr" style="background:#B6E23C">PR BATIDO</div>
+        </div>
+        <div class="mock-stat-label">VOLUME DA SEMANA</div>
+        <div class="mock-stat-value">8.420 kg</div>
+        <div class="mock-bar-track"><div class="mock-bar-fill" style="width:72%;background:#B6E23C"></div></div>
+        <div class="mock-copy">Recalculamos seu protocolo — pelo seu histórico, você já é avançado.</div>
+        <div class="mock-cta" style="background:#B6E23C">Começar treino</div>
+      </div>
+    </div>
+
+    <div class="palette-block">
+      <div class="palette-meta">
+        <div class="palette-name">5 · Granada Profunda</div>
+        <div class="palette-rationale">Vermelho-vinho escurecido e dessaturado — não é o vermelho/laranja padrão de app de academia (proibido): é mais sério, "esforço" sem gritar. A opção mais arriscada/distinta das cinco.</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch" style="background:#15140F"></div>
+        <div class="swatch" style="background:#F5F3EE"></div>
+        <div class="swatch" style="background:#7A2E3B"></div>
+      </div>
+      <div class="swatch-labels"><span>tinta</span><span>papel</span><span>acento</span></div>
+      <div class="mock">
+        <div class="mock-header">
+          <div class="mock-appicon"><svg viewBox="0 0 240 240"><path fill="#F5F3EE" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/></svg></div>
+          <div class="mock-wordmark">FortEvo</div>
+          <div class="mock-pr" style="background:#7A2E3B;color:#F5F3EE">PR BATIDO</div>
+        </div>
+        <div class="mock-stat-label">VOLUME DA SEMANA</div>
+        <div class="mock-stat-value">8.420 kg</div>
+        <div class="mock-bar-track"><div class="mock-bar-fill" style="width:72%;background:#7A2E3B"></div></div>
+        <div class="mock-copy">Recalculamos seu protocolo — pelo seu histórico, você já é avançado.</div>
+        <div class="mock-cta" style="background:#7A2E3B;color:#F5F3EE">Começar treino</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

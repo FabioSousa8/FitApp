@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está decidida: **iteration-14** (monograma achatado, lockup empilhado) é a direção escolhida e passou por uma rodada de polimento (ver "refino final" abaixo). A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Próximo: decidir se o preto-e-branco está fechado ou segue pra paleta de cores (etapa 8).
+**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo, com o refino final aprovado. A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Etapa 8 (estudo de cor) está em andamento — ver seção abaixo.
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -148,13 +148,29 @@ O Fabio pediu uma última rodada de refino na iteration-14 antes de considerar o
 
 **Teste em contexto real** (não só a marca isolada): montei um mockup com (1) a marca como favicon de verdade dentro de abas de navegador + barra de endereço, e (2) o ícone de app dentro de uma home screen simulada ao lado de outros ícones coloridos genéricos, pra ver se ele se sustenta visualmente numa tela cheia de ícones e não "some". Nos dois casos a marca segurou bem — no favicon ela lê "FE" nítido mesmo na aba pequena, e na home screen o preto sólido contrasta bem contra os ícones coloridos ao redor sem parecer destoante.
 
-Considero o preto-e-branco da iteration-14 fechado depois desse refino, salvo o Fabio apontar algo específico.
+Considero o preto-e-branco da iteration-14 fechado depois desse refino — **confirmado pelo Fabio em out/2026.**
+
+## Etapa 8 — Estudo de cor (out/2026)
+
+A base neutra (tinta `#15140F` / papel `#F5F3EE`) fica como está em qualquer paleta — é a fundação construída desde a etapa 6 e não muda. O que etapa 8 decide é o **acento** — a cor usada em CTA, progresso, badges e destaques do produto, não no logotipo em si (o logo segue monocromático, disciplina mantida desde o início do projeto).
+
+Fundamentei as 5 propostas na personalidade de marca já fechada (`01-pesquisa-e-naming.md`, seção 1): *"competente, direta, confiável — mais a lógica de um treinador de verdade, sistematizada do que motivação de internet; sóbrio, não clínico/frio"* — e no tom de voz já aprovado (*"Recalculamos seu protocolo — pelo seu histórico, você já é avançado."*). Evitei deliberadamente o vermelho/laranja saturado — é o clichê padrão de app de academia que o projeto já tinha banido pro logotipo (etapa 6) e que não faz sentido reintroduzir pela porta dos fundos na paleta de cor.
+
+Em vez de mostrar só chips de cor soltos, testei cada acento aplicado num cartão de produto real — ícone + nome, progresso semanal, badge de "PR batido" e botão de CTA, com a copy já aprovada — pra avaliar como cada cor se comporta no tom do app, não só isoladamente. Publicado em `branding/colors/palette-study.html`:
+
+1. **Azul Protocolo** (`#3A64FF`) — cobalto saturado, a leitura mais direta de "rigor e raciocínio": precisão, dado, confiança. A mais segura/esperada das cinco — funciona bem, mas é a que menos surpreende.
+2. **Verde Tático** (`#5C7A47`) — oliva escurecido, disciplina/controle/resistência, registro "operacional" em vez de "wellness". Mais sóbrio que o azul, bate direto com "sistematizado, não hype".
+3. **Bronze Forjado** (`#C1862E`) — âmbar/bronze metálico, não o laranja-chapado de app de academia genérico. Remete a "forja" (metal sob esforço, eco do candidato de nome "Forja" da etapa 1), conquista e calor sem cair no clichê proibido.
+4. **Lima Técnica** (`#B6E23C`) — verde-limão frio e saturado, leitura de "sinal vital"/painel de performance em tempo real. A mais "tech/dado" das cinco, maior contraste contra a tinta escura.
+5. **Granada Profunda** (`#7A2E3B`) — vinho escurecido e dessaturado. Não é o vermelho/laranja padrão proibido — é mais sério, "esforço" sem gritar. A opção mais arriscada/distinta das cinco.
+
+**Minha leitura honesta**: as cinco passam no teste de "não parecer genérico de academia" — nenhuma é vermelho/laranja saturado. Se eu tivesse que apostar em uma só olhando pra personalidade da marca (sóbria mas com energia, rigor sem ser fria), diria que **Verde Tático** ou **Bronze Forjado** encaixam melhor que Azul Protocolo — o azul é tecnicamente correto mas é a escolha mais previsível/segura de qualquer app "de dados"; não é errado, só não é distintivo. Lima Técnica é a mais ousada e pode funcionar bem se o posicionamento for puxar mais pro lado "performance science" do que "treinador de confiança". Granada é a aposta mais arriscada e também a mais exclusiva — nenhum concorrente vai estar nessa região de cor.
 
 ## Como decidir a partir daqui
 
-- O refino bateu o "100%" que você queria, ou ainda tem algum ponto específico pra ajustar?
-- Se está fechado: seguimos pra etapa 8 (estudo de cor — 5 paletas aplicadas em cima da iteration-14)?
+- Alguma dessas cinco já bate, ou quer ver variações/combinações antes de decidir?
+- Depois de escolhida a paleta: seguimos pra matriz logotipo×paleta (etapa 9) e ícone final do app (etapa 10)?
 
-## Próximos passos (etapas 8-16, não iniciados)
+## Próximos passos (etapas 9-16, não iniciados)
 
-Estudo de cor → 5 paletas → matriz logotipo×paleta (5×5) → ícone do app → telas-conceito → manual de marca → arquivos finais de exportação.
+Matriz logotipo×paleta (5×5) → ícone do app → telas-conceito → manual de marca → arquivos finais de exportação.
