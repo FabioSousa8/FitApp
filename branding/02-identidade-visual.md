@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: ícone final do app ou telas-conceito (etapa 9).
+**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: telas-conceito (etapa 10).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -186,9 +186,26 @@ Um hex só não é suficiente pra usar em produto — precisa de estados de inte
 
 ## Como decidir a partir daqui
 
-- O sistema de estados (hover/pressed/tints) cobre o que você precisa, ou falta alguma variação?
-- Próximo da lista: ícone final do app (exportar `favicon.ico`, PNGs em todos os tamanhos padrão, `apple-touch-icon`, etc.) ou telas-conceito (aplicar logo + paleta numa tela de verdade do app, tipo a "home" ou o fluxo de treino)? A matriz logotipo×paleta 5×5 do roadmap original não se aplica mais como estava pensada — o logo já é um único direcionado (iteration-14) e a paleta já é uma só (Azul Protocolo), então não há mais "matriz" pra montar; o que falta é aplicar essa combinação já decidida nos próximos entregáveis.
+A matriz logotipo×paleta 5×5 do roadmap original não se aplica mais como estava pensada — o logo já é um único direcionado (iteration-14) e a paleta já é uma só (Azul Protocolo), então não há mais "matriz" pra montar; o que faltava era aplicar essa combinação já decidida nos próximos entregáveis. O Fabio decidiu: os dois — ícone primeiro, telas-conceito em seguida.
 
-## Próximos passos (etapas 9-16, não iniciados)
+## Etapa 9 — Ícone final do app (exports) (out/2026)
 
-Ícone final do app (exports) → telas-conceito → manual de marca → arquivos finais de exportação.
+Exportei a marca (monocromática, tinta `#15140F` / papel `#F5F3EE` — sem acento azul aqui; disciplina de etapa 6 mantida: logo não leva cor de produto) direto pros slots reais do app Expo (`app/assets/`), substituindo os placeholders padrão do Expo que ainda estavam lá:
+
+| Arquivo | Tamanho/modo | Tratamento |
+|---|---|---|
+| `icon.png` | 1024×1024, RGB opaco | Quadrado liso (sem cantos arredondados embutidos — o próprio iOS aplica a máscara), fundo tinta cheio + marca em papel, mesma proporção do `appicon-14.svg` aprovado |
+| `favicon.png` | 48×48, RGBA | Marca escura sobre transparente — mesmo tratamento já validado no teste de aba de navegador da etapa 7 |
+| `splash-icon.png` | 1024×1024, RGBA | Marca escura sobre transparente (pro fundo claro padrão da splash screen do Expo) |
+| `android-icon-foreground.png` | 512×512, RGBA | Marca em papel sobre transparente, com margem de ~20% de cada lado (zona de segurança do adaptive icon) |
+| `android-icon-monochrome.png` | 432×432, RGBA | Marca em branco sobre transparente — ícone temático do Android 13+, o sistema aplica a cor |
+
+`app.json`: troquei `android.adaptiveIcon.backgroundColor` do azul-claro placeholder (`#E6F4FE`) pra tinta da marca (`#15140F`) e removi `backgroundImage` (não precisa de PNG de fundo separado quando é cor sólida — um campo a menos pra manter sincronizado). Removi o `android-icon-background.png` antigo (não usado por nenhum ícone).
+
+Validação: simulei a máscara que o SO aplica por cima — squircle do iOS, círculo e squircle do Android (os dois formatos de máscara mais comuns) — em cima dos arquivos exportados de verdade (não da ilustração `appicon-14.svg`). A marca se sustenta com folga em qualquer uma das três máscaras, sem cortar nada importante.
+
+Também gerei (fora do app, como registro de marca em `branding/logos/export/`) um `favicon.ico` multi-resolução (16/32/48) e duas versões isoladas da marca em alta resolução (tinta sobre transparente e papel sobre transparente, 1024px/512px) pra uso fora do app — site institucional, materiais impressos, etc., quando precisar.
+
+## Próximos passos (etapas 10-16, não iniciados)
+
+Telas-conceito (em andamento) → manual de marca → arquivos finais de exportação.
