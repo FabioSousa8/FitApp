@@ -10,6 +10,15 @@
           "branding/colors/*.html"
         ],
         "createdAt": "2026-10-21T19:57:48.972Z"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "branding/manual/manual-de-marca.html"
+        ],
+        "createdAt": "2026-10-21T21:07:12.890Z",
+        "reason": "False positive: static analyzer resolves body's unitless line-height:1.5 to a fixed px value (24px, assuming 16px base) instead of re-deriving the 1.5x ratio per descendant font-size. Verified against real Chromium getComputedStyle on .cover .lede (font-size 19px): actual rendered line-height is 28.5px = 1.5x, well above the 1.3 threshold. No real readability issue in this file."
       }
     ]
   }
