@@ -1,0 +1,16 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "branding/colors/*.html"
+        ],
+        "createdAt": "2026-10-21T19:57:48.972Z"
+      }
+    ]
+  }
+}
