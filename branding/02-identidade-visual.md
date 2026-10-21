@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. Etapa 11 (manual de marca) também está **fechada**: `branding/manual/manual-de-marca.html`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: arquivos finais de exportação (etapa 12).
+**Status: fechado.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. Etapa 11 (manual de marca) também está **fechada**: `branding/manual/manual-de-marca.html` + PDF. Etapa 12 (kit de marca) também está **fechada**: tudo empacotado em `branding/kit/fortevo-brand-kit.zip`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Nenhuma etapa de branding em aberto.
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -251,6 +251,18 @@ Consolidei tudo que estava espalhado nas etapas 6-10 (e a voz/nome de `01-pesqui
 
 Não é um documento novo com decisões novas — é o ponto único de consulta pra quem (incluindo eu, em sessões futuras) precisar saber "qual o hex do pressed" ou "o logo pode ficar azul?" sem garimpar o histórico inteiro deste arquivo.
 
-## Próximos passos (etapa 12, não iniciada)
+## Etapa 12 — Kit de marca (out/2026)
 
-Arquivos finais de exportação.
+Os arquivos finais de exportação, na prática, já tinham saído prontos ao longo das etapas 9 e 11 (ícones do app, marca isolada em alta resolução, `favicon.ico`, manual em HTML/PDF) — só estavam espalhados em pastas diferentes do repo. Esta etapa empacotou tudo num único `.zip` autossuficiente, `branding/kit/fortevo-brand-kit.zip`, pra uso fora do repositório (site institucional, material impresso, qualquer pessoa que precise da marca sem clonar o projeto):
+
+- `manual/` — `manual-de-marca.html` + `manual-de-marca.pdf`
+- `marca-vetor/` — fonte vetorial: `fortevo-mark.svg` (marca isolada, cópia de `branding/logos/iterations/icon-14.svg`) e `fortevo-app-icon.svg` (composição aprovada do ícone de app, cópia de `appicon-14.svg`)
+- `marca-raster/` — `favicon.ico`, marca em tinta 1024px e em papel 512px sobre transparente
+- `app-icons/` — cópia de referência dos arquivos já integrados em `app/assets/`
+- `README.md` — índice do kit + essencial de cor/regras de uso, pra quem abrir o zip sem contexto nenhum
+
+Com isso, as seis etapas do branding (naming, identidade visual, ícone, telas, manual, kit) estão fechadas.
+
+## Próximos passos
+
+Nenhum item de branding em aberto no momento.
