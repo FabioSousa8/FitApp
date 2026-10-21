@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo, com o refino final aprovado. A linha inclinada/dinâmica (iterations 7-13) fica registrada abaixo como histórico, mas não segue sendo desenvolvida. Etapa 8 (estudo de cor) está em andamento — ver seção abaixo.
+**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: ícone final do app ou telas-conceito (etapa 9).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -166,11 +166,29 @@ Em vez de mostrar só chips de cor soltos, testei cada acento aplicado num cart�
 
 **Minha leitura honesta**: as cinco passam no teste de "não parecer genérico de academia" — nenhuma é vermelho/laranja saturado. Se eu tivesse que apostar em uma só olhando pra personalidade da marca (sóbria mas com energia, rigor sem ser fria), diria que **Verde Tático** ou **Bronze Forjado** encaixam melhor que Azul Protocolo — o azul é tecnicamente correto mas é a escolha mais previsível/segura de qualquer app "de dados"; não é errado, só não é distintivo. Lima Técnica é a mais ousada e pode funcionar bem se o posicionamento for puxar mais pro lado "performance science" do que "treinador de confiança". Granada é a aposta mais arriscada e também a mais exclusiva — nenhum concorrente vai estar nessa região de cor.
 
+## Decisão (out/2026)
+
+O Fabio escolheu **Azul Protocolo** (`#3A64FF`) como acento — contra minha sugestão (eu puxava pro Verde Tático ou Bronze Forjado), e tudo bem: a escolha é dele, e "previsível/seguro" não é defeito quando o produto é literalmente sobre dado e protocolo recalculado — é coerência, não covardia.
+
+### Sistema do acento Azul Protocolo
+
+Um hex só não é suficiente pra usar em produto — precisa de estados de interação e de variações de superfície. Derivei os seguintes valores (ajuste de luminosidade/saturação em cima da base, verificado visualmente, não só calculado):
+
+| Uso | Hex | Onde aplica |
+|---|---|---|
+| Base | `#3A64FF` | Preenchimento de botão, barra de progresso, ícone de destaque |
+| Hover | `#1144FF` | Estado de passar o mouse/toque em botões |
+| Pressed | `#0031E7` | Estado de clique/toque ativo |
+| Tint escuro | `#002096` | Fundo de superfície de destaque (ex: card selecionado) em tema escuro — não substitui a tinta `#15140F` padrão, é só pra estados de seleção/destaque |
+| Tint claro | `#DFE2F0` | Chip/badge sutil sobre fundo de papel `#F5F3EE`, pro caso de telas em tema claro |
+
+**Nota de contraste**: o Azul Protocolo funciona bem como **preenchimento** (com texto claro ou escuro por cima, dependendo do tom — testado no estudo de cor) mas **não deve ser usado como cor de texto direto** sobre a tinta `#15140F` nem sobre o papel `#F5F3EE` — o contraste fica abaixo do mínimo de acessibilidade (AA) nos dois casos. Pra link/texto em azul, usar um tom mais claro que o acento base (não documentado ainda — resolver quando a etapa de telas-conceito precisar de link de texto).
+
 ## Como decidir a partir daqui
 
-- Alguma dessas cinco já bate, ou quer ver variações/combinações antes de decidir?
-- Depois de escolhida a paleta: seguimos pra matriz logotipo×paleta (etapa 9) e ícone final do app (etapa 10)?
+- O sistema de estados (hover/pressed/tints) cobre o que você precisa, ou falta alguma variação?
+- Próximo da lista: ícone final do app (exportar `favicon.ico`, PNGs em todos os tamanhos padrão, `apple-touch-icon`, etc.) ou telas-conceito (aplicar logo + paleta numa tela de verdade do app, tipo a "home" ou o fluxo de treino)? A matriz logotipo×paleta 5×5 do roadmap original não se aplica mais como estava pensada — o logo já é um único direcionado (iteration-14) e a paleta já é uma só (Azul Protocolo), então não há mais "matriz" pra montar; o que falta é aplicar essa combinação já decidida nos próximos entregáveis.
 
 ## Próximos passos (etapas 9-16, não iniciados)
 
-Matriz logotipo×paleta (5×5) → ícone do app → telas-conceito → manual de marca → arquivos finais de exportação.
+Ícone final do app (exports) → telas-conceito → manual de marca → arquivos finais de exportação.

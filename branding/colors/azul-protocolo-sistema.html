@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #F5F3EE; padding: 40px; }
+  .row { display: flex; gap: 40px; margin-bottom: 36px; align-items: flex-start; }
+  .block-label { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  .dark-surface { background: #15140F; border-radius: 14px; padding: 28px; display: flex; gap: 16px; align-items: center; }
+  .btn { font-size: 14px; font-weight: 700; padding: 12px 20px; border-radius: 9px; color: #F5F3EE; }
+  .swatchrow { display: flex; gap: 14px; margin-top: 10px; }
+  .chip { width: 90px; }
+  .chip-color { height: 54px; border-radius: 8px; margin-bottom: 6px; }
+  .chip-label { font-size: 11px; font-weight: 600; }
+  .chip-hex { font-size: 10.5px; opacity: 0.6; }
+  .light-chip { background: #DFE2F0; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; padding: 14px 18px; font-size: 13px; font-weight: 600; color: #15140F; display:inline-block; }
+</style>
+</head>
+<body>
+  <div class="block-label">Botão — estados (base / hover / pressionado) sobre fundo escuro</div>
+  <div class="dark-surface">
+    <div class="btn" style="background:#3A64FF">Começar treino</div>
+    <div class="btn" style="background:#1144FF">Começar treino (hover)</div>
+    <div class="btn" style="background:#0031E7">Começar treino (pressed)</div>
+  </div>
+
+  <div class="block-label" style="margin-top:30px;">Swatches do sistema</div>
+  <div class="swatchrow">
+    <div class="chip"><div class="chip-color" style="background:#3A64FF"></div><div class="chip-label">Base</div><div class="chip-hex">#3A64FF</div></div>
+    <div class="chip"><div class="chip-color" style="background:#1144FF"></div><div class="chip-label">Hover</div><div class="chip-hex">#1144FF</div></div>
+    <div class="chip"><div class="chip-color" style="background:#0031E7"></div><div class="chip-label">Pressed</div><div class="chip-hex">#0031E7</div></div>
+    <div class="chip"><div class="chip-color" style="background:#002096"></div><div class="chip-label">Tint escuro</div><div class="chip-hex">#002096</div></div>
+    <div class="chip"><div class="chip-color" style="background:#DFE2F0"></div><div class="chip-label">Tint claro</div><div class="chip-hex">#DFE2F0</div></div>
+  </div>
+
+  <div class="block-label" style="margin-top:30px;">Tint escuro como fundo de destaque (ex: card selecionado)</div>
+  <div class="dark-surface" style="background:#002096;">
+    <span style="color:#F5F3EE;font-size:13px;font-weight:600;">Superfície de destaque — não é a tinta padrão</span>
+  </div>
+
+  <div class="block-label" style="margin-top:30px;">Tint claro — chip/badge em superfície de papel</div>
+  <div class="light-chip">Treino de hoje</div>
+</body>
+</html>
