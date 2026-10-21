@@ -6,13 +6,14 @@
 <link rel="stylesheet" href="shared.css">
 <style>
 
-  .slide { flex-direction: row; align-items: center; gap: 80px; }
-  .col-text { flex: 1.3; }
+  .slide { flex-direction: row; align-items: center; gap: 80px; overflow: hidden; }
+  .ghost-mark { position: absolute; z-index: 0; right: -110px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; color: rgba(245,243,238,0.045); pointer-events: none; }
+  .col-text { position: relative; z-index: 1; flex: 1.3; }
   .heading { font-size: 52px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.15; margin-bottom: 28px; }
   .body-text { font-size: 19px; color: var(--muted); line-height: 1.6; max-width: 520px; }
   .body-text + .body-text { margin-top: 16px; }
-  .col-name { flex: 1; display: flex; flex-direction: column; gap: 28px; }
-  .root { border-left: 2px solid var(--accent); padding-left: 20px; }
+  .col-name { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; gap: 32px; }
+  .root .bar { width: 28px; height: 4px; border-radius: 2px; background: var(--accent); margin-bottom: 12px; }
   .root .word { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
   .root .gloss { font-size: 15px; color: var(--muted); margin-top: 4px; }
     
@@ -28,19 +29,21 @@
 
 <div class="slide">
 
+<svg class="ghost-mark"><use href="#fe-mark"/></svg>
 <div class="col-text">
   <div class="heading">O raciocínio de um treinador, sistematizado.</div>
   <p class="body-text">Não é mais um app de treino — é critério aplicado de verdade, sem precisar pagar por um personal. Competente, direta, confiável. Sóbria, não clínica/fria.</p>
   <p class="body-text">Ferramenta profissional que vale pagar, porque ainda é mais barato que contratar alguém. Nem bargain/gratuito, nem luxo/exclusivo.</p>
 </div>
 <div class="col-name">
-  <div class="root"><div class="word">Fortis</div><div class="gloss">força, latim</div></div>
-  <div class="root"><div class="word">Evo</div><div class="gloss">evolução</div></div>
+  <div class="root"><div class="bar"></div><div class="word">Fortis</div><div class="gloss">força, latim</div></div>
+  <div class="root"><div class="bar"></div><div class="word">Evo</div><div class="gloss">evolução</div></div>
 </div>
     
 
 <div class="meta">Conceito</div>
 <div class="page-no">02 / 09</div>
+<div class="grain"></div>
 </div>
 
 </body>

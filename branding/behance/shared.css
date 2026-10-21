@@ -56,3 +56,28 @@ body {
 .do-list li, .dont-list li { display: flex; gap: 12px; font-size: 17px; color: var(--paper); align-items: baseline; }
 .do-list li::before { content: "✓"; color: var(--accent-text); font-weight: 700; flex: none; }
 .dont-list li::before { content: "✕"; color: var(--danger); font-weight: 700; flex: none; }
+
+/* ---- shared grafismos: the brand's own devices, reused across slides ---- */
+
+/* the modular grid from the logo construction (03) — a brand-owned motif,
+   reused faint and full-bleed elsewhere instead of inventing new decoration */
+.grid-motif {
+  background-image:
+    linear-gradient(to right, rgba(245,243,238,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245,243,238,0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* whisper-quiet grain so the flat ink surface reads as produced, not a CSS gradient —
+   unseen individually, compounds across all 9 frames */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* soft contact shadow for anything that should feel lifted off the surface */
+.lift { box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 2px 10px rgba(0,0,0,0.3); }

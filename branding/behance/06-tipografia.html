@@ -6,7 +6,9 @@
 <link rel="stylesheet" href="shared.css">
 <style>
 
-  .slide { padding: 80px 96px 56px; justify-content: center; }
+  .slide { padding: 80px 96px 56px; justify-content: center; overflow: hidden; }
+  .ghost-glyph { position: absolute; z-index: 0; right: -40px; bottom: -170px; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 580px; line-height: 1; color: rgba(245,243,238,0.045); pointer-events: none; user-select: none; }
+  .content-col { position: relative; z-index: 1; }
   .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; }
   .sub { font-size: 17px; color: var(--muted); max-width: 680px; margin-bottom: 36px; }
   .type-row { display: flex; align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); }
@@ -26,6 +28,8 @@
 
 <div class="slide">
 
+<div class="ghost-glyph">Aa</div>
+<div class="content-col">
 <div class="heading">Escala do produto</div>
 <p class="sub">Fonte do sistema (San Francisco/Roboto) em todo o produto — só o wordmark do logotipo usa fonte fixa (Arial/Helvetica Bold).</p>
 <div class="type-row"><div class="sample" style="font-size:28px;font-weight:700;">Seu protocolo</div><div class="spec">title · 24/700</div></div>
@@ -34,10 +38,12 @@
 <div class="type-row"><div class="sample" style="font-size:17px;color:var(--muted);">fabio@email.com</div><div class="spec">subtitle · 15/400</div></div>
 <div class="type-row"><div class="sample" style="font-size:15px;font-weight:600;">Split: Push / Pull / Legs</div><div class="spec">label · 13/600</div></div>
 <div class="type-row"><div class="sample" style="font-size:14px;color:var(--muted);">Mínimo de 6 caracteres.</div><div class="spec">helper · 12/400</div></div>
+</div>
     
 
 <div class="meta">Tipografia</div>
 <div class="page-no">06 / 09</div>
+<div class="grain"></div>
 </div>
 
 </body>

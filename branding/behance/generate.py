@@ -36,6 +36,7 @@ def wrap(slide_id, title, extra_style, body, meta, page_no):
 
 <div class="meta">{meta}</div>
 <div class="page-no">{page_no} / 09</div>
+<div class="grain"></div>
 </div>
 
 </body>
@@ -48,9 +49,15 @@ slides = {}
 slides["01-capa"] = wrap(
     "01-capa", "FortEvo — Capa",
     '''
-  .slide { align-items: center; justify-content: center; }
-  .stage { display: flex; flex-direction: column; align-items: center; gap: 36px; }
-  .mark { width: 180px; height: 180px; }
+  .slide {
+    align-items: center; justify-content: center;
+    background-image:
+      linear-gradient(to right, rgba(245,243,238,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(245,243,238,0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .stage { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+  .mark { width: 180px; height: 180px; position: relative; filter: drop-shadow(0 18px 32px rgba(0,0,0,0.5)); }
   .wordmark { font-family: Arial, Helvetica, sans-serif; font-size: 108px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
   .tagline { font-size: 22px; color: var(--muted); letter-spacing: 0.01em; margin-top: -8px; }
     ''',
@@ -68,25 +75,27 @@ slides["01-capa"] = wrap(
 slides["02-conceito"] = wrap(
     "02-conceito", "FortEvo — Conceito",
     '''
-  .slide { flex-direction: row; align-items: center; gap: 80px; }
-  .col-text { flex: 1.3; }
+  .slide { flex-direction: row; align-items: center; gap: 80px; overflow: hidden; }
+  .ghost-mark { position: absolute; z-index: 0; right: -110px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; color: rgba(245,243,238,0.045); pointer-events: none; }
+  .col-text { position: relative; z-index: 1; flex: 1.3; }
   .heading { font-size: 52px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.15; margin-bottom: 28px; }
   .body-text { font-size: 19px; color: var(--muted); line-height: 1.6; max-width: 520px; }
   .body-text + .body-text { margin-top: 16px; }
-  .col-name { flex: 1; display: flex; flex-direction: column; gap: 28px; }
-  .root { border-left: 2px solid var(--accent); padding-left: 20px; }
+  .col-name { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; gap: 32px; }
+  .root .bar { width: 28px; height: 4px; border-radius: 2px; background: var(--accent); margin-bottom: 12px; }
   .root .word { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
   .root .gloss { font-size: 15px; color: var(--muted); margin-top: 4px; }
     ''',
     '''
+<svg class="ghost-mark"><use href="#fe-mark"/></svg>
 <div class="col-text">
   <div class="heading">O raciocínio de um treinador, sistematizado.</div>
   <p class="body-text">Não é mais um app de treino — é critério aplicado de verdade, sem precisar pagar por um personal. Competente, direta, confiável. Sóbria, não clínica/fria.</p>
   <p class="body-text">Ferramenta profissional que vale pagar, porque ainda é mais barato que contratar alguém. Nem bargain/gratuito, nem luxo/exclusivo.</p>
 </div>
 <div class="col-name">
-  <div class="root"><div class="word">Fortis</div><div class="gloss">força, latim</div></div>
-  <div class="root"><div class="word">Evo</div><div class="gloss">evolução</div></div>
+  <div class="root"><div class="bar"></div><div class="word">Fortis</div><div class="gloss">força, latim</div></div>
+  <div class="root"><div class="bar"></div><div class="word">Evo</div><div class="gloss">evolução</div></div>
 </div>
     ''',
     "Conceito", "02"
@@ -107,8 +116,8 @@ slides["03-construcao"] = wrap(
       linear-gradient(to bottom, rgba(245,243,238,0.08) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-  .mark { width: 320px; height: 320px; position: relative; z-index: 1; }
-  .callout { position: absolute; font-size: 14px; color: var(--accent-text); display: flex; align-items: center; gap: 8px; }
+  .mark { width: 320px; height: 320px; position: relative; z-index: 1; filter: drop-shadow(0 24px 44px rgba(0,0,0,0.55)); }
+  .callout { position: absolute; z-index: 1; font-size: 14px; color: var(--accent-text); display: flex; align-items: center; gap: 8px; }
   .callout .line { height: 1px; background: var(--accent-text); opacity: 0.5; }
   .c1 { top: 120px; left: 230px; }
   .c1 .line { width: 90px; }
@@ -138,9 +147,10 @@ slides["04-sistema"] = wrap(
   .stage-card {
     flex: 1; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
     padding: 28px; border: 1px solid var(--border);
+    box-shadow: 0 20px 44px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
   }
-  .stage-card.dark { background: var(--surface); }
-  .stage-card.light { background: var(--paper); }
+  .stage-card.dark { background: linear-gradient(180deg, #27261E 0%, var(--surface) 100%); }
+  .stage-card.light { background: linear-gradient(180deg, #FBFAF6 0%, var(--paper) 100%); box-shadow: 0 20px 44px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3); }
   .lockup { display: flex; align-items: center; gap: 10px; }
   .lockup svg { width: 44px; height: 44px; }
   .lockup span { font-family: Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.2px; }
@@ -197,7 +207,7 @@ slides["05-paleta"] = wrap(
   .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; }
   .sub { font-size: 17px; color: var(--muted); max-width: 680px; margin-bottom: 44px; }
   .row { display: flex; gap: 20px; flex: 1; margin-bottom: 44px; }
-  .swatch { flex: 1; border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; border: 1px solid var(--border); }
+  .swatch { flex: 1; position: relative; overflow: hidden; border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; border: 1px solid var(--border); box-shadow: 0 18px 36px rgba(0,0,0,0.3); }
   .swatch .name { font-size: 17px; font-weight: 700; }
   .swatch .hex { font-size: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; opacity: 0.75; margin-top: 2px; }
   .swatch .use { font-size: 13px; margin-top: 10px; max-width: 220px; }
@@ -220,7 +230,9 @@ slides["05-paleta"] = wrap(
 slides["06-tipografia"] = wrap(
     "06-tipografia", "FortEvo — Tipografia",
     '''
-  .slide { padding: 80px 96px 56px; justify-content: center; }
+  .slide { padding: 80px 96px 56px; justify-content: center; overflow: hidden; }
+  .ghost-glyph { position: absolute; z-index: 0; right: -40px; bottom: -170px; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 580px; line-height: 1; color: rgba(245,243,238,0.045); pointer-events: none; user-select: none; }
+  .content-col { position: relative; z-index: 1; }
   .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; }
   .sub { font-size: 17px; color: var(--muted); max-width: 680px; margin-bottom: 36px; }
   .type-row { display: flex; align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); }
@@ -229,6 +241,8 @@ slides["06-tipografia"] = wrap(
   .type-row .spec { font-size: 14px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; flex: none; }
     ''',
     '''
+<div class="ghost-glyph">Aa</div>
+<div class="content-col">
 <div class="heading">Escala do produto</div>
 <p class="sub">Fonte do sistema (San Francisco/Roboto) em todo o produto — só o wordmark do logotipo usa fonte fixa (Arial/Helvetica Bold).</p>
 <div class="type-row"><div class="sample" style="font-size:28px;font-weight:700;">Seu protocolo</div><div class="spec">title · 24/700</div></div>
@@ -237,6 +251,7 @@ slides["06-tipografia"] = wrap(
 <div class="type-row"><div class="sample" style="font-size:17px;color:var(--muted);">fabio@email.com</div><div class="spec">subtitle · 15/400</div></div>
 <div class="type-row"><div class="sample" style="font-size:15px;font-weight:600;">Split: Push / Pull / Legs</div><div class="spec">label · 13/600</div></div>
 <div class="type-row"><div class="sample" style="font-size:14px;color:var(--muted);">Mínimo de 6 caracteres.</div><div class="spec">helper · 12/400</div></div>
+</div>
     ''',
     "Tipografia", "06"
 )
@@ -248,8 +263,8 @@ slides["07-icone"] = wrap(
   .slide { padding: 80px 96px 56px; }
   .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 44px; }
   .row { display: flex; gap: 60px; align-items: center; flex: 1; }
-  .hero-icon { width: 220px; height: 220px; border-radius: 48px; background: var(--ink); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex: none; }
-  .hero-icon svg { width: 110px; height: 110px; }
+  .hero-icon { position: relative; width: 220px; height: 220px; border-radius: 48px; background: linear-gradient(180deg, #221F1A 0%, var(--ink) 100%); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex: none; box-shadow: 0 28px 52px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.35); }
+  .hero-icon svg { position: relative; z-index: 1; width: 110px; height: 110px; }
   .homescreen { flex: 1; background: var(--surface); border-radius: 28px; border: 1px solid var(--border); padding: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .tile { aspect-ratio: 1; border-radius: 20px; }
   .tile.placeholder { background: rgba(245,243,238,0.08); }
@@ -274,9 +289,10 @@ slides["07-icone"] = wrap(
 slides["08-telas"] = wrap(
     "08-telas", "FortEvo — Telas do app",
     '''
-  .slide { padding: 72px 96px 56px; }
-  .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 36px; }
-  .phones { display: flex; gap: 40px; flex: 1; align-items: center; justify-content: center; }
+  .slide { padding: 72px 96px 56px; overflow: hidden; }
+  .heading { position: relative; z-index: 1; font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 36px; }
+  .floor { position: absolute; z-index: 0; left: 0; right: 0; bottom: 0; height: 340px; background: linear-gradient(180deg, rgba(58,100,255,0) 0%, rgba(58,100,255,0.10) 100%); pointer-events: none; }
+  .phones { position: relative; z-index: 1; display: flex; gap: 40px; flex: 1; align-items: center; justify-content: center; }
   .phone { width: 280px; background: var(--ink); border: 1px solid var(--border); border-radius: 32px; padding: 20px; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
   .p-brand-row { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
   .p-brand-row svg { width: 18px; height: 18px; }
@@ -296,6 +312,7 @@ slides["08-telas"] = wrap(
     ''',
     '''
 <div class="heading">No app de verdade</div>
+<div class="floor"></div>
 <div class="phones">
   <div class="phone">
     <div class="p-brand-row"><svg viewBox="-16.80 -16.80 273.60 273.60" style="color:var(--paper)"><use href="#fe-mark"/></svg><span>FortEvo</span></div>
@@ -335,9 +352,15 @@ slides["08-telas"] = wrap(
 slides["09-encerramento"] = wrap(
     "09-encerramento", "FortEvo — Encerramento",
     '''
-  .slide { align-items: center; justify-content: center; }
-  .stage { display: flex; flex-direction: column; align-items: center; gap: 28px; }
-  .mark { width: 120px; height: 120px; }
+  .slide {
+    align-items: center; justify-content: center;
+    background-image:
+      linear-gradient(to right, rgba(245,243,238,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(245,243,238,0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .stage { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+  .mark { width: 120px; height: 120px; filter: drop-shadow(0 14px 24px rgba(0,0,0,0.5)); }
   .wordmark { font-family: Arial, Helvetica, sans-serif; font-size: 56px; font-weight: 700; letter-spacing: -0.3px; }
     ''',
     '''
