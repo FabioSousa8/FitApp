@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo — Construção do logotipo</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .slide { padding: 80px 96px 56px; }
+  .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; }
+  .sub { font-size: 17px; color: var(--muted); max-width: 640px; margin-bottom: 44px; }
+  .stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+  .grid-bg {
+    position: absolute; width: 440px; height: 440px;
+    background-image:
+      linear-gradient(to right, rgba(245,243,238,0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(245,243,238,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .mark { width: 320px; height: 320px; position: relative; z-index: 1; }
+  .callout { position: absolute; font-size: 14px; color: var(--accent-text); display: flex; align-items: center; gap: 8px; }
+  .callout .line { height: 1px; background: var(--accent-text); opacity: 0.5; }
+  .c1 { top: 120px; left: 230px; }
+  .c1 .line { width: 90px; }
+  .c2 { bottom: 150px; right: 230px; flex-direction: row-reverse; }
+  .c2 .line { width: 90px; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="heading">Monograma F+E</div>
+<p class="sub">O F empresta sua barra superior pro E, que fica reduzido a dois traços flutuantes. Uma peça única sobre grade modular — não duas letras encostadas.</p>
+<div class="stage">
+  <div class="grid-bg"></div>
+  <svg class="mark" style="color: var(--paper)"><use href="#fe-mark"/></svg>
+  <div class="callout c1"><span class="line"></span>Barra do F vira o traço superior do E</div>
+  <div class="callout c2">Módulo de traço constante em toda a peça<span class="line"></span></div>
+</div>
+    
+
+<div class="meta">Logotipo</div>
+<div class="page-no">03 / 09</div>
+</div>
+
+</body>
+</html>

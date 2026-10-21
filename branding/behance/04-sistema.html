@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo — Sistema do logotipo</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .slide { padding: 72px 96px 56px; justify-content: center; }
+  .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 32px; }
+  .row { display: flex; gap: 24px; margin-bottom: 28px; }
+  .stage-card {
+    flex: 1; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    padding: 28px; border: 1px solid var(--border);
+  }
+  .stage-card.dark { background: var(--surface); }
+  .stage-card.light { background: var(--paper); }
+  .lockup { display: flex; align-items: center; gap: 10px; }
+  .lockup svg { width: 44px; height: 44px; }
+  .lockup span { font-family: Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.2px; }
+  .mark-only { width: 72px; height: 72px; }
+  .cap { font-size: 13px; color: var(--muted); }
+  .size-row { display: flex; gap: 40px; align-items: flex-end; margin-bottom: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .size-swatch { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .checks { display: flex; gap: 64px; }
+  .checks .do-list, .checks .dont-list { font-size: 15px; }
+  .checks li { font-size: 15px !important; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="heading">Sistema do logotipo</div>
+<div class="row">
+  <div class="stage-card dark">
+    <div class="lockup"><svg style="color:var(--paper)"><use href="#fe-mark"/></svg><span>FortEvo</span></div>
+    <span class="cap">Lockup — tinta</span>
+  </div>
+  <div class="stage-card dark">
+    <svg class="mark-only" style="color:var(--paper)"><use href="#fe-mark"/></svg>
+    <span class="cap">Marca isolada — papel sobre tinta</span>
+  </div>
+  <div class="stage-card light">
+    <svg class="mark-only" style="color:var(--ink)"><use href="#fe-mark"/></svg>
+    <span class="cap" style="color:#6b6a63;">Marca isolada — tinta sobre papel</span>
+  </div>
+</div>
+<div class="size-row">
+  <div class="size-cell"><div class="size-swatch" style="width:72px;height:72px;"><svg style="width:56px;height:56px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">64px</span></div>
+  <div class="size-cell"><div class="size-swatch" style="width:48px;height:48px;"><svg style="width:32px;height:32px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">32px</span></div>
+  <div class="size-cell"><div class="size-swatch" style="width:32px;height:32px;"><svg style="width:16px;height:16px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">16px</span></div>
+  <div class="cap" style="align-self:center;max-width:320px;">Lê "FE" com clareza até o menor tamanho real de favicon.</div>
+</div>
+<div class="checks">
+  <ul class="do-list">
+    <li>Sempre monocromática — tinta sobre papel, ou o inverso</li>
+    <li>Espaço de respiro ao redor, sem encostar outros elementos</li>
+  </ul>
+  <ul class="dont-list">
+    <li>Sem gradiente, sombra, contorno ou recolorir com o acento</li>
+    <li>Sem halteres, chamas, raios ou o vermelho/laranja de "Sports Fitness"</li>
+  </ul>
+</div>
+    
+
+<div class="meta">Logotipo</div>
+<div class="page-no">04 / 09</div>
+</div>
+
+</body>
+</html>

@@ -19,6 +19,60 @@
         ],
         "createdAt": "2026-10-21T21:07:12.890Z",
         "reason": "False positive: static analyzer resolves body's unitless line-height:1.5 to a fixed px value (24px, assuming 16px base) instead of re-deriving the 1.5x ratio per descendant font-size. Verified against real Chromium getComputedStyle on .cover .lede (font-size 19px): actual rendered line-height is 28.5px = 1.5x, well above the 1.3 threshold. No real readability issue in this file."
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "branding/behance/01-capa.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.881Z",
+        "reason": "Arial/Helvetica Bold is the documented brand rule for the standalone wordmark lockup (02-identidade-visual.md etapa 10/11) — not a generic default; in-app UI uses the system font stack."
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "branding/behance/04-sistema.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.885Z",
+        "reason": "Arial/Helvetica Bold is the documented brand rule for the standalone wordmark lockup (02-identidade-visual.md etapa 10/11) — not a generic default; in-app UI uses the system font stack."
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "branding/behance/06-tipografia.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.888Z",
+        "reason": "Arial/Helvetica Bold is the documented brand rule for the standalone wordmark lockup (02-identidade-visual.md etapa 10/11) — not a generic default; in-app UI uses the system font stack."
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "branding/behance/09-encerramento.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.891Z",
+        "reason": "Arial/Helvetica Bold is the documented brand rule for the standalone wordmark lockup (02-identidade-visual.md etapa 10/11) — not a generic default; in-app UI uses the system font stack."
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "branding/behance/05-paleta.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.893Z",
+        "reason": "False positive: static analyzer can't resolve the linear-gradient scrim layered under the Base/Accent-text swatch labels. Empirically verified via pixel-sampled screenshot (PIL, WCAG formula) — actual rendered contrast at every text position is 7.2:1-10.6:1, well above the 4.5:1 AA requirement."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "branding/behance/03-construcao.html"
+        ],
+        "createdAt": "2026-10-21T22:58:08.897Z",
+        "reason": "Not a decorative generated-UI grid: it's the literal modular grid the F+E monogram is constructed on (see callout 'Módulo de traço constante'), which is exactly the blueprint/measurement-surface exception this rule names."
       }
     ]
   }

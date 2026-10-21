@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo — Ícone de app</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .slide { padding: 80px 96px 56px; }
+  .heading { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 44px; }
+  .row { display: flex; gap: 60px; align-items: center; flex: 1; }
+  .hero-icon { width: 220px; height: 220px; border-radius: 48px; background: var(--ink); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex: none; }
+  .hero-icon svg { width: 110px; height: 110px; }
+  .homescreen { flex: 1; background: var(--surface); border-radius: 28px; border: 1px solid var(--border); padding: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .tile { aspect-ratio: 1; border-radius: 20px; }
+  .tile.placeholder { background: rgba(245,243,238,0.08); }
+  .tile.hero { background: var(--ink); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; }
+  .tile.hero svg { width: 46%; height: 46%; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="heading">Ícone de app</div>
+<div class="row">
+  <div class="hero-icon"><svg style="color:var(--paper)"><use href="#fe-mark"/></svg></div>
+  <div class="homescreen">
+    <div class="tile placeholder"></div><div class="tile placeholder"></div><div class="tile hero"><svg style="color:var(--paper)"><use href="#fe-mark"/></svg></div><div class="tile placeholder"></div>
+    <div class="tile placeholder"></div><div class="tile placeholder"></div><div class="tile placeholder"></div><div class="tile placeholder"></div>
+    <div class="tile placeholder"></div><div class="tile placeholder"></div><div class="tile placeholder"></div><div class="tile placeholder"></div>
+  </div>
+</div>
+    
+
+<div class="meta">Ícone</div>
+<div class="page-no">07 / 09</div>
+</div>
+
+</body>
+</html>
