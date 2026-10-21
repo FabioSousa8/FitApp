@@ -148,6 +148,17 @@
     .cover h1 { font-size: 36px; }
     .phones { justify-content: center; }
   }
+
+  /* ---- Print / PDF export ---- */
+  @media print {
+    nav { position: static; }
+    .card, .swatch-card, .logo-stage, .voice-example, .phone, table.states,
+    section > .wrap > h2, section > .wrap > h3 {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    h2, h3 { break-after: avoid; page-break-after: avoid; }
+  }
 </style>
 </head>
 <body>
