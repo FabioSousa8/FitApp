@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { Text } from "react-native";
-import { Button, Card, HelperText, Label, Screen, Title } from "@/components/ui";
+import { Button, Card, HelperText, Label, Screen, TEXT, Title } from "@/components/ui";
 import { useSession } from "@/ctx";
 import { loadProfile, type StoredProfile } from "@/lib/profileStore";
 
@@ -66,7 +66,7 @@ export default function Resultado() {
         <Card key={day.dayLabel}>
           <Label>{day.dayLabel.toUpperCase()}</Label>
           {day.items.map((it: any, i: number) => (
-            <Text key={i} style={{ fontSize: 14, color: "#111827" }}>
+            <Text key={i} style={{ fontSize: 14, color: TEXT }}>
               {`${it.name} — ${it.sets}x${it.repsLabel}`}
             </Text>
           ))}

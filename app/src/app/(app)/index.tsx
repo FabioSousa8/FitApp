@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { Button, Card, HelperText, Label, Screen, Subtitle, Title } from "@/components/ui";
+import { Brand, Button, Card, HelperText, Label, Screen, Subtitle } from "@/components/ui";
 import { useSession } from "@/ctx";
 import { loadProfile, type StoredProfile } from "@/lib/profileStore";
 
@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <Screen>
-      <Title>FitApp</Title>
+      <Brand />
       <Subtitle>{displayName}</Subtitle>
 
       {checked &&

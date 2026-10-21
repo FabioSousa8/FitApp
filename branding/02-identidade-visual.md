@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: telas-conceito (etapa 10).
+**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: manual de marca (etapa 11).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -206,6 +206,45 @@ Validação: simulei a máscara que o SO aplica por cima — squircle do iOS, c�
 
 Também gerei (fora do app, como registro de marca em `branding/logos/export/`) um `favicon.ico` multi-resolução (16/32/48) e duas versões isoladas da marca em alta resolução (tinta sobre transparente e papel sobre transparente, 1024px/512px) pra uso fora do app — site institucional, materiais impressos, etc., quando precisar.
 
-## Próximos passos (etapas 10-16, não iniciados)
+## Etapa 10 — Telas-conceito: marca aplicada no app real (out/2026)
 
-Telas-conceito (em andamento) → manual de marca → arquivos finais de exportação.
+A pergunta em aberto da etapa 9 era "aplicar logo + paleta numa tela de verdade do app". Decidi aplicar direto no código real do app (`app/`), não num mockup HTML solto como os das etapas 7-9 — o app já tem um kit de UI compartilhado (`app/src/components/ui.tsx`) com um comentário literal esperando por isso: *"branding... ainda está aberta... Troque ACCENT quando a marca for decidida."* Era exatamente o encaixe certo.
+
+**Decisão de design que não estava escrita em lugar nenhum até agora, então documento aqui**: o app roda em **tema escuro fixo** (não segue claro/escuro do sistema). Isso não foi uma escolha nova feita agora — é a consequência direta de como a etapa 8 inteira já foi validada: todo mockup de contexto real da paleta (`palette-study.html`, `azul-protocolo-sistema.html`) usou fundo `#15140F` como base do produto, nunca papel claro. Theming claro nunca foi desenhado nem testado neste projeto. Apliquei essa mesma leitura ("ferramenta séria, de dado e protocolo recalculado, não wellness") no app de verdade: `userInterfaceStyle: "dark"` em `app.json`, `<StatusBar style="light" />`.
+
+**Tokens em `ui.tsx`**:
+
+| Token | Valor | Uso |
+|---|---|---|
+| `INK` / `BG` | `#15140F` | Fundo de tela |
+| `PAPER` / `TEXT` | `#F5F3EE` | Texto principal |
+| `SURFACE` | `#22211D` (tinta clareada ~6%) | Elevação de card/input sobre o fundo |
+| `BORDER` | papel a 12% (`rgba`) | Linha sutil |
+| `MUTED` | papel a 64% (`rgba`) | Texto secundário |
+| `ACCENT` | `#3A64FF` | Preenchimento de CTA, progresso, destaque |
+| `ACCENT_PRESSED` | `#0031E7` | Toque ativo e seleção forte (chip marcado) |
+| `ACCENT_TEXT` | `#5E80FF` | **Novo** — único uso do acento como cor de TEXTO/ícone sobre fundo escuro |
+| `DANGER` | `#E5564A` | Erro — vermelho original (`#DC2626`) recalibrado pra contraste AA sobre fundo escuro |
+
+**Resolvendo a lacuna que eu tinha deixado em aberto na etapa 8** ("Pra link/texto em azul, usar um tom mais claro que o acento base — não documentado ainda"): o Azul Protocolo base (`#3A64FF`) não serve como cor de TEXTO sobre fundo escuro — fica em ~3.4-3.9:1 de contraste, abaixo do mínimo AA (4.5:1). Resolvido com dois ajustes, cada um reaproveitando algo que já existia no sistema em vez de inventar cor nova:
+- **Texto/ícone em azul** (label de botão secundário/ghost, link): usa `ACCENT_TEXT` (`#5E80FF`), uma variante clareada do mesmo azul — 4.6-5.3:1 de contraste, passa AA.
+- **Chip selecionado**: em vez de clarear o texto ou aumentar a fonte do chip (que é pequena, 14px, de propósito), usei o tom `ACCENT_PRESSED` (`#0031E7`) como fundo — já existia no sistema de estados da etapa 8, só não tinha esse uso. Com texto papel por cima, contraste sobe pra 7.3:1.
+- **Texto de botão primário** (papel sobre azul base): sobe de 16px pra 19px/700 — cruza a faixa de "texto grande" do WCAG (que pede só 3:1, não 4.5:1), onde o contraste real (~4.3:1) passa com folga. Preferi isso a escurecer o preenchimento do botão, que já é a leitura mais correta de CTA primário no resto do produto.
+
+**Microinteração** (bula do design engineering aplicada, não só cor): todo elemento tocável (`Button`, `Chip`) agora encolhe pra 0.97 na entrada do toque e volta na saída, via `Animated.timing` com `ease-out` (120ms entrando / 160ms saindo) — substitui o dim de opacidade genérico que existia antes. Sem biblioteca nova: usa o `Animated` nativo do React Native, não `react-native-reanimated` (já é dependência do projeto, mas a API mudou bastante entre versões maiores — não valia o risco de sintaxe desatualizada pra uma animação desse tamanho).
+
+**Telas tocadas**:
+- `app/src/components/ui.tsx` — kit de UI inteiro (tokens + `Button`/`Chip`/`Field`/`Card` + novo componente `Brand`, o lockup ícone+"FortEvo" pro topo de tela).
+- `app/src/app/(app)/index.tsx` (home) — troca `<Title>FitApp</Title>` pelo lockup `<Brand />` de verdade.
+- `app/src/app/(app)/resultado.tsx` (fluxo de treino/protocolo) — cor de texto hardcoded (`#111827`, ilegível no fundo novo) corrigida pro token `TEXT`.
+- `app/src/app/sign-in.tsx` — copy da tela ("Bem-vindo de volta ao FitApp.") → "FortEvo".
+- `app/src/app/_layout.tsx` — `<StatusBar style="light" />`.
+- Novo asset: `app/assets/brand/mark-paper.png` (marca clara sobre transparente, pro lockup em `Brand`).
+
+**O que eu NÃO toquei, de propósito**: o rename completo "FitApp"→"FortEvo" (nome do repo, `package.json`, `slug`, prefixos de log tipo `[FitApp]` em `useStorageState.ts`/`profileStore.ts`/`supabase.ts`, comentários de código) continua **fora de escopo** — é uma decisão pendente separada, maior que uma tela, documentada em `01-pesquisa-e-naming.md`. Troquei só a copy que o usuário efetivamente VÊ na tela (título da home, saudação do login), porque deixar "FitApp" escrito do lado do ícone novo da marca, bem na tela que essa etapa pediu pra brandear, seria pior que não mexer em nada.
+
+**Validação**: `npx tsc --noEmit` limpo. `npx expo start --web` não roda neste ambiente sandboxed (proxy bloqueia a checagem de rede que o Expo CLI faz no boot, nada a ver com o código) — então a verificação visual foi feita com uma réplica estática (HTML/Playwright, mesmas cores/tokens/medidas) das 3 telas principais (home, resultado, um passo do intake com chips), só pra conferir visualmente antes de levar pro código de verdade. Print enviado no chat.
+
+## Próximos passos (etapas 11-16, não iniciados)
+
+Manual de marca → arquivos finais de exportação.

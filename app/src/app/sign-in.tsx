@@ -25,7 +25,7 @@ export default function SignIn() {
   return (
     <Screen>
       <Title>Entrar</Title>
-      <Subtitle>Bem-vindo de volta ao FitApp.</Subtitle>
+      <Subtitle>Bem-vindo de volta ao FortEvo.</Subtitle>
       {usingLocalAuth && (
         <HelperText>
           Modo local (sem Supabase configurado ainda) — qualquer e-mail/senha entra, sem validar de

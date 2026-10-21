@@ -1,6 +1,7 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { SessionProvider, useSession } from "@/ctx";
 
 export default function RootLayout() {
@@ -8,6 +9,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <SessionProvider>
+          {/* fundo da marca é escuro fixo (ver src/components/ui.tsx) — ícones
+              claros na barra de status, senão somem contra o fundo */}
+          <StatusBar style="light" />
           <RootNavigator />
         </SessionProvider>
       </SafeAreaProvider>
