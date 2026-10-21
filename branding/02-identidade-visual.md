@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: manual de marca (etapa 11).
+**Status: em andamento.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. Etapa 11 (manual de marca) também está **fechada**: `branding/manual/manual-de-marca.html`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Próximo: arquivos finais de exportação (etapa 12).
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -245,6 +245,12 @@ A pergunta em aberto da etapa 9 era "aplicar logo + paleta numa tela de verdade 
 
 **Validação**: `npx tsc --noEmit` limpo. `npx expo start --web` não roda neste ambiente sandboxed (proxy bloqueia a checagem de rede que o Expo CLI faz no boot, nada a ver com o código) — então a verificação visual foi feita com uma réplica estática (HTML/Playwright, mesmas cores/tokens/medidas) das 3 telas principais (home, resultado, um passo do intake com chips), só pra conferir visualmente antes de levar pro código de verdade. Print enviado no chat.
 
-## Próximos passos (etapas 11-16, não iniciados)
+## Etapa 11 — Manual de marca (out/2026)
 
-Manual de marca → arquivos finais de exportação.
+Consolidei tudo que estava espalhado nas etapas 6-10 (e a voz/nome de `01-pesquisa-e-naming.md`) numa referência única: `branding/manual/manual-de-marca.html`. Seis seções — marca (personalidade/posicionamento/nome), logotipo (construção, lockup, teste de legibilidade 64/32/16px, ícone de app, faça/não faça), cor (neutros + tabela completa dos 6 tokens do acento), tipografia (escala real tirada de `ui.tsx`, não inventada pra esse documento), voz (os 3 exemplos de calibração já aprovados) e aplicação (preview das telas reais, mesma estrutura/cor do app de verdade).
+
+Não é um documento novo com decisões novas — é o ponto único de consulta pra quem (incluindo eu, em sessões futuras) precisar saber "qual o hex do pressed" ou "o logo pode ficar azul?" sem garimpar o histórico inteiro deste arquivo.
+
+## Próximos passos (etapa 12, não iniciada)
+
+Arquivos finais de exportação.

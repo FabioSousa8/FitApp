@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FortEvo — Manual de marca</title>
+<style>
+  :root {
+    --ink: #15140F;
+    --paper: #F5F3EE;
+    --accent: #3A64FF;
+    --accent-hover: #1144FF;
+    --accent-pressed: #0031E7;
+    --accent-text: #5E80FF;
+    --accent-tint-dark: #002096;
+    --accent-tint-light: #DFE2F0;
+    --surface: #22211D;
+    --border: rgba(245,243,238,0.12);
+    --muted: rgba(245,243,238,0.64);
+    --danger: #E5564A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---- Nav ---- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(21,20,15,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; gap: 24px; padding-top: 14px; padding-bottom: 14px; overflow-x: auto; }
+  nav .brand-mini { display: flex; align-items: center; gap: 7px; flex: none; }
+  nav .brand-mini svg { width: 18px; height: 18px; }
+  nav .brand-mini span { font-weight: 700; font-size: 14px; letter-spacing: -0.2px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  nav a:hover { color: var(--paper); }
+
+  /* ---- Cover ---- */
+  .cover { padding: 96px 0 72px; border-bottom: 1px solid var(--border); }
+  .cover-mark { width: 88px; height: 88px; margin-bottom: 28px; }
+  .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: -1.5px; margin: 0 0 10px; }
+  .cover .kicker { color: var(--accent-text); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 18px; }
+  .cover p.lede { font-size: 19px; color: var(--muted); max-width: 560px; margin: 0; }
+  .cover .meta { margin-top: 36px; font-size: 12px; color: var(--muted); }
+
+  /* ---- Sections ---- */
+  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow { color: var(--accent-text); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 8px; }
+  h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin: 0 0 16px; }
+  h3 { font-size: 18px; font-weight: 700; margin: 36px 0 12px; }
+  p { color: var(--paper); max-width: 680px; }
+  p.muted { color: var(--muted); max-width: 680px; }
+  .lead { font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 0 32px; }
+
+  /* ---- Generic cards/grids ---- */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+
+  /* ---- Logo block ---- */
+  .logo-stage {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-stage.lockup svg { height: 140px; width: auto; }
+  .logo-stage.mark svg { height: 120px; width: 120px; }
+
+  .size-check { display: flex; gap: 36px; align-items: flex-end; flex-wrap: wrap; }
+  .size-check .cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .size-check .swatch { background: var(--ink); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .size-check .cap { font-size: 12px; color: var(--muted); }
+
+  .dont-list, .do-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .dont-list li, .do-list li { display: flex; gap: 10px; font-size: 14px; color: var(--paper); align-items: baseline; }
+  .dont-list li::before { content: "✕"; color: var(--danger); font-weight: 700; flex: none; }
+  .do-list li::before { content: "✓"; color: var(--accent-text); font-weight: 700; flex: none; }
+
+  /* ---- Color swatches ---- */
+  .swatch-card { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+  .swatch-fill { height: 92px; }
+  .swatch-info { background: var(--surface); padding: 12px 14px; }
+  .swatch-name { font-size: 13px; font-weight: 700; }
+  .swatch-hex { font-size: 12px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .swatch-use { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+  table.states { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  table.states th, table.states td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  table.states th { color: var(--muted); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  table.states td.hex { font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--muted); }
+  table.states .dot { width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: -2px; border: 1px solid var(--border); }
+
+  /* ---- Type scale ---- */
+  .type-row { display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row:last-child { border-bottom: none; }
+  .type-row .sample { flex: 1; }
+  .type-row .spec { font-size: 12px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; flex: none; width: 190px; text-align: right; }
+
+  /* ---- Voice ---- */
+  .voice-example { border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; font-size: 15px; }
+  .voice-example.bad { background: rgba(229,86,74,0.08); border: 1px solid rgba(229,86,74,0.3); color: var(--muted); }
+  .voice-example.good { background: rgba(58,100,255,0.1); border: 1px solid rgba(58,100,255,0.35); color: var(--paper); font-weight: 600; }
+  .voice-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
+  .voice-example.bad .voice-label { color: var(--danger); }
+  .voice-example.good .voice-label { color: var(--accent-text); }
+
+  /* ---- App application: phone frames ---- */
+  .phones { display: flex; gap: 28px; flex-wrap: wrap; }
+  .phone { width: 260px; background: var(--ink); border: 1px solid var(--border); border-radius: 28px; padding: 16px; }
+  .phone-cap { font-size: 12px; color: var(--muted); margin-bottom: 10px; text-align: center; }
+  .p-brand-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .p-brand-row svg { width: 16px; height: 16px; }
+  .p-brand-row span { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; }
+  .p-subtitle { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+  .p-title { font-size: 17px; font-weight: 700; margin: 0 0 8px; }
+  .p-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-top: 10px; }
+  .p-label { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .p-helper { font-size: 12px; color: var(--muted); }
+  .p-btn { border-radius: 9px; padding: 10px; text-align: center; font-size: 13px; font-weight: 700; margin-top: 8px; }
+  .p-btn.primary { background: var(--accent); color: var(--paper); }
+  .p-btn.secondary { background: var(--surface); border: 1px solid var(--border); color: var(--accent-text); }
+  .p-chip-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .p-chip { font-size: 12px; font-weight: 600; padding: 5px 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--paper); }
+  .p-chip.sel { background: var(--accent-pressed); border-color: var(--accent-pressed); color: var(--paper); }
+  .p-ex { font-size: 12px; color: var(--paper); margin-top: 3px; }
+
+  footer { padding: 48px 0 80px; }
+  footer p { color: var(--muted); font-size: 12.5px; }
+  footer code { background: var(--surface); padding: 2px 6px; border-radius: 4px; font-size: 11.5px; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 20px; }
+    .grid-2, .grid-3, .grid-5 { grid-template-columns: 1fr; }
+    .cover h1 { font-size: 36px; }
+    .phones { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Reusable inline mark (icon-14.svg path, exact source of truth) -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <div class="brand-mini"><svg><use href="#fe-mark" style="color: var(--paper)"/></svg><span>FortEvo</span></div>
+    <a href="#marca">Marca</a>
+    <a href="#logotipo">Logotipo</a>
+    <a href="#cor">Cor</a>
+    <a href="#tipografia">Tipografia</a>
+    <a href="#voz">Voz</a>
+    <a href="#aplicacao">Aplicação</a>
+  </div>
+</nav>
+
+<header class="cover">
+  <div class="wrap">
+    <svg class="cover-mark" style="color: var(--paper)"><use href="#fe-mark"/></svg>
+    <p class="kicker">Manual de marca</p>
+    <h1>FortEvo</h1>
+    <p class="lede">Fortis + Evo — força em evolução. Referência única pra logotipo, cor, tipografia e voz, consolidando as etapas 6 a 10 do branding.</p>
+    <p class="meta">out/2026 · fonte: <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">branding/02-identidade-visual.md</code></p>
+  </div>
+</header>
+
+<section id="marca">
+  <div class="wrap">
+    <p class="eyebrow">01 — Marca</p>
+    <h2>Lógica de treinador, sistematizada</h2>
+    <p class="lead">Não é mais um app de treino — é o raciocínio de quem tem critério aplicado de verdade, sem precisar pagar por isso.</p>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-top:0;">Personalidade</h3>
+        <p class="muted">Competente, direta, confiável — mais a lógica de um treinador de verdade, sistematizada, do que motivação de internet. Sóbria, não clínica/fria.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">Posicionamento</h3>
+        <p class="muted">Ferramenta profissional que vale pagar, porque ainda é mais barato que contratar alguém. Nem bargain/gratuito, nem luxo/exclusivo.</p>
+      </div>
+    </div>
+
+    <h3>O nome</h3>
+    <p class="muted">FortEvo funde <em>fortis</em> (força, latim) com <em>evo</em> (evolução) — estilizado com F e E maiúsculos de propósito, não é erro de digitação. Essas mesmas duas letras são o logotipo inteiro (seção seguinte). Percurso completo de naming em <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">branding/01-pesquisa-e-naming.md</code>.</p>
+  </div>
+</section>
+
+<section id="logotipo">
+  <div class="wrap">
+    <p class="eyebrow">02 — Logotipo</p>
+    <h2>Monograma F+E</h2>
+    <p class="lead">F e E fundidos — o F empresta sua barra superior pro E, que fica reduzido a dois traços flutuantes. Uma peça única, não duas letras encostadas.</p>
+
+    <div class="grid grid-2">
+      <div class="logo-stage lockup">
+        <svg viewBox="0 0 600 260" style="height:140px;width:auto;color:var(--paper)">
+          <use href="#fe-mark" x="245" y="16" width="110" height="110"/>
+          <text x="300" y="210" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="44" letter-spacing="-0.6" fill="var(--paper)">FortEvo</text>
+        </svg>
+      </div>
+      <div class="logo-stage mark"><svg viewBox="-16.80 -16.80 273.60 273.60" style="height:120px;width:120px;color:var(--paper)"><use href="#fe-mark"/></svg></div>
+    </div>
+    <p class="muted" style="margin-top:12px;font-size:13px;">Lockup empilhado (ícone + wordmark) à esquerda, marca isolada (ícone/favicon/app) à direita. Fonte do wordmark: Arial/Helvetica Bold, tracking levemente negativo.</p>
+
+    <h3>Legibilidade em tamanho pequeno</h3>
+    <p class="muted" style="margin-bottom:16px;">Testado e confirmado — a marca isolada ainda lê "FE" com clareza em 16px, o menor tamanho de favicon real.</p>
+    <div class="size-check">
+      <div class="cell"><div class="swatch" style="width:72px;height:72px;"><svg viewBox="-16.80 -16.80 273.60 273.60" style="width:56px;height:56px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">64px</span></div>
+      <div class="cell"><div class="swatch" style="width:48px;height:48px;"><svg viewBox="-16.80 -16.80 273.60 273.60" style="width:32px;height:32px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">32px</span></div>
+      <div class="cell"><div class="swatch" style="width:32px;height:32px;"><svg viewBox="-16.80 -16.80 273.60 273.60" style="width:16px;height:16px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">16px</span></div>
+    </div>
+
+    <h3>Ícone de app</h3>
+    <div class="grid grid-3">
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <svg viewBox="0 0 512 512" style="width:88px;height:88px;border-radius:19px;">
+          <rect width="512" height="512" rx="112" fill="var(--ink)"/>
+          <g transform="translate(118,118)"><use href="#fe-mark-sq" style="color:var(--paper)"/>
+            <path fill="var(--paper)" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+          </g>
+        </svg>
+        <span style="font-size:12px;color:var(--muted);">iOS — squircle aplicada pelo sistema</span>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <svg viewBox="0 0 512 512" style="width:88px;height:88px;border-radius:50%;">
+          <rect width="512" height="512" fill="var(--ink)"/>
+          <g transform="translate(150,150) scale(0.84)">
+            <path fill="var(--paper)" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+          </g>
+        </svg>
+        <span style="font-size:12px;color:var(--muted);">Android — máscara circular</span>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <svg viewBox="0 0 48 48" style="width:48px;height:48px;">
+          <use href="#fe-mark" style="color:var(--paper)"/>
+        </svg>
+        <span style="font-size:12px;color:var(--muted);">Favicon — tinta sobre transparente</span>
+      </div>
+    </div>
+    <p class="muted" style="font-size:12.5px;margin-top:10px;">Arquivos de exportação completos (todos os tamanhos padrão, <code style="background:var(--ink);padding:1px 5px;border-radius:4px;">favicon.ico</code>, variantes de ícone adaptativo do Android) em <code style="background:var(--ink);padding:1px 5px;border-radius:4px;">branding/logos/export/</code> e já integrados em <code style="background:var(--ink);padding:1px 5px;border-radius:4px;">app/assets/</code>.</p>
+
+    <div class="grid grid-2" style="margin-top:36px;">
+      <div>
+        <h3 style="margin-top:0;color:var(--accent-text);">Faça</h3>
+        <ul class="do-list">
+          <li>Use a marca sempre monocromática — tinta sobre papel, ou papel sobre tinta</li>
+          <li>Mantenha espaço de respiro ao redor — não encoste texto ou outros elementos na marca</li>
+          <li>Use os arquivos-fonte (SVG) pra qualquer novo tamanho — nunca redesenhe à mão</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-top:0;color:var(--danger);">Não faça</h3>
+        <ul class="dont-list">
+          <li>Não recolora a marca com o acento de produto (Azul Protocolo) ou qualquer outra cor</li>
+          <li>Não adicione gradiente, sombra, contorno ou qualquer efeito</li>
+          <li>Não distorça, estique ou incline a marca</li>
+          <li>Não inclua halteres, barras, chamas, raios, escudos ou silhuetas musculosas — vocabulário padrão de app de academia, banido desde a etapa 6</li>
+          <li>Não use o vermelho/laranja saturado genérico de "Sports Fitness" em nada que carregue a marca</li>
+          <li>Não aplique a marca sobre fundos de baixo contraste</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cor">
+  <div class="wrap">
+    <p class="eyebrow">03 — Cor</p>
+    <h2>Tinta, papel e Azul Protocolo</h2>
+    <p class="lead">Dois neutros fixos (não mudam com a paleta) e um único acento de produto — decidido contra o conselho de "mais distintivo" porque previsível é coerência, não covardia, quando o produto é sobre dado e protocolo recalculado.</p>
+
+    <h3 style="margin-top:0;">Neutros</h3>
+    <div class="grid grid-2">
+      <div class="swatch-card">
+        <div class="swatch-fill" style="background:#15140F;"></div>
+        <div class="swatch-info"><div class="swatch-name">Tinta</div><div class="swatch-hex">#15140F</div><div class="swatch-use">Fundo de tela, texto sobre papel</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-fill" style="background:#F5F3EE;"></div>
+        <div class="swatch-info"><div class="swatch-name">Papel</div><div class="swatch-hex">#F5F3EE</div><div class="swatch-use">Texto sobre tinta, logo sobre fundo escuro</div></div>
+      </div>
+    </div>
+
+    <h3>Acento — Azul Protocolo</h3>
+    <p class="muted" style="margin-top:-4px;">Um hex só não basta pra produto — cada uso abaixo já está em produção em <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">app/src/components/ui.tsx</code>.</p>
+    <table class="states">
+      <tr><th>Token</th><th>Hex</th><th>Uso</th></tr>
+      <tr><td><span class="dot" style="background:#3A64FF"></span>Base</td><td class="hex">#3A64FF</td><td>Preenchimento — CTA, progresso, destaque</td></tr>
+      <tr><td><span class="dot" style="background:#1144FF"></span>Hover</td><td class="hex">#1144FF</td><td>Passar o mouse (telas web/desktop)</td></tr>
+      <tr><td><span class="dot" style="background:#0031E7"></span>Pressed</td><td class="hex">#0031E7</td><td>Toque ativo, seleção forte (ex: chip marcado)</td></tr>
+      <tr><td><span class="dot" style="background:#5E80FF"></span>Accent-text</td><td class="hex">#5E80FF</td><td>Único uso do acento como cor de TEXTO/ícone sobre fundo escuro (a base falha contraste AA como texto)</td></tr>
+      <tr><td><span class="dot" style="background:#002096"></span>Tint escuro</td><td class="hex">#002096</td><td>Superfície de destaque (ex: card selecionado)</td></tr>
+      <tr><td><span class="dot" style="background:#DFE2F0"></span>Tint claro</td><td class="hex">#DFE2F0</td><td>Chip/badge sutil sobre papel</td></tr>
+    </table>
+
+    <div class="grid grid-2" style="margin-top:28px;">
+      <div>
+        <h3 style="margin-top:0;color:var(--accent-text);">Faça</h3>
+        <ul class="do-list">
+          <li>Use a base (#3A64FF) como preenchimento de CTA, progresso e destaque</li>
+          <li>Use accent-text (#5E80FF) quando o acento precisar ser cor de texto ou ícone</li>
+          <li>Use pressed (#0031E7) em estados de seleção com texto pequeno — tem contraste de sobra</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-top:0;color:var(--danger);">Não faça</h3>
+        <ul class="dont-list">
+          <li>Não use a base (#3A64FF) como cor de texto — fica abaixo do mínimo de contraste AA</li>
+          <li>Não aplique o acento no logotipo — ele é monocromático, sempre</li>
+          <li>Não introduza vermelho/laranja saturado como acento alternativo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tipografia">
+  <div class="wrap">
+    <p class="eyebrow">04 — Tipografia</p>
+    <h2>Escala do produto</h2>
+    <p class="lead">Fonte do sistema (San Francisco/Roboto conforme a plataforma) em todo o produto — só o wordmark do logotipo usa uma fonte fixa (Arial/Helvetica Bold). Escala de uso real, tirada de <code style="background:var(--surface);padding:2px 6px;border-radius:4px;font-size:13px;">ui.tsx</code>.</p>
+
+    <div class="type-row"><div class="sample" style="font-size:24px;font-weight:700;">Seu protocolo</div><div class="spec">title · 24 / 700</div></div>
+    <div class="type-row"><div class="sample" style="font-size:19px;font-weight:700;">Começar treino</div><div class="spec">button · 19 / 700</div></div>
+    <div class="type-row"><div class="sample" style="font-size:17px;font-weight:700;letter-spacing:-0.2px;">FortEvo</div><div class="spec">brand wordmark · 17 / 700</div></div>
+    <div class="type-row"><div class="sample" style="font-size:15px;color:var(--muted);">fabio@email.com</div><div class="spec">subtitle · 15 / 400</div></div>
+    <div class="type-row"><div class="sample" style="font-size:13px;font-weight:600;">Split: Push / Pull / Legs</div><div class="spec">label · 13 / 600</div></div>
+    <div class="type-row"><div class="sample" style="font-size:14px;font-weight:500;">Intermediário</div><div class="spec">chip · 14 / 500</div></div>
+    <div class="type-row"><div class="sample" style="font-size:12px;color:var(--muted);">Mínimo de 6 caracteres.</div><div class="spec">helper · 12 / 400</div></div>
+
+    <p class="muted" style="margin-top:24px;font-size:13px;">O botão primário é 19px, não 16 — é o que faz o texto papel sobre o azul base cruzar a faixa de "texto grande" do WCAG e passar no contraste mínimo (detalhe na etapa 10).</p>
+  </div>
+</section>
+
+<section id="voz">
+  <div class="wrap">
+    <p class="eyebrow">05 — Voz</p>
+    <h2>Protocolo recalculado, não hype de internet</h2>
+    <p class="lead">A régua: nem o extremo formal/clínico, nem o extremo informal/hype. O meio é o tom aprovado pra qualquer copy — tela, notificação, nome de estado.</p>
+
+    <div class="voice-example bad"><span class="voice-label">Formal demais</span>"Seu protocolo foi recalculado. O nível foi reclassificado para avançado com base no histórico informado."</div>
+    <div class="voice-example good"><span class="voice-label">Calibrado — o tom da marca</span>"Recalculamos seu protocolo — pelo seu histórico, você já é avançado."</div>
+    <div class="voice-example good"><span class="voice-label">Calibrado — o tom da marca</span>"Bateu PR? Hora de ajustar a carga."</div>
+    <div class="voice-example bad"><span class="voice-label">Informal demais</span>"Mano, você tá voando! 🔥 Partiu subir de nível!"</div>
+  </div>
+</section>
+
+<section id="aplicacao">
+  <div class="wrap">
+    <p class="eyebrow">06 — Aplicação</p>
+    <h2>No app de verdade</h2>
+    <p class="lead">Marca, cor e microinteração já em produção — não é mockup, é o que está em <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">app/src/components/ui.tsx</code> e nas telas reais hoje.</p>
+
+    <div class="phones">
+      <div>
+        <div class="phone-cap">Home</div>
+        <div class="phone">
+          <div class="p-brand-row"><svg viewBox="-16.80 -16.80 273.60 273.60" style="color:var(--paper)"><use href="#fe-mark"/></svg><span>FortEvo</span></div>
+          <div class="p-subtitle">fabio@email.com</div>
+          <div class="p-card">
+            <div class="p-label">Seu protocolo já foi gerado</div>
+            <div class="p-helper">Split: Push / Pull / Legs</div>
+            <div class="p-btn primary">Ver protocolo</div>
+            <div class="p-btn secondary">Refazer cadastro</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="phone-cap">Resultado (fluxo de treino)</div>
+        <div class="phone">
+          <div class="p-title">Seu protocolo</div>
+          <div class="p-card">
+            <div class="p-label">PUSH</div>
+            <div class="p-ex">Supino reto barra — 4x6-8</div>
+            <div class="p-ex">Desenvolvimento halteres — 3x8-10</div>
+            <div class="p-ex">Elevação lateral — 3x12-15</div>
+          </div>
+          <div class="p-btn secondary" style="margin-top:14px;">Refazer cadastro</div>
+        </div>
+      </div>
+      <div>
+        <div class="phone-cap">Intake</div>
+        <div class="phone">
+          <div class="p-title" style="font-size:15px;">Qual seu nível de treino?</div>
+          <div class="p-chip-row">
+            <div class="p-chip">Iniciante</div>
+            <div class="p-chip sel">Intermediário</div>
+            <div class="p-chip">Avançado</div>
+          </div>
+          <div class="p-btn primary" style="margin-top:16px;">Continuar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Fontes: <code>branding/02-identidade-visual.md</code> (logotipo, cor, ícone, telas) e <code>branding/01-pesquisa-e-naming.md</code> (nome, voz). Próximo: arquivos finais de exportação (etapa 12).</p>
+  </div>
+</footer>
+
+</body>
+</html>
