@@ -51,6 +51,7 @@ export type UserProfile = {
   daysAvailable: number;
   sessionMinutes?: number;
   goalCategory: GoalCategory;
+  secondaryGoalCategory?: Exclude<GoalCategory, "evento_especifico">;
   goalDetail?: string;
   goal?: string;
   goalDurationDays?: number;
@@ -92,6 +93,25 @@ export const GOAL_CATEGORY_LABELS: Record<GoalCategory, string> = {
   emagrecimento_recomposicao: "Emagrecimento / recomposição",
   saude_geral_sem_meta_especifica: "Saúde geral, sem meta específica",
   evento_especifico: "Evento específico (tenho uma data em mente)",
+};
+
+// Decisão de produto (Fabio, out/2026): "Objetivo" ganhou meta principal + meta
+// secundária (não multi-select livre). A secundária por enquanto é só contexto/exibição
+// no resultado — NÃO entra em goalCategory nem muda cardioEmphasis/repRangesByGoal no
+// motor ainda (ver engine/cardio.js, data/cardio-rules.json). Pra não deixar escolher uma
+// combinação que já se sabe incoerente, bloqueamos o único eixo de conflito que já existe
+// nos dados: cardioEmphasisTable (cardio-rules.json) opõe "alta" (emagrecimento_recomposicao)
+// a "mínima" (hypertrophy_estetica, forca) — pedir as duas ao mesmo tempo seria prescrever
+// cardio alto e mínimo pro mesmo treino. saude_geral (mínima/moderada) e evento_especifico
+// (reaproveita outro foco, por isso nem aparece como opção de secundária) não entram nesse
+// conflito. Se um dia a secundária passar a influenciar o motor de verdade, essa tabela é
+// o ponto de partida pra decidir a regra de combinação real.
+export const GOAL_CATEGORY_CARDIO_CONFLICTS: Record<GoalCategory, GoalCategory[]> = {
+  hypertrophy_estetica: ["emagrecimento_recomposicao"],
+  forca: ["emagrecimento_recomposicao"],
+  emagrecimento_recomposicao: ["hypertrophy_estetica", "forca"],
+  saude_geral_sem_meta_especifica: [],
+  evento_especifico: [],
 };
 
 export const LEVEL_LABELS: Record<Level, string> = {

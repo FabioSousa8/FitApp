@@ -46,7 +46,13 @@
           "required": true,
           "note": "Substitui o campo livre 'goal' usado nas personas de teste. 'saude_geral_sem_meta_especifica' existe como opção de primeira classe — não é o usuário tendo que adivinhar que pode deixar em branco. Mapeia pra 'maintenance_support' (MV/MEV, sem rampa de crescimento) quando level != beginner, e pra progressão normal MEV→MAV quando level == beginner (ainda não existe base pra 'manter') — ver maintenanceSupportTriggers.goalBased em activity-priority-rules.json."
         },
-        { "field": "goalDetail", "type": "string", "required": false, "note": "Elaboração livre e OPCIONAL (ex: 'quero ficar mais definido pra praia'). Nunca bloqueia o fluxo se deixado em branco." }
+        { "field": "goalDetail", "type": "string", "required": false, "note": "Elaboração livre e OPCIONAL (ex: 'quero ficar mais definido pra praia'). Nunca bloqueia o fluxo se deixado em branco." },
+        {
+          "field": "secondaryGoalCategory",
+          "type": "enum[hypertrophy_estetica,forca,emagrecimento_recomposicao,saude_geral_sem_meta_especifica] | null",
+          "required": false,
+          "note": "Decisão de produto (Fabio, out/2026): meta principal + meta secundária, não multi-select livre — goalCategory sozinho continua decidindo tudo no motor (cardioEmphasis, repRangesByGoal, maintenanceSupportTriggers). secondaryGoalCategory por enquanto é SÓ contexto/exibição no resultado (ver app/src/app/(app)/resultado.tsx), não entra em nenhuma regra do motor ainda. Não disponível quando goalCategory == 'evento_especifico' (esse já tem eventSubFocus como seu próprio 'segundo foco') nem igual à goalCategory escolhida. Bloqueado contra o par hypertrophy_estetica/forca (cardioEmphasis mínima) vs emagrecimento_recomposicao (cardioEmphasis alta) — ver GOAL_CATEGORY_CARDIO_CONFLICTS em app/src/intake/types.ts e cardioEmphasisTable em cardio-rules.json — pra não deixar escolher uma combinação que já se sabe incoerente, mesmo sem o motor usar a secundária ainda."
+        }
       ],
       "branch": [
         {

@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import { Button, Card, HelperText, Label, Screen, TEXT, Title } from "@/components/ui";
 import { useSession } from "@/ctx";
 import { loadProfile, type StoredProfile } from "@/lib/profileStore";
+import { GOAL_CATEGORY_LABELS } from "@/intake/types";
 
 export default function Resultado() {
   const { session } = useSession();
@@ -28,11 +29,17 @@ export default function Resultado() {
   }
   if (!stored) return null;
 
-  const { protocol } = stored;
+  const { protocol, profile } = stored;
 
   return (
     <Screen>
       <Title>Seu protocolo</Title>
+
+      {profile.secondaryGoalCategory && (
+        <HelperText>
+          {`Meta secundária: ${GOAL_CATEGORY_LABELS[profile.secondaryGoalCategory]} (ainda só contexto — não mudou série/cardio deste protocolo).`}
+        </HelperText>
+      )}
 
       <Card>
         <Label>{`Split: ${protocol.split.name}`}</Label>

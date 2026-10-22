@@ -22,6 +22,7 @@ import {
 import {
   CONTRAINDICATION_LABELS,
   EQUIPMENT_LABELS,
+  GOAL_CATEGORY_CARDIO_CONFLICTS,
   GOAL_CATEGORY_LABELS,
   LEVEL_LABELS,
   type ContraindicationTag,
@@ -62,6 +63,7 @@ type Draft = {
   daysAvailable?: number;
   sessionMinutes?: string;
   goalCategory?: GoalCategory;
+  secondaryGoalCategory?: GoalCategory;
   goalDetail?: string;
   goalDurationDays?: string;
   eventSubFocus?: GoalCategory;
@@ -200,6 +202,10 @@ function buildProfile(d: Draft): UserProfile {
     daysAvailable: d.daysAvailable as number,
     sessionMinutes: d.sessionMinutes ? Number(d.sessionMinutes) : undefined,
     goalCategory: d.goalCategory as GoalCategory,
+    secondaryGoalCategory:
+      d.goalCategory !== "evento_especifico"
+        ? (d.secondaryGoalCategory as Exclude<GoalCategory, "evento_especifico"> | undefined)
+        : undefined,
     goalDetail: d.goalDetail?.trim() || undefined,
     goal: d.goalDetail?.trim() || GOAL_CATEGORY_LABELS[d.goalCategory as GoalCategory],
     goalDurationDays: d.goalDurationDays ? Number(d.goalDurationDays) : undefined,
@@ -265,6 +271,14 @@ function StepTreinoBasico({ draft, setDraft }: { draft: Draft; setDraft: React.D
 // --- Passo 2: Objetivo ---
 function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispatch<React.SetStateAction<Draft>> }) {
   const isEvent = draft.goalCategory === "evento_especifico";
+  const secondaryOptions = draft.goalCategory
+    ? GOAL_CATEGORIES.filter(
+        (g) =>
+          g !== draft.goalCategory &&
+          g !== "evento_especifico" &&
+          !GOAL_CATEGORY_CARDIO_CONFLICTS[draft.goalCategory as GoalCategory].includes(g)
+      )
+    : [];
   return (
     <>
       <Title>Objetivo</Title>
@@ -272,9 +286,34 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
 
       <ChipRow>
         {GOAL_CATEGORIES.map((g) => (
-          <Chip key={g} label={GOAL_CATEGORY_LABELS[g]} selected={draft.goalCategory === g} onPress={() => setDraft((d) => ({ ...d, goalCategory: g, eventSubFocus: undefined }))} />
+          <Chip
+            key={g}
+            label={GOAL_CATEGORY_LABELS[g]}
+            selected={draft.goalCategory === g}
+            onPress={() => setDraft((d) => ({ ...d, goalCategory: g, eventSubFocus: undefined, secondaryGoalCategory: undefined }))}
+          />
         ))}
       </ChipRow>
+
+      {!isEvent && draft.goalCategory && (
+        <View>
+          <Label>Meta secundária (opcional)</Label>
+          <ChipRow>
+            {secondaryOptions.map((g) => (
+              <Chip
+                key={g}
+                label={GOAL_CATEGORY_LABELS[g]}
+                selected={draft.secondaryGoalCategory === g}
+                onPress={() => setDraft((d) => ({ ...d, secondaryGoalCategory: d.secondaryGoalCategory === g ? undefined : g }))}
+              />
+            ))}
+          </ChipRow>
+          <HelperText>
+            Por enquanto isso só aparece como contexto no resultado, sem mudar série/cardio ainda. Metas com
+            ênfase de cardio opostas (ex: emagrecimento + hipertrofia) não aparecem aqui como combinação.
+          </HelperText>
+        </View>
+      )}
 
       <Field
         label="Quer elaborar? (opcional)"
