@@ -113,9 +113,9 @@
       "fields": [
         {
           "field": "trainingConsistency",
-          "type": "enum[continuo,esporadico]",
+          "type": "enum[continuo,pausas_curtas,esporadico]",
           "required": true,
-          "note": "Pergunta única e simples (ex: 'nos últimos 6 meses você treinou sem parar, ou teve pausas longas de meses?'), não uma seção separada. Já existe em exercise-selection-rules.json."
+          "note": "Pergunta única e simples (ex: 'nos últimos 6 meses você treinou sem parar, teve pausas curtas, ou teve pausas longas de meses?'), não uma seção separada. Já existe em exercise-selection-rules.json."
         }
       ]
     },

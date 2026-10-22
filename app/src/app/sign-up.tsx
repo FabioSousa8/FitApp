@@ -37,7 +37,7 @@ export default function SignUp() {
       <Title>Criar conta</Title>
       <Subtitle>Pra guardar seu protocolo e acompanhar sua evolução.</Subtitle>
       {usingLocalAuth && (
-        <HelperText>Modo local (sem Supabase configurado ainda) — a conta fica só neste aparelho.</HelperText>
+        <HelperText>Modo local (sem Supabase configurado ainda): a conta fica só neste aparelho.</HelperText>
       )}
       <Field
         label="E-mail"

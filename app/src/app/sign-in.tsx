@@ -28,7 +28,7 @@ export default function SignIn() {
       <Subtitle>Bem-vindo de volta ao FortEvo.</Subtitle>
       {usingLocalAuth && (
         <HelperText>
-          Modo local (sem Supabase configurado ainda) — qualquer e-mail/senha entra, sem validar de
+          Modo local (sem Supabase configurado ainda): qualquer e-mail/senha entra, sem validar de
           verdade. Ver app/README.md pra ligar o backend real.
         </HelperText>
       )}

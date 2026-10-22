@@ -41,6 +41,10 @@ function buildProtocol(persona) {
   const periodizationIsMaintenance = isMaintenance && !escalationActive;
   const goalKey = isMaintenance ? "maintenance_support" : "hypertrophy";
   const preferLowRecovery = goalKey === "maintenance_support";
+  // "pausas_curtas" (interrupções breves) cai no mesmo tratamento de "continuo" aqui, de propósito:
+  // o viés de equipamento guiado existe pra quem perde coordenação motora em hiatos longos
+  // (meses sem treinar), não pra quem só teve pausas curtas — ver trainingConsistencyNote em
+  // data/exercise-selection-rules.json.
   const preferGuidedEquipment = persona.trainingConsistency === "esporadico";
 
   const groupInfo = {};

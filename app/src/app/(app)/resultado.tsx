@@ -47,8 +47,8 @@ export default function Resultado() {
         {protocol.periodization.blocks.map((b: any, i: number) => (
           <HelperText key={i}>
             {b.type === "deload"
-              ? `Bloco ${i + 1}: deload — ${b.lengthDays}d de calendário`
-              : `Bloco ${i + 1}: treino — ${b.lengthSessions} treinos${b.taper ? " (com taper)" : ""}`}
+              ? `Bloco ${i + 1}: deload (${b.lengthDays}d de calendário)`
+              : `Bloco ${i + 1}: treino (${b.lengthSessions} treinos${b.taper ? ", com taper" : ""})`}
           </HelperText>
         ))}
       </Card>
@@ -57,7 +57,7 @@ export default function Resultado() {
         <Card>
           <Label>Cardio</Label>
           <HelperText>
-            {`${protocol.cardioPlan.modality} — ${protocol.cardioPlan.frequencyPerWeek.join("-")}x/semana, ${protocol.cardioPlan.minutesPerSession.join("-")}min/sessão`}
+            {`${protocol.cardioPlan.modality}, ${protocol.cardioPlan.frequencyPerWeek.join("-")}x/semana, ${protocol.cardioPlan.minutesPerSession.join("-")}min/sessão`}
           </HelperText>
         </Card>
       )}
@@ -67,7 +67,7 @@ export default function Resultado() {
           <Label>{day.dayLabel.toUpperCase()}</Label>
           {day.items.map((it: any, i: number) => (
             <Text key={i} style={{ fontSize: 14, color: TEXT }}>
-              {`${it.name} — ${it.sets}x${it.repsLabel}`}
+              {`${it.name}: ${it.sets}x${it.repsLabel}`}
             </Text>
           ))}
         </Card>

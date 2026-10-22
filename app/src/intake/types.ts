@@ -12,7 +12,7 @@ export type GoalCategory =
   | "saude_geral_sem_meta_especifica"
   | "evento_especifico";
 
-export type TrainingConsistency = "continuo" | "esporadico";
+export type TrainingConsistency = "continuo" | "pausas_curtas" | "esporadico";
 
 export type EquipmentType = "barbell" | "dumbbell" | "machine" | "cable" | "smith" | "bodyweight";
 

@@ -234,7 +234,7 @@ function StepTreinoBasico({ draft, setDraft }: { draft: Draft; setDraft: React.D
           <Chip key={lvl} label={LEVEL_LABELS[lvl]} selected={draft.level === lvl} onPress={() => setDraft((d) => ({ ...d, level: lvl }))} />
         ))}
       </ChipRow>
-      <HelperText>Isso é cruzado com os anos de treino abaixo — tempo de treino só pode puxar o nível pra baixo, nunca pra cima.</HelperText>
+      <HelperText>Isso é cruzado com os anos de treino abaixo: tempo de treino só pode puxar o nível pra baixo, nunca pra cima.</HelperText>
 
       <Field
         label="Há quantos anos você treina musculação?"
@@ -268,7 +268,7 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
   return (
     <>
       <Title>Objetivo</Title>
-      <Subtitle>"Saúde geral, sem meta específica" é uma resposta completa por si só — não precisa forçar uma meta estética.</Subtitle>
+      <Subtitle>"Saúde geral, sem meta específica" é uma resposta completa por si só, sem precisar forçar uma meta estética.</Subtitle>
 
       <ChipRow>
         {GOAL_CATEGORIES.map((g) => (
@@ -288,7 +288,7 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
           <Label>Em quantos treinos é o seu evento?</Label>
           <Field
             label=""
-            placeholder="ex: 25, 42 — contado em treinos, não em dias de calendário"
+            placeholder="ex: 25, 42 (contado em treinos, não em dias de calendário)"
             keyboardType="number-pad"
             value={draft.goalDurationDays ?? ""}
             onChangeText={(v) => setDraft((d) => ({ ...d, goalDurationDays: v }))}
@@ -303,7 +303,7 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
       ) : (
         <Field
           label="Quer definir um período pra esse protocolo até reavaliarmos? (opcional)"
-          placeholder="ex: 35, 60, 90 — em treinos, não em dias de calendário"
+          placeholder="ex: 35, 60, 90 (em treinos, não em dias de calendário)"
           keyboardType="number-pad"
           value={draft.goalDurationDays ?? ""}
           onChangeText={(v) => setDraft((d) => ({ ...d, goalDurationDays: v }))}
@@ -412,7 +412,7 @@ function StepAtividades({
   return (
     <>
       <Title>Atividades físicas</Title>
-      <Subtitle>Ordene da mais pra menos importante — isso decide o teto de volume quando musculação não é a prioridade 1.</Subtitle>
+      <Subtitle>Ordene da mais pra menos importante: isso decide o teto de volume quando musculação não é a prioridade 1.</Subtitle>
 
       {draft.activities.map((a, i) => (
         <Card key={a.name}>
@@ -511,12 +511,13 @@ function StepConsistencia({ draft, setDraft }: { draft: Draft; setDraft: React.D
   return (
     <>
       <Title>Consistência de treino</Title>
-      <Subtitle>Nos últimos 6 meses você treinou sem parar, ou teve pausas longas de meses?</Subtitle>
+      <Subtitle>Nos últimos 6 meses você treinou sem parar, teve só pausas curtas, ou teve pausas longas de meses?</Subtitle>
       <ChipRow>
         <Chip label="Treinei sem parar" selected={draft.trainingConsistency === "continuo"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "continuo" }))} />
+        <Chip label="Treinei com pausas curtas" selected={draft.trainingConsistency === "pausas_curtas"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "pausas_curtas" }))} />
         <Chip label="Tive pausas longas" selected={draft.trainingConsistency === "esporadico"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "esporadico" }))} />
       </ChipRow>
-      <HelperText>Isso não muda o volume (quem decide é o nível) — só faz o motor preferir equipamento guiado (máquina/smith/cabo) sobre peso livre.</HelperText>
+      <HelperText>Isso não muda o volume (quem decide é o nível): só faz o motor preferir equipamento guiado (máquina/smith/cabo) sobre peso livre pra quem teve pausas longas.</HelperText>
     </>
   );
 }
@@ -546,7 +547,7 @@ function StepRotinaAtual({ draft, setDraft }: { draft: Draft; setDraft: React.Di
   return (
     <>
       <Title>Sua rotina atual</Title>
-      <Subtitle>Opcional. Se você já treina, cole ou descreva sua ficha atual — ajuda a calibrar quantos exercícios por grupo.</Subtitle>
+      <Subtitle>Opcional. Se você já treina, cole ou descreva sua ficha atual: ajuda a calibrar quantos exercícios por grupo.</Subtitle>
       <Field
         label="Ficha atual (opcional)"
         placeholder="ex: Supino 4x, Crucifixo 3x, Puxada 4x..."
@@ -556,7 +557,7 @@ function StepRotinaAtual({ draft, setDraft }: { draft: Draft; setDraft: React.Di
         onChangeText={(v) => setDraft((d) => ({ ...d, currentRoutineRaw: v }))}
       />
       <HelperText>
-        Por enquanto isso só fica guardado pra referência — a extração automática pra quantidade de
+        Por enquanto isso só fica guardado pra referência: a extração automática pra quantidade de
         exercícios por grupo ainda não existe (ver pendências do motor). Sem isso, o cálculo cai numa
         estimativa de bom senso.
       </HelperText>
