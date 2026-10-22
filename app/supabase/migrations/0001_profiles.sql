@@ -18,14 +18,21 @@ comment on table public.profiles is
 alter table public.profiles enable row level security;
 
 -- Cada usuário só lê/escreve a própria linha — nunca a de outra pessoa.
+-- `to authenticated` restringe o papel (não só a predicate), e o UPDATE leva
+-- tanto USING quanto WITH CHECK: sem o WITH CHECK, nada impediria um usuário
+-- autenticado de reatribuir user_id pra outra pessoa num update.
 create policy "profiles_select_own" on public.profiles
-  for select using (auth.uid() = user_id);
+  for select to authenticated
+  using ((select auth.uid()) = user_id);
 
 create policy "profiles_insert_own" on public.profiles
-  for insert with check (auth.uid() = user_id);
+  for insert to authenticated
+  with check ((select auth.uid()) = user_id);
 
 create policy "profiles_update_own" on public.profiles
-  for update using (auth.uid() = user_id);
+  for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
 
 -- Mantém updated_at correto em todo upsert, sem depender do client mandar a data certa.
 create or replace function public.set_profiles_updated_at()
