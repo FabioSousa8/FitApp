@@ -6,7 +6,7 @@ Plano operacional pra rodar a primeira rodada de testes com usuários reais. Ist
 
 Nesta ordem, porque cada um depende do anterior:
 
-1. **Projeto Supabase real criado e configurado** (`app/.env` preenchido — ver `app/README.md`). Sem isso, a autenticação continua no modo local, que não guarda nada com segurança e perde o cadastro se o usuário trocar de aparelho ou reinstalar. Pra usuários reais, isso não é aceitável mesmo num beta.
+1. ~~Projeto Supabase real criado e configurado~~ — resolvido (out/2026): projeto `anujgpaucafrpfbfapgi` (região São Paulo), migration `0001_profiles.sql` aplicada (RLS endurecida), `app/.env` preenchido. Autenticação passou do modo local pra Supabase Auth de verdade.
 2. **Decisão sobre os documentos legais** (`legal/termo-de-uso.md`, `legal/politica-de-privacidade.md`): os dois são rascunhos que ainda não passaram por um advogado. Duas opções, e a escolha é sua, não minha:
    - Esperar a revisão jurídica de verdade antes de convidar qualquer pessoa — mais seguro, mais lento.
    - Rodar esta primeira rodada só com um grupo muito pequeno e de confiança (ver seção 1), sendo transparente com eles de que os termos ainda são rascunho — reduz o risco mas não elimina.
@@ -72,6 +72,6 @@ Não é uma data travada, é uma ordem de grandeza:
 ## Pendências desta logística
 
 - E-mail/canal de contato real ainda não existe (ver `legal/termo-de-uso.md` seção 12 e `legal/politica-de-privacidade.md` seção 11) — bloqueia o convite do primeiro usuário.
-- Projeto Supabase real ainda não existe — mesma observação.
+- ~~Projeto Supabase real ainda não existe~~ — resolvido (out/2026).
 - Decisão em aberto: esperar revisão jurídica ou rodar com grupo de confiança primeiro (seção 0, ponto 2) — decisão do Fabio.
 - Formulário/roteiro de feedback (seção 3) ainda não foi criado de fato.

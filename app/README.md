@@ -80,7 +80,7 @@ aparelho. Ligar o Supabase de verdade:
 
 ## Pendências deste scaffold
 
-- Modo local de auth é só pra demonstração — nenhum dado fica seguro nele.
+- ~~Modo local de auth é só pra demonstração — nenhum dado fica seguro nele.~~ — resolvido (out/2026): projeto Supabase real criado (`anujgpaucafrpfbfapgi`, região São Paulo), migration `0001_profiles.sql` aplicada (com RLS endurecida — ver histórico do arquivo), `.env` configurado. Login/cadastro autenticam de verdade agora; o modo local em `src/ctx.tsx` só entra em jogo se `.env` estiver ausente (ex: outra máquina sem as chaves).
 - `currentRoutineRaw` (passo 7 do cadastro) é coletado mas ainda não alimenta
   `currentRoutine`/`exerciseCountByGroup` — a extração não existe no motor ainda
   (ver `docs/engine-flow.md` na raiz).
