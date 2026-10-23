@@ -35,6 +35,13 @@ export default function Resultado() {
     <Screen>
       <Title>Seu protocolo</Title>
 
+      {stored.syncFailed && (
+        <HelperText>
+          ⚠ Seu protocolo está salvo neste aparelho, mas não deu pra sincronizar com a nuvem agora. A gente
+          tenta de novo na próxima vez que salvar.
+        </HelperText>
+      )}
+
       {profile.secondaryGoalCategory && (
         <HelperText>
           {`Meta secundária: ${GOAL_CATEGORY_LABELS[profile.secondaryGoalCategory]} (ainda só contexto — não mudou série/cardio deste protocolo).`}

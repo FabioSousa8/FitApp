@@ -39,12 +39,16 @@ const ACCENT_TEXT = "#5E80FF"; // único uso do acento como COR DE TEXTO/ícone 
 
 const SURFACE = "#22211D"; // tinta clareada ~6% — elevação de card sobre o fundo
 const BORDER = "rgba(245, 243, 238, 0.12)"; // papel a 12% — linha sutil sobre fundo escuro
-const MUTED = "rgba(245, 243, 238, 0.64)"; // papel a 64% — texto secundário
+export const MUTED = "rgba(245, 243, 238, 0.64)"; // papel a 64% — texto secundário
 const DANGER = "#E5564A"; // vermelho de erro recalibrado pra contraste AA sobre fundo escuro
 const BG = INK;
 export const TEXT = PAPER;
 
-export function Screen({ children, style, ...rest }: ViewProps) {
+// `footer` renderiza FORA do ScrollView, fixo no rodapé da tela (dentro da
+// SafeAreaView, então o inset de baixo continua respeitado). É pra qualquer
+// linha de ação (Voltar/Avançar, CTA principal) que não pode rolar junto com
+// o conteúdo — ver nota de "CTA fora do alcance do polegar" no critique de UX.
+export function Screen({ children, footer, style, ...rest }: ViewProps & { footer?: React.ReactNode }) {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -53,6 +57,7 @@ export function Screen({ children, style, ...rest }: ViewProps) {
         {...rest}>
         {children}
       </ScrollView>
+      {footer ? <View style={styles.screenFooter}>{footer}</View> : null}
     </SafeAreaView>
   );
 }
@@ -177,10 +182,17 @@ export function Chip({
   label,
   selected,
   onPress,
+  role = "checkbox",
 }: {
   label: string;
   selected: boolean;
   onPress: () => void;
+  // "radio" pra grupos de escolha única (nível, objetivo, consistência, etc.) —
+  // "checkbox" (default) só pra grupos onde várias seleções fazem sentido ao
+  // mesmo tempo (equipamento, limitações). Antes o Chip sempre dizia "checkbox"
+  // pra leitor de tela mesmo em grupos de escolha única — ver critique de UX,
+  // red flag da persona Sam.
+  role?: "checkbox" | "radio";
 }) {
   const { scale, onPressIn, onPressOut } = usePressScale();
   return (
@@ -188,8 +200,12 @@ export function Chip({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessibilityRole="checkbox"
-      accessibilityState={{ checked: selected }}>
+      // Área visual do chip mede ~35-38px de altura, abaixo do mínimo de
+      // 44pt(iOS)/48dp(Android) — hitSlop estende a área tocável sem mudar o
+      // tamanho visual (ver critique de UX, P2 de alvo de toque).
+      hitSlop={{ top: 8, bottom: 8, left: 6, right: 6 }}
+      accessibilityRole={role}
+      accessibilityState={role === "radio" ? { selected } : { checked: selected }}>
       <Animated.View style={[styles.chip, selected && styles.chipSelected, { transform: [{ scale }] }]}>
         <Text style={[styles.chipText, selected && styles.chipTextSelected]}>{label}</Text>
       </Animated.View>
@@ -215,15 +231,29 @@ export function StepProgress({ step, total }: { step: number; total: number }) {
   );
 }
 
+// Escala de espaçamento — progressão limpa de 4 em 4. Antes a escala real em
+// uso tinha dois números fora da progressão (6 e 9, ver critique de UX,
+// observação menor); os dois usos foram arredondados pro múltiplo de 4 mais
+// próximo (6→8, 9→8) em vez de inventar um valor novo.
+export const SPACING = { xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 24 } as const;
+
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: BG },
   screenContent: { padding: 20, paddingBottom: 40, gap: 16 },
+  screenFooter: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: BORDER,
+    backgroundColor: BG,
+  },
   brandRow: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 4 },
   brandMark: { width: 22, height: 22 },
   brandWordmark: { fontSize: 17, fontWeight: "700", letterSpacing: -0.2, color: TEXT },
   title: { fontSize: 24, fontWeight: "700", color: TEXT },
   subtitle: { fontSize: 15, color: MUTED, lineHeight: 21 },
-  label: { fontSize: 13, fontWeight: "600", color: TEXT, marginBottom: 6 },
+  label: { fontSize: 13, fontWeight: "600", color: TEXT, marginBottom: SPACING.sm },
   helper: { fontSize: 12, color: MUTED, marginTop: 4 },
   error: { fontSize: 12, color: DANGER, marginTop: 4 },
   field: { gap: 0 },
@@ -261,7 +291,7 @@ const styles = StyleSheet.create({
     borderColor: BORDER,
     borderRadius: 20,
     paddingHorizontal: 14,
-    paddingVertical: 9,
+    paddingVertical: SPACING.sm,
     backgroundColor: SURFACE,
   },
   // Chip selecionado usa o tom PRESSED (mais escuro/saturado que a base), não a
@@ -280,7 +310,7 @@ const styles = StyleSheet.create({
     backgroundColor: SURFACE,
     gap: 8,
   },
-  progressRow: { flexDirection: "row", gap: 6, marginBottom: 4 },
+  progressRow: { flexDirection: "row", gap: SPACING.sm, marginBottom: SPACING.xs },
   progressDot: { flex: 1, height: 4, borderRadius: 2, backgroundColor: BORDER },
   progressDotDone: { backgroundColor: ACCENT },
   progressDotCurrent: { backgroundColor: ACCENT },

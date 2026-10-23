@@ -13,6 +13,10 @@ export type StoredProfile = {
   // puro, sem .d.ts dedicado ainda). `any` aqui é deliberado, não descuido.
   protocol: any;
   updatedAt: string;
+  // true quando o upsert pro Supabase falhou e o perfil ficou só local (ver
+  // saveProfile abaixo). Antes essa falha só ia pro console — ver critique de
+  // UX, observação menor sobre falha silenciosa de sync.
+  syncFailed?: boolean;
 };
 
 function storageKey(userId: string) {
@@ -32,6 +36,8 @@ export async function saveProfile(userId: string, profile: UserProfile, protocol
     });
     if (error) {
       console.warn("[FitApp] não deu pra sincronizar o perfil com o Supabase (ficou salvo localmente):", error.message);
+      record.syncFailed = true;
+      await AsyncStorage.setItem(storageKey(userId), JSON.stringify(record));
     }
   }
 }

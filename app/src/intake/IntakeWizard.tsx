@@ -4,7 +4,7 @@
 // são campos condicionais DENTRO do passo correspondente, não passos extras — é
 // assim que o próprio intake-flow-rules.json descreve a ramificação.
 import React, { useMemo, useState } from "react";
-import { View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import {
   Button,
   Card,
@@ -14,6 +14,7 @@ import {
   Field,
   HelperText,
   Label,
+  MUTED,
   Screen,
   StepProgress,
   Subtitle,
@@ -89,17 +90,64 @@ function toggleInArray<T>(arr: T[], value: T): T[] {
   return arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value];
 }
 
-export function IntakeWizard({ onComplete }: { onComplete: (profile: UserProfile) => void }) {
+// Inverso de buildProfile() — reconstrói o Draft a partir de um UserProfile já
+// salvo, pra "Refazer cadastro" reabrir preenchido em vez de sempre voltar pro
+// EMPTY_DRAFT (ver critique de UX, observação menor). Só é chamado com um
+// profile que passou com sucesso pelo validateStep de cada passo, então os
+// campos obrigatórios (hasLimitations etc.) sempre dão pra inferir de volta.
+function profileToDraft(p: UserProfile): Draft {
+  return {
+    level: p.level,
+    trainingTimeYears: String(p.trainingTimeYears),
+    daysAvailable: p.daysAvailable,
+    sessionMinutes: p.sessionMinutes != null ? String(p.sessionMinutes) : undefined,
+    goalCategory: p.goalCategory,
+    secondaryGoalCategory: p.secondaryGoalCategory,
+    goalDetail: p.goalDetail,
+    goalDurationDays: p.goalDurationDays != null ? String(p.goalDurationDays) : undefined,
+    eventSubFocus: p.eventSubFocus,
+    hasLimitations: p.limitations.length > 0,
+    limitationTags: p.limitations.map((l) => l.tag),
+    limitationSafetyNote: p.limitationSafetyNote,
+    activities: p.physicalActivities.length > 0 ? p.physicalActivities : EMPTY_DRAFT.activities,
+    sameDaySelected: p.physicalActivities
+      .filter((a) => a.sameDayAsMusculacao === "antes" || a.sameDayAsMusculacao === "depois")
+      .map((a) => a.name),
+    cardioPreference: p.cardioPreference,
+    trainingConsistency: p.trainingConsistency,
+    availableEquipment: p.availableEquipment,
+    currentRoutineRaw: p.currentRoutineRaw,
+  };
+}
+
+export function IntakeWizard({
+  onComplete,
+  onExit,
+  initialProfile,
+}: {
+  onComplete: (profile: UserProfile) => void | Promise<void>;
+  // Sem isso não existia nenhuma saída visível do wizard de volta pra Home —
+  // só "Voltar" passo a passo (ver critique de UX, P2). Opcional pra manter o
+  // componente usável sem navegação em outros contextos (ex: testes).
+  onExit?: () => void;
+  // Pré-preenche o draft quando "Refazer cadastro" vem de um profile já salvo.
+  initialProfile?: UserProfile;
+}) {
   const [step, setStep] = useState(1);
-  const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
+  const [draft, setDraft] = useState<Draft>(() => (initialProfile ? profileToDraft(initialProfile) : EMPTY_DRAFT));
   const [error, setError] = useState<string | null>(null);
+  // Feedback de carregamento no último passo: antes disso "Gerar meu protocolo"
+  // chamava onComplete sem esperar nada, então numa conexão lenta a tela
+  // parecia travada bem no momento em que a pessoa acabou de preencher os 7
+  // passos (ver critique de UX, P1).
+  const [submitting, setSubmitting] = useState(false);
 
   const secondaryActivities = useMemo(
     () => draft.activities.filter((a) => a.name.trim().toLowerCase() !== "musculação"),
     [draft.activities]
   );
 
-  function next() {
+  async function next() {
     const err = validateStep(step, draft, secondaryActivities);
     if (err) {
       setError(err);
@@ -107,7 +155,13 @@ export function IntakeWizard({ onComplete }: { onComplete: (profile: UserProfile
     }
     setError(null);
     if (step === TOTAL_STEPS) {
-      onComplete(buildProfile(draft));
+      setSubmitting(true);
+      try {
+        await onComplete(buildProfile(draft));
+      } catch {
+        setSubmitting(false);
+        setError("Não deu pra gerar o protocolo agora. Tenta de novo em alguns segundos.");
+      }
       return;
     }
     setStep((s) => s + 1);
@@ -118,9 +172,45 @@ export function IntakeWizard({ onComplete }: { onComplete: (profile: UserProfile
     setStep((s) => Math.max(1, s - 1));
   }
 
+  function handleExit() {
+    if (!onExit) return;
+    Alert.alert("Sair do cadastro?", "As respostas desse cadastro ainda não foram salvas e serão perdidas.", [
+      { text: "Cancelar", style: "cancel" },
+      { text: "Sair", style: "destructive", onPress: onExit },
+    ]);
+  }
+
   return (
-    <Screen>
-      <StepProgress step={step} total={TOTAL_STEPS} />
+    <Screen
+      footer={
+        <View style={{ flexDirection: "row", gap: 12 }}>
+          {step > 1 && (
+            <Button title="Voltar" variant="secondary" onPress={back} disabled={submitting} style={{ flex: 1 }} />
+          )}
+          <Button
+            title={step === TOTAL_STEPS ? "Gerar meu protocolo" : "Avançar"}
+            onPress={next}
+            loading={step === TOTAL_STEPS && submitting}
+            disabled={submitting}
+            style={{ flex: 1 }}
+          />
+        </View>
+      }>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <View style={{ flex: 1 }}>
+          <StepProgress step={step} total={TOTAL_STEPS} />
+        </View>
+        {onExit && (
+          <Pressable
+            onPress={handleExit}
+            disabled={submitting}
+            accessibilityRole="button"
+            accessibilityLabel="Sair do cadastro"
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+            <Text style={{ color: MUTED, fontSize: 13, fontWeight: "600" }}>Sair</Text>
+          </Pressable>
+        )}
+      </View>
       {step === 1 && <StepTreinoBasico draft={draft} setDraft={setDraft} />}
       {step === 2 && <StepObjetivo draft={draft} setDraft={setDraft} />}
       {step === 3 && <StepLimitacoes draft={draft} setDraft={setDraft} />}
@@ -132,11 +222,6 @@ export function IntakeWizard({ onComplete }: { onComplete: (profile: UserProfile
       {step === 7 && <StepRotinaAtual draft={draft} setDraft={setDraft} />}
 
       <ErrorText>{error}</ErrorText>
-
-      <View style={{ flexDirection: "row", gap: 12, marginTop: 8 }}>
-        {step > 1 && <Button title="Voltar" variant="secondary" onPress={back} style={{ flex: 1 }} />}
-        <Button title={step === TOTAL_STEPS ? "Gerar meu protocolo" : "Avançar"} onPress={next} style={{ flex: 1 }} />
-      </View>
     </Screen>
   );
 }
@@ -237,7 +322,13 @@ function StepTreinoBasico({ draft, setDraft }: { draft: Draft; setDraft: React.D
       <Label>Como você classificaria seu nível?</Label>
       <ChipRow>
         {LEVELS.map((lvl) => (
-          <Chip key={lvl} label={LEVEL_LABELS[lvl]} selected={draft.level === lvl} onPress={() => setDraft((d) => ({ ...d, level: lvl }))} />
+          <Chip
+            key={lvl}
+            role="radio"
+            label={LEVEL_LABELS[lvl]}
+            selected={draft.level === lvl}
+            onPress={() => setDraft((d) => ({ ...d, level: lvl }))}
+          />
         ))}
       </ChipRow>
       <HelperText>Isso é cruzado com os anos de treino abaixo: tempo de treino só pode puxar o nível pra baixo, nunca pra cima.</HelperText>
@@ -253,7 +344,13 @@ function StepTreinoBasico({ draft, setDraft }: { draft: Draft; setDraft: React.D
       <Label>Quantos dias por semana você tem disponível?</Label>
       <ChipRow>
         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-          <Chip key={n} label={String(n)} selected={draft.daysAvailable === n} onPress={() => setDraft((d) => ({ ...d, daysAvailable: n }))} />
+          <Chip
+            key={n}
+            role="radio"
+            label={String(n)}
+            selected={draft.daysAvailable === n}
+            onPress={() => setDraft((d) => ({ ...d, daysAvailable: n }))}
+          />
         ))}
       </ChipRow>
 
@@ -288,6 +385,7 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
         {GOAL_CATEGORIES.map((g) => (
           <Chip
             key={g}
+            role="radio"
             label={GOAL_CATEGORY_LABELS[g]}
             selected={draft.goalCategory === g}
             onPress={() => setDraft((d) => ({ ...d, goalCategory: g, eventSubFocus: undefined, secondaryGoalCategory: undefined }))}
@@ -302,6 +400,7 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
             {secondaryOptions.map((g) => (
               <Chip
                 key={g}
+                role="radio"
                 label={GOAL_CATEGORY_LABELS[g]}
                 selected={draft.secondaryGoalCategory === g}
                 onPress={() => setDraft((d) => ({ ...d, secondaryGoalCategory: d.secondaryGoalCategory === g ? undefined : g }))}
@@ -335,7 +434,13 @@ function StepObjetivo({ draft, setDraft }: { draft: Draft; setDraft: React.Dispa
           <Label>Existe um foco específico pra esse evento?</Label>
           <ChipRow>
             {GOAL_CATEGORIES.filter((g) => g !== "evento_especifico").map((g) => (
-              <Chip key={g} label={GOAL_CATEGORY_LABELS[g]} selected={draft.eventSubFocus === g} onPress={() => setDraft((d) => ({ ...d, eventSubFocus: g }))} />
+              <Chip
+                key={g}
+                role="radio"
+                label={GOAL_CATEGORY_LABELS[g]}
+                selected={draft.eventSubFocus === g}
+                onPress={() => setDraft((d) => ({ ...d, eventSubFocus: g }))}
+              />
             ))}
           </ChipRow>
         </Card>
@@ -455,20 +560,43 @@ function StepAtividades({
 
       {draft.activities.map((a, i) => (
         <Card key={a.name}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 4 }}>
             <Label>{`${a.rank}. ${a.name}`}</Label>
             {a.name.trim().toLowerCase() !== "musculação" && (
               <View style={{ flexDirection: "row", gap: 8 }}>
-                <Button title="▲" variant="ghost" onPress={() => move(a.name, -1)} disabled={i === 0} />
-                <Button title="▼" variant="ghost" onPress={() => move(a.name, 1)} disabled={i === draft.activities.length - 1} />
-                <Button title="Remover" variant="ghost" onPress={() => removeActivity(a.name)} />
+                <Button
+                  title="Subir"
+                  variant="ghost"
+                  onPress={() => move(a.name, -1)}
+                  disabled={i === 0}
+                  accessibilityLabel={`Subir ${a.name} na lista`}
+                />
+                <Button
+                  title="Descer"
+                  variant="ghost"
+                  onPress={() => move(a.name, 1)}
+                  disabled={i === draft.activities.length - 1}
+                  accessibilityLabel={`Descer ${a.name} na lista`}
+                />
+                <Button
+                  title="Remover"
+                  variant="ghost"
+                  onPress={() => removeActivity(a.name)}
+                  accessibilityLabel={`Remover ${a.name} da lista`}
+                />
               </View>
             )}
           </View>
           <Label>Quantas vezes por semana?</Label>
           <ChipRow>
             {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-              <Chip key={n} label={String(n)} selected={a.frequencyPerWeek === n} onPress={() => updateActivity(a.name, { frequencyPerWeek: n })} />
+              <Chip
+                key={n}
+                role="radio"
+                label={String(n)}
+                selected={a.frequencyPerWeek === n}
+                onPress={() => updateActivity(a.name, { frequencyPerWeek: n })}
+              />
             ))}
           </ChipRow>
         </Card>
@@ -486,16 +614,19 @@ function StepAtividades({
           <Label>{`"${secondaryActivities[0].name}" costuma cair no mesmo dia da musculação?`}</Label>
           <ChipRow>
             <Chip
+              role="radio"
               label="Não"
               selected={secondaryActivities[0].sameDayAsMusculacao === null}
               onPress={() => updateActivity(secondaryActivities[0].name, { sameDayAsMusculacao: null })}
             />
             <Chip
+              role="radio"
               label="Sim, antes"
               selected={secondaryActivities[0].sameDayAsMusculacao === "antes"}
               onPress={() => updateActivity(secondaryActivities[0].name, { sameDayAsMusculacao: "antes" })}
             />
             <Chip
+              role="radio"
               label="Sim, depois"
               selected={secondaryActivities[0].sameDayAsMusculacao === "depois"}
               onPress={() => updateActivity(secondaryActivities[0].name, { sameDayAsMusculacao: "depois" })}
@@ -526,8 +657,8 @@ function StepAtividades({
               <View key={name}>
                 <Label>{`"${name}" vem antes ou depois da musculação?`}</Label>
                 <ChipRow>
-                  <Chip label="Antes" selected={a.sameDayAsMusculacao === "antes"} onPress={() => updateActivity(name, { sameDayAsMusculacao: "antes" })} />
-                  <Chip label="Depois" selected={a.sameDayAsMusculacao === "depois"} onPress={() => updateActivity(name, { sameDayAsMusculacao: "depois" })} />
+                  <Chip role="radio" label="Antes" selected={a.sameDayAsMusculacao === "antes"} onPress={() => updateActivity(name, { sameDayAsMusculacao: "antes" })} />
+                  <Chip role="radio" label="Depois" selected={a.sameDayAsMusculacao === "depois"} onPress={() => updateActivity(name, { sameDayAsMusculacao: "depois" })} />
                 </ChipRow>
               </View>
             );
@@ -552,9 +683,9 @@ function StepConsistencia({ draft, setDraft }: { draft: Draft; setDraft: React.D
       <Title>Consistência de treino</Title>
       <Subtitle>Nos últimos 6 meses você treinou sem parar, teve só pausas curtas, ou teve pausas longas de meses?</Subtitle>
       <ChipRow>
-        <Chip label="Treinei sem parar" selected={draft.trainingConsistency === "continuo"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "continuo" }))} />
-        <Chip label="Treinei com pausas curtas" selected={draft.trainingConsistency === "pausas_curtas"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "pausas_curtas" }))} />
-        <Chip label="Tive pausas longas" selected={draft.trainingConsistency === "esporadico"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "esporadico" }))} />
+        <Chip role="radio" label="Treinei sem parar" selected={draft.trainingConsistency === "continuo"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "continuo" }))} />
+        <Chip role="radio" label="Treinei com pausas curtas" selected={draft.trainingConsistency === "pausas_curtas"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "pausas_curtas" }))} />
+        <Chip role="radio" label="Tive pausas longas" selected={draft.trainingConsistency === "esporadico"} onPress={() => setDraft((d) => ({ ...d, trainingConsistency: "esporadico" }))} />
       </ChipRow>
       <HelperText>Isso não muda o volume (quem decide é o nível): só faz o motor preferir equipamento guiado (máquina/smith/cabo) sobre peso livre pra quem teve pausas longas.</HelperText>
     </>
