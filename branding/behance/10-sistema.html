@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo: sistema do logotipo</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .row { display: flex; gap: 22px; margin-top: 44px; }
+  .card { flex: 1; min-height: 350px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 44px 28px; border: 1px solid var(--border); box-shadow: 0 20px 44px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25); }
+  .card.dark { background: linear-gradient(180deg, #27261E 0%, var(--surface) 100%); }
+  .card.light { background: linear-gradient(180deg, #FBFAF6 0%, var(--paper) 100%); }
+  .lockup { display: flex; align-items: center; gap: 12px; }
+  .lockup svg { width: 74px; height: 74px; }
+  .lockup span { font-family: var(--wordmark); font-size: 52px; font-weight: 700; letter-spacing: -0.5px; }
+  .mark-only { width: 130px; height: 130px; }
+  .cap { font-size: 13px; color: var(--muted); }
+  .sizes { display: flex; gap: 52px; align-items: flex-end; margin-top: 76px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .swatch { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .checks { display: flex; gap: 80px; margin-top: 90px; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="h1 sm">Como o símbolo se comporta.</div>
+<div class="row">
+  <div class="card dark"><div class="lockup"><svg style="color:var(--paper)"><use href="#fe-mark"/></svg><span>FortEvo</span></div><span class="cap">Lockup, papel sobre tinta</span></div>
+  <div class="card dark"><svg class="mark-only" style="color:var(--paper)"><use href="#fe-mark"/></svg><span class="cap">Símbolo, papel sobre tinta</span></div>
+  <div class="card light"><svg class="mark-only" style="color:var(--ink)"><use href="#fe-mark"/></svg><span class="cap" style="color:#6b6a63;">Símbolo, tinta sobre papel</span></div>
+</div>
+<div class="sizes">
+  <div class="size-cell"><div class="swatch" style="width:80px;height:80px;"><svg style="width:60px;height:60px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">64 px</span></div>
+  <div class="size-cell"><div class="swatch" style="width:52px;height:52px;"><svg style="width:34px;height:34px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">32 px</span></div>
+  <div class="size-cell"><div class="swatch" style="width:34px;height:34px;"><svg style="width:18px;height:18px;color:var(--paper)"><use href="#fe-mark"/></svg></div><span class="cap">16 px</span></div>
+  <p class="fine" style="align-self:center;max-width:380px;">Lê "FE" com clareza até o menor tamanho real de favicon.</p>
+</div>
+<div class="checks">
+  <ul class="do-list">
+    <li>Sempre monocromático: tinta sobre papel, ou o inverso</li>
+    <li>Espaço de respiro ao redor, sem encostar outros elementos</li>
+  </ul>
+  <ul class="dont-list">
+    <li>Sem gradiente, sombra, contorno ou recolorir com o azul</li>
+    <li>Sem halteres, chamas, raios ou o vermelho e laranja de academia</li>
+  </ul>
+</div>
+    
+
+<div class="meta">Logotipo</div>
+<div class="page-no">10 / 14</div>
+<div class="grain"></div>
+</div>
+
+</body>
+</html>

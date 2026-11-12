@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo: 14 iterações</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .groups { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; margin-top: 52px; }
+  .grp { border-top: 2px solid var(--border); padding-top: 10px; font-size: 14px; color: var(--muted); }
+  .grp.a { grid-column: 1 / span 2; }
+  .grp.b { grid-column: 3 / span 3; }
+  .grp.c { grid-column: 6 / span 1; border-top-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; margin-top: 18px; }
+  .art { aspect-ratio: 1; background: var(--paper); border-radius: 16px; display: flex; align-items: center; justify-content: center; padding: 22px; box-shadow: 0 18px 36px rgba(0,0,0,0.35); }
+  .art img { max-width: 100%; max-height: 100%; }
+  .tile.final .art { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .tile .nm { font-family: var(--display); font-weight: 700; font-size: 17px; margin-top: 18px; letter-spacing: -0.01em; }
+  .tile .ls { font-size: 15px; line-height: 1.5; color: var(--muted); margin-top: 8px; }
+  .turn { margin-top: 56px; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 26px 32px; font-size: 20px; line-height: 1.55; color: var(--muted); max-width: 1100px; }
+  .turn b { color: var(--paper); font-weight: 600; }
+  .tile .it { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 4px; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="h1">14 iterações até o símbolo certo.</div>
+<p class="lede">Sem ícone literal de academia, a busca de forma foi só letra, geometria e peso. Cada rodada resolveu um problema e abriu outro.</p>
+
+<div class="groups">
+  <div class="grp a">Primeiras rodadas</div>
+  <div class="grp b">Linha inclinada, encerrada na 13</div>
+  <div class="grp c">Linha modular</div>
+</div>
+<div class="tiles">
+  <div class="tile"><div class="art"><img src="../logos/concepts/concept-1.svg"></div><div class="nm">Emenda</div><div class="it">conceito 1</div><div class="ls">Silhueta forte e legível a 16px, mas sem letras.</div></div>
+  <div class="tile"><div class="art"><img src="../logos/iterations/icon-4.svg"></div><div class="nm">Selo com E</div><div class="it">iteração 4</div><div class="ls">A letra lê limpo até 16px, mas os cantos arredondados liam como SaaS, não como atlético.</div></div>
+  <div class="tile"><div class="art"><img src="../logos/iterations/icon-8.svg"></div><div class="nm">F·E inclinado</div><div class="it">iteração 8</div><div class="ls">Ângulo e peso resolveram o "não parece fit". A fusão ainda era acidental.</div></div>
+  <div class="tile"><div class="art"><img src="../logos/iterations/icon-12.svg"></div><div class="nm">Fusão e cantos</div><div class="it">iteração 12</div><div class="ls">Letras fundidas numa só silhueta, cantos arredondados vértice a vértice.</div></div>
+  <div class="tile"><div class="art"><img src="../logos/iterations/icon-13.svg"></div><div class="nm">Escada no E</div><div class="it">iteração 13</div><div class="ls">Hastes crescentes sugerem progressão, sem forma nova.</div></div>
+  <div class="tile final"><div class="art"><img src="../logos/iterations/icon-14.svg"></div><div class="nm">Monograma achatado</div><div class="it">iteração 14</div><div class="ls">Ortogonal, traço constante, F e E numa peça. Direção final.</div></div>
+</div>
+<div class="turn"><b>A virada.</b> Uma referência externa de monograma FE achatado, com a barra superior do F servindo também ao E, abriu uma rota alternativa à linha inclinada. A inclinada parou na 13 e a 14 virou a direção definitiva.</div>
+    
+
+<div class="meta">Logotipo</div>
+<div class="page-no">07 / 14</div>
+<div class="grain"></div>
+</div>
+
+</body>
+</html>

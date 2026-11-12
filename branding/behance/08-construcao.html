@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo: construção do símbolo</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .cols { display: grid; grid-template-columns: 780px 1fr; gap: 44px; margin-top: 36px; align-items: center; }
+  .rows { display: flex; flex-direction: column; }
+  .r { display: grid; grid-template-columns: 70px 1fr; gap: 16px; align-items: baseline; padding: 28px 0; border-bottom: 1px solid var(--border); }
+  .r:first-child { border-top: 1px solid var(--border); }
+  .r .n { font-family: var(--display); font-weight: 700; font-size: 44px; line-height: 1; color: var(--accent-text); letter-spacing: -0.03em; text-align: right; }
+  .r .t { font-size: 18px; line-height: 1.5; color: var(--muted); }
+  .r .t b { color: var(--paper); font-weight: 600; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="h1 sm">Uma peça só, sobre uma grade de 240.</div>
+<p class="lede" style="margin-top:16px;">O F empresta a barra superior ao E, que fica com dois traços próprios. É uma silhueta única, não duas letras encostadas.</p>
+<div class="cols">
+  <div><svg viewBox="-96 -52 452 346" width="780" height="597" xmlns="http://www.w3.org/2000/svg" style="font-family: Inter, sans-serif">
+  <!-- destaque da barra compartilhada: braço superior do E = barra do F -->
+  <rect x="44" y="0" width="196" height="44" fill="#3A64FF" opacity="0.30"/>
+  <!-- guias da grade -->
+  <g stroke="#5E80FF" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.42" fill="none">
+    <path d="M-20 0H266 M-20 44H266 M-20 98H266 M-20 142H266 M-20 196H266 M-20 240H266"/>
+    <path d="M0 -16V262 M44 -16V262 M96 -16V262 M124 -16V262 M240 -16V262"/>
+  </g>
+  <path d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z" fill="#F5F3EE" fill-rule="nonzero"/>
+  <!-- cadeia de cotas vertical -->
+  <g stroke="#5E80FF" stroke-width="0.9" fill="none">
+    <path d="M-34 0V240"/>
+    <path d="M-39 0H-29 M-39 44H-29 M-39 98H-29 M-39 142H-29 M-39 196H-29 M-39 240H-29"/>
+  </g>
+  <g fill="#F5F3EE" font-size="11" font-weight="600" text-anchor="end">
+    <text x="-46" y="26">44</text>
+    <text x="-46" y="75">54</text>
+    <text x="-46" y="124">44</text>
+    <text x="-46" y="173">54</text>
+    <text x="-46" y="222">44</text>
+  </g>
+  <!-- cota horizontal total -->
+  <g stroke="#5E80FF" stroke-width="0.9" fill="none">
+    <path d="M0 -30H240 M0 -35V-25 M240 -35V-25"/>
+  </g>
+  <text x="120" y="-38" fill="#F5F3EE" font-size="11" font-weight="600" text-anchor="middle">240</text>
+  <!-- vão entre as letras -->
+  <g stroke="#5E80FF" stroke-width="0.9" fill="none">
+    <path d="M96 120H124 M96 114V126 M124 114V126"/>
+    <path d="M110 126V158"/>
+  </g>
+  <text x="110" y="172" fill="#F5F3EE" font-size="11" font-weight="600" text-anchor="middle">28</text>
+  <!-- raio do canto -->
+  <circle cx="232" cy="8" r="8" fill="none" stroke="#5E80FF" stroke-width="0.9"/>
+  <path d="M237 3L262 -14" stroke="#5E80FF" stroke-width="0.9" fill="none"/>
+  <text x="266" y="-10" fill="#F5F3EE" font-size="11" font-weight="600">r 8</text>
+  <!-- legenda da barra compartilhada -->
+  <text x="252" y="28" fill="#5E80FF" font-size="9.5">barra do F</text>
+  <text x="252" y="40" fill="#5E80FF" font-size="9.5">= braço do E</text>
+</svg></div>
+  <div class="rows">
+    <div class="r"><span class="n">44</span><span class="t"><b>Traço constante.</b> Uma só medida dá o ritmo de todas as barras.</span></div>
+    <div class="r"><span class="n">54</span><span class="t"><b>Respiro constante.</b> O espaço entre as barras é sempre o mesmo.</span></div>
+    <div class="r"><span class="n">28</span><span class="t"><b>Vão entre as letras.</b> Separa o F do E sem soltá-los. Mede menos que um traço.</span></div>
+    <div class="r"><span class="n">8</span><span class="t"><b>Raio dos cantos.</b> Tira a aresta de esquadro sem virar pílula.</span></div>
+  </div>
+</div>
+    
+
+<div class="meta">Logotipo</div>
+<div class="page-no">08 / 14</div>
+<div class="grain"></div>
+</div>
+
+</body>
+</html>

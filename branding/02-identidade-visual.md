@@ -2,7 +2,7 @@
 
 Continuação de `01-pesquisa-e-naming.md`. Nome final: **FortEvo** (grafia com F e E maiúsculos). Este arquivo documenta as etapas 6+ do branding (identidade visual) — refeito do zero depois da troca de nome de "Lastro" pra "FortEvo"; a rodada anterior (em torno de "LASTRO") está obsoleta.
 
-**Status: fechado.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. Etapa 11 (manual de marca) também está **fechada**: `branding/manual/manual-de-marca.html` + PDF. Etapa 12 (kit de marca) também está **fechada**: tudo empacotado em `branding/kit/fortevo-brand-kit.zip`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Nenhuma etapa de branding em aberto.
+**Status: fechado.** Etapa 7 está **fechada**: **iteration-14** (monograma achatado, lockup empilhado) é a direção definitiva do logo. Etapa 8 também está **fechada**: **Azul Protocolo (`#3A64FF`)** é o acento definitivo, com sistema de estados (hover/pressed/tints) documentado abaixo. Etapa 9 (ícone final do app) também está **fechada**: exportado e integrado em `app/assets/` e `app.json`. Etapa 10 (telas-conceito) também está **fechada**: marca aplicada direto no app real (`app/src/components/ui.tsx` + telas), não num mockup solto. Etapa 11 (manual de marca) também está **fechada**: `branding/manual/manual-de-marca.html` + PDF. Etapa 12 (kit de marca) também está **fechada**: tudo empacotado em `branding/kit/fortevo-brand-kit.zip`. Etapa 13 (case Behance refeito, 14 slides: app, nome e logo) também está **fechada**: `branding/behance/`. A linha inclinada/dinâmica do logo (iterations 7-13) e as outras 4 propostas de cor ficam registradas como histórico. Nenhuma etapa de branding em aberto.
 
 ## Limitação declarada (vale pra esta rodada também)
 
@@ -262,6 +262,15 @@ Os arquivos finais de exportação, na prática, já tinham saído prontos ao lo
 - `README.md` — índice do kit + essencial de cor/regras de uso, pra quem abrir o zip sem contexto nenhum
 
 Com isso, as seis etapas do branding (naming, identidade visual, ícone, telas, manual, kit) estão fechadas.
+
+## Etapa 13 — Case Behance refeito: o app, o nome e o logo (nov/2026)
+
+As artes do case Behance foram refeitas do zero (9 → 14 slides) para contar a história em vez de só mostrar a marca: o que o app é e para quem, por que o nome FortEvo, e por que o símbolo tem esta forma. Fonte de tudo: este arquivo, `01-pesquisa-e-naming.md`, o motor (`engine/`, `data/`) e o app real. Nada foi inventado para o case.
+
+- **Narrativa**: capa → o app (cadastro, motor de regras, protocolo, com saída real do motor) → o espaço em aberto no mercado → direção de marca (rigor, não hype) → a busca do nome (Lastro e as palavras já ocupadas) → o nome FortEvo → as 14 iterações do símbolo → construção na grade de 240 → por que o símbolo é assim (decisão, motivo e custo) → sistema do logotipo → cor (com os contrastes medidos) → ícone de app → telas do app real → o que ainda falta validar.
+- **Honestidade deliberada**: o slide de decisões tem uma coluna de custo; o case diz que nome e visual ainda não foram validados com usuários e que a busca formal no INPI, domínio e @handle continua pendente. Não afirma registro de marca.
+- **Arquivos**: `branding/behance/` (`generate.py` gera os 14 HTMLs a partir do caminho do símbolo extraído de `icon-14.svg`; `render.py` exporta os PNGs 2800×2100 e o PDF; `shared.css`). Entrega empacotada em `branding/behance/FortEvo-case-behance.zip`.
+- **Nota de leitura**: o motivo "reta, não inclinada" no slide de decisões combina o que está documentado (a direção veio da referência externa estática e modular trazida pelo Fabio, na ruptura com as iterations 7-13) com a leitura de que isso troca energia por precisão. A segunda parte é interpretação, a confirmar com o Fabio.
 
 ## Próximos passos
 

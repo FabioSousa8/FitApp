@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo: telas do app</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .floor { position: absolute; z-index: 0; left: 0; right: 0; bottom: 0; height: 380px; background: linear-gradient(180deg, rgba(58,100,255,0) 0%, rgba(58,100,255,0.11) 100%); pointer-events: none; }
+  .head { position: relative; z-index: 1; }
+  .phones { position: relative; z-index: 1; display: flex; gap: 44px; justify-content: center; margin-top: 36px; }
+  .phone { width: 322px; height: 690px; background: var(--ink); border: 1px solid rgba(245,243,238,0.2); border-radius: 40px; padding: 26px 20px 0; box-shadow: 0 44px 90px rgba(0,0,0,0.55); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .phone .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; background: linear-gradient(180deg, rgba(21,20,15,0), #15140F); pointer-events: none; }
+  .ui { display: flex; flex-direction: column; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .brand svg { width: 22px; height: 22px; }
+  .brand span { font-family: var(--wordmark); font-size: 17px; font-weight: 700; letter-spacing: -0.2px; }
+  .sub { font-size: 14px; line-height: 1.45; color: var(--muted); }
+  .t { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  .lab { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .help { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 6px; }
+  .btn { border-radius: 12px; min-height: 46px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; }
+  .btn.p { background: var(--accent); color: var(--paper); }
+  .btn.s { background: var(--surface); border: 1px solid var(--border); color: var(--accent-text); }
+  .btn.g { color: var(--accent-text); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 13.5px; font-weight: 500; padding: 8px 13px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border); }
+  .chip.sel { background: var(--accent-pressed); border-color: var(--accent-pressed); }
+  .prog { display: flex; gap: 8px; }
+  .prog i { flex: 1; height: 4px; border-radius: 2px; background: var(--border); display: block; }
+  .prog i.on { background: var(--accent); }
+  .input { border: 1px solid var(--border); border-radius: 10px; padding: 11px 13px; font-size: 15px; background: var(--surface); color: var(--muted); }
+  .footer { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 20px 18px; border-top: 1px solid var(--border); background: var(--ink); z-index: 2; }
+  .ex { font-size: 13px; line-height: 1.35; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="head">
+  <div class="h1 sm">No app de verdade.</div>
+  <p class="lede" style="margin-top:14px;">Telas do pré-beta, com saída real do motor.</p>
+</div>
+<div class="floor"></div>
+<div class="phones">
+
+  <div class="phone"><div class="ui" style="gap:14px;">
+    <div class="brand"><svg viewBox="-16.80 -16.80 273.60 273.60" style="color:var(--paper)"><use href="#fe-mark"/></svg><span>FortEvo</span></div>
+    <div class="sub">nome@email.com</div>
+    <div class="card" style="margin-top:6px;">
+      <div class="lab" style="margin-bottom:2px;">Seu protocolo já foi gerado</div>
+      <div class="help" style="margin:0 0 8px;font-size:13px;">Split: Upper / Lower (U/L)</div>
+      <div class="btn p">Ver protocolo</div>
+      <div class="btn s" style="margin-top:4px;">Refazer cadastro</div>
+    </div>
+    <div class="btn g">Sair</div>
+  </div></div>
+
+  <div class="phone"><div class="ui" style="gap:14px;">
+    <div class="prog"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="t">Treino básico</div>
+    <div class="sub">Pra calibrar volume e split certos pro seu ponto de partida.</div>
+    <div><div class="lab">Como você classificaria seu nível?</div>
+      <div class="chips"><div class="chip">Iniciante</div><div class="chip sel">Intermediário</div><div class="chip">Avançado</div><div class="chip">Muito avançado (anos de treino ininterrupto)</div></div>
+      <div class="help">Isso é cruzado com os anos de treino abaixo: tempo de treino só pode puxar o nível pra baixo, nunca pra cima.</div></div>
+    <div><div class="lab">Há quantos anos você treina musculação?</div><div class="input">ex: 2 ou 0.5</div></div>
+    <div><div class="lab">Quantos dias por semana você tem disponível?</div>
+      <div class="chips"><div class="chip">1</div><div class="chip">2</div><div class="chip">3</div><div class="chip sel">4</div><div class="chip">5</div></div></div>
+  </div>
+  <div class="footer"><div class="btn p">Avançar</div></div></div>
+
+  <div class="phone"><div class="ui" style="gap:12px;">
+    <div class="t">Seu protocolo</div>
+    <div class="card"><div class="lab" style="margin:0;">Split: Upper / Lower (U/L)</div><div class="help" style="margin:0;">upper#1 · lower#1 · upper#2 · lower#2</div><div class="help" style="margin:0;">Também viável: ABCD, ABC</div></div>
+    <div class="card"><div class="lab" style="margin:0;">Periodização</div><div class="help" style="margin:0;">Bloco 1: treino (35 treinos)</div><div class="help" style="margin:0;">Bloco 2: deload (7d de calendário)</div><div class="help" style="margin:0;">Bloco 3: treino (35 treinos)</div></div>
+    <div class="card"><div class="lab" style="margin:0;">Cardio</div><div class="help" style="margin:0;">MISS, 3-4x/semana, 25-35min/sessão</div></div>
+    <div class="card"><div class="lab" style="margin:0 0 4px;">UPPER#1</div>
+      <div class="ex">Supino reto (barra): 4x8-10</div>
+      <div class="ex">Supino inclinado (máquina): 3x8-12</div>
+      <div class="ex">Puxada alta (pegada aberta): 4x8-10</div>
+      <div class="ex">Puxada alta (pegada fechada/triângulo): 3x8-12</div></div>
+  </div><div class="fade"></div></div>
+
+</div>
+    
+
+<div class="meta">Aplicação</div>
+<div class="page-no">13 / 14</div>
+<div class="grain"></div>
+</div>
+
+</body>
+</html>

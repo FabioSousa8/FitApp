@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>FortEvo: o app</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+  .flow { display: flex; align-items: stretch; margin-top: 46px; }
+  .step { flex: 1; padding: 28px 28px 30px; }
+  .step h3 { font-family: var(--display); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
+  .step .sub { font-size: 15px; color: var(--accent-text); margin: 4px 0 18px; }
+  .step ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.42; }
+  .step li { padding-left: 18px; position: relative; }
+  .step li::before { content: ""; position: absolute; left: 0; top: 0.58em; width: 7px; height: 7px; border-radius: 2px; background: var(--accent); }
+  .link { width: 52px; display: flex; align-items: center; justify-content: center; color: var(--accent-text); flex: none; }
+  .sample { margin-top: 30px; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 20px 26px; font-size: 17px; line-height: 1.6; color: var(--muted); }
+  .sample b { color: var(--paper); font-weight: 600; }
+  .fine { margin-top: 22px; max-width: 1100px; }
+    
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="fe-mark" viewBox="-16.80 -16.80 273.60 273.60">
+    <path fill="currentColor" fill-rule="nonzero" d="M 36.00,0.00 L 8.00,0.00 Q 0.00,0.00 0.00,8.00 L 0.00,36.00 Q 0.00,44.00 0.00,52.00 L 0.00,90.00 Q 0.00,98.00 0.00,106.00 L 0.00,134.00 Q 0.00,142.00 0.00,150.00 L 0.00,232.00 Q 0.00,240.00 8.00,240.00 L 36.00,240.00 Q 44.00,240.00 44.00,232.00 L 44.00,150.00 Q 44.00,142.00 52.00,142.00 L 88.00,142.00 Q 96.00,142.00 96.00,134.00 L 96.00,106.00 Q 96.00,98.00 88.00,98.00 L 52.00,98.00 Q 44.00,98.00 44.00,90.00 L 44.00,52.00 Q 44.00,44.00 52.00,44.00 L 232.00,44.00 Q 240.00,44.00 240.00,36.00 L 240.00,8.00 Q 240.00,0.00 232.00,0.00 L 52.00,0.00 Q 44.00,0.00 36.00,0.00 Z M 124.00,134.00 L 124.00,106.00 Q 124.00,98.00 132.00,98.00 L 232.00,98.00 Q 240.00,98.00 240.00,106.00 L 240.00,134.00 Q 240.00,142.00 232.00,142.00 L 132.00,142.00 Q 124.00,142.00 124.00,134.00 Z M 124.00,232.00 L 124.00,204.00 Q 124.00,196.00 132.00,196.00 L 232.00,196.00 Q 240.00,196.00 240.00,204.00 L 240.00,232.00 Q 240.00,240.00 232.00,240.00 L 132.00,240.00 Q 124.00,240.00 124.00,232.00 Z"/>
+  </symbol>
+</svg>
+
+<div class="slide">
+
+<div class="h1">Um treinador de verdade para quem não pode pagar um.</div>
+<p class="lede">O FortEvo é um app de treino para quem já tem experiência de academia e não tem personal. Em vez de só anotar o que a pessoa decide, ele decide junto: lê histórico, equipamento e limitações e monta o protocolo.</p>
+
+<div class="flow">
+  <div class="step panel">
+    <h3>Cadastro</h3>
+    <div class="sub">7 passos</div>
+    <ul>
+      <li>Nível e anos de treino</li>
+      <li>Objetivo, principal e secundário</li>
+      <li>Limitações físicas</li>
+      <li>Atividades físicas</li>
+      <li>Consistência de treino</li>
+      <li>Equipamento disponível</li>
+      <li>Rotina atual</li>
+    </ul>
+  </div>
+  <div class="link"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 12h16M13 6l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="step panel">
+    <h3>Motor de regras</h3>
+    <div class="sub">Roda dentro do app</div>
+    <ul>
+      <li>Cruza o nível declarado com os anos de treino</li>
+      <li>Escolhe a divisão da semana, de full body a bro split</li>
+      <li>Calcula o volume por grupo muscular</li>
+      <li>Seleciona, entre 209 exercícios, os que cabem no equipamento e nas limitações</li>
+      <li>Define o cardio</li>
+    </ul>
+  </div>
+  <div class="link"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 12h16M13 6l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="step panel">
+    <h3>Protocolo</h3>
+    <div class="sub">Sessões, blocos e deload</div>
+    <ul>
+      <li>Sessões em rotação, sem dia da semana fixo</li>
+      <li>Blocos medidos em treinos concluídos, não em dias de calendário</li>
+      <li>Exercícios fixos dentro do bloco; a troca só acontece entre blocos</li>
+      <li>Uma semana de deload entre blocos</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sample"><b>Saída real do motor</b> para uma persona de teste (intermediário, 4 dias por semana, 60 min): divisão Upper / Lower, bloco de 35 treinos, deload de 7 dias, cardio MISS de 3 a 4 vezes por semana.</div>
+<p class="fine">Mobile, iOS e Android, modelo pago, em pré-beta fechado. Fora de escopo por decisão: dieta e suplementação, que exigem profissional e dados sensíveis.</p>
+    
+
+<div class="meta">O app</div>
+<div class="page-no">02 / 14</div>
+<div class="grain"></div>
+</div>
+
+</body>
+</html>
